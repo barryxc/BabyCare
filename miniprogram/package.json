@@ -1,0 +1,17 @@
+{
+  "name": "baby-care-mini-program",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "@vant/weapp": "^1.11.0",
+    "chart.js": "^4.4.0",
+    "dayjs": "^1.11.9",
+    "uuid": "^9.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

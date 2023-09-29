@@ -1,0 +1,50 @@
+<!--components/editRecord/EditRecordModal.wxml-->
+<view class="mask" wx:if="{{show}}">
+  <view class="modal-container">
+    <view class="header" wx:if="{{record.event}}">
+      <text class="title">{{record.event}}</text>
+      <image wx:if="{{icon}}" src="{{icon}}" mode="aspectFit" class="icon-img" />
+    </view>
+    <view class="body">
+
+      <picker mode="date" style="width: 100%;">
+        <view class="row">
+          <text class="label">日期</text>
+          <view style="margin-left: auto;"></view>
+          <text class="content">{{ record.day }} </text>
+          <image src="../../images/arrow.svg" class='arrow-style' mode="aspectFit"></image>
+        </view>
+      </picker>
+
+      <view class="row">
+        <text class="label">时间</text>
+        <view style="margin-left: auto;"></view>
+        <text class="content">{{ record.time }} </text>
+        <image src="../../images/arrow.svg" class='arrow-style' mode="aspectFit"></image>
+      </view>
+
+      <view class="row">
+        <text class="label">备忘录</text>
+        <view style="margin-left: auto;"></view>
+        <text class="content">{{record.content}}</text>
+        <image src="../../images/arrow.svg" class='arrow-style' mode="aspectFit"></image>
+      </view>
+
+      <view class="img-row">
+        <text class="label">图像</text>
+        <view style="margin-left: auto;"></view>
+        <image class='view-img' src="{{record.imgSrc?record.imgSrc:'../../images/select-img.svg'}}" mode="aspectFit">
+        </image>
+      </view>
+
+    </view>
+
+    <view class="footer">
+      <text bind:tap="onCancel" class="cancel-style click-style">取消</text>
+      <text type="default" bind:tap="onDelete" class="delete-style click-style">删除</text>
+      <text type="default" bind:tap="onConfirm" class="modify-style click-style">修改</text>
+    </view>
+
+  </view>
+
+</view>

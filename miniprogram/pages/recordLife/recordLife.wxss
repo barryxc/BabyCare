@@ -1,0 +1,168 @@
+.tip {
+  font-size: 23rpx;
+  color: rgba(0, 0, 0, 0.5);
+  width: 90%;
+  text-align: center;
+  margin: 30rpx auto 0 auto;
+}
+
+.top_tip {
+  font-size: 28rpx;
+  color: rgba(0, 0, 0, 0.5);
+  width: 90%;
+  text-align: left;
+  margin-top: 30rpx;
+  margin-left: 20rpx;
+}
+
+.box_text {
+  background-color: white;
+  text-align: center;
+  padding: 300rpx 0;
+  margin-top: 30rpx;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.code_box {
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  margin-left: auto;
+  background-color: #fefefe;
+  padding: 10rpx;
+}
+
+.code_img {
+  width: 100%;
+  height: 100%;
+}
+
+.button_clear {
+  width: 300rpx;
+  text-align: center;
+  margin: 20% auto 0 auto;
+  height: 80rpx;
+  color: #07c160;
+  border-radius: 5px;
+  line-height: 80rpx;
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.img_info {
+  padding-top: 16px;
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  padding: 16rpx 0;
+  border-top: 0.5px solid #E5E5E5;
+  margin-top: 50rpx;
+}
+
+.img_info_title {
+  font-size: 14;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #888888;
+  width: 72px;
+  margin-right: 32px;
+}
+
+.img_info_detail {
+  text-align: left;
+  font-size: 14;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: #000000;
+  width: 500rpx;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  margin: 1px 0rpx;
+  padding: 32rpx 20rpx;
+  background-color: white;
+  border-radius: 6rpx;
+  font-size: 26px;
+  align-items: center;
+}
+
+.row:active {
+  background-color: #f1f1f1;
+}
+
+.less {
+  margin-left: 28rpx;
+}
+
+.preview-img {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.margin-left-auto {
+  margin-left: auto;
+  color: #666666;
+  font-size: 28rpx;
+}
+
+.title {
+  padding-left: 20rpx;
+  width: auto;
+  height: 30rpx;
+  text-align: right;
+  flex: 1;
+  font-size: 28rpx;
+}
+
+.content {
+  max-height: 140rpx;
+  margin-top: 30rpx;
+  font-size: 28rpx;
+  color: #666666;
+  padding-left: 10rpx;
+}
+
+.label {
+  padding-left: 10rpx;
+  color: #333333;
+  height: 60rpx;
+  font-size: 30rpx;
+}
+
+.icon {
+  margin-left: 10rpx;
+  width: 40rpx;
+  height: 40rpx;
+  display: inline-block;
+}
+
+.submi-area {
+  display: flex;
+  margin-top: 30rpx;
+  flex-direction: row;
+}
+
+.submit-button-reset {
+  width: 20rpx;
+  background-color: white;
+  color: #666666;
+  opacity: 1;
+}
+
+.submit-button-reset-hover {
+  width: 20rpx;
+  background-color: #f6f6f6;
+  color: #333333;
+}
+
+.submit-button-confirm {
+  width: 100rpx;
+  margin-left: 30rpx;
+  color: white;
+}
+
+.submit-button-confirm-hover {
+  background-color: white;
+  color: #666666;
+}

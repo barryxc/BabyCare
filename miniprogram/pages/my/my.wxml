@@ -1,0 +1,92 @@
+<!--pages/my/my.wxml-->
+<scroll-view class="scroll" scroll-y="true">
+
+  <view class="container">
+    <view class="header-area  color-accent">
+
+      <view class="icon-area">
+        <image class="circle" src="{{baby.avatar?baby.avatar:'../../images/avatar.svg'}}" mode="aspectFit" bind:tap="" />
+      </view>
+
+      <view class="text-area">
+        <view class="text-area-row">
+          <view class="edge">
+            <text class="samll-text-white">{{baby.height?baby.height:"--"}}</text>
+          </view>
+          <view class="middle">
+            <text class="large-text-white">{{baby.name?baby.name:"--"}}</text>
+          </view>
+
+          <view class="edge">
+            <text class="samll-text-white">{{baby.weight?baby.weight:"--"}}</text>
+          </view>
+        </view>
+
+        <view class="text-area-row">
+          <view class="edge">
+            <text class="samll-text-white">身高(cm)</text>
+          </view>
+          <view class="middle">
+            <text class="samll-text-white">出生{{baby.age?baby.age:0}}天</text>
+          </view>
+
+          <view class="edge">
+            <text class="samll-text-white">体重(kg)</text>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <view class="boby-area-with-line" bind:tap="gotoSetting">
+      <view class="baby-area">
+        <image class="baby-img" src="../../images/setting.svg" mode="aspectFit" />
+
+        <view class="baby-text-container">
+          <view class="name-born-container">
+            <text class="large-text">用户信息</text>
+          </view>
+        </view>
+
+        <image src="../../images/arrow.svg" class="arrow-img" mode="aspectFit" />
+      </view>
+
+      <view class="line"></view>
+    </view>
+
+    <view class="boby-area-with-line" bind:tap="">
+      <view class="baby-area">
+        <image class="baby-img" src="../../images/share.svg" mode="aspectFit" />
+
+        <view class="baby-text-container">
+          <view class="name-born-container">
+            <text class="large-text">添加家人</text>
+          </view>
+        </view>
+
+        <image src="../../images/arrow.svg" class="arrow-img" mode="aspectFit" />
+      </view>
+
+      <view class="line"></view>
+    </view>
+
+    <view class="boby-area-with-line" bind:tap="gotoAdd">
+      <view class="baby-area">
+        <image class="baby-img" src="../../images/my-baby.svg" mode="aspectFit" />
+
+        <view class="baby-text-container">
+          <view class="name-born-container">
+            <text class="large-text">宝宝管理</text>
+          </view>
+        </view>
+
+        <image src="../../images/arrow.svg" class="arrow-img" mode="aspectFit" />
+      </view>
+
+      <view class="line"></view>
+    </view>
+
+  </view>
+
+
+</scroll-view>

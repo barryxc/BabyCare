@@ -1,0 +1,46 @@
+.list-item-container {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  z-index: 0;
+}
+
+.list-item {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+}
+
+.item-content {
+  height: 100%;
+}
+
+.delete-button {
+  position: relative;
+  flex-shrink: 0;
+  width: 120rpx;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.gray {
+  background-color: gray;
+  color: white;
+  font-size: 28rpx;
+}
+
+.red {
+  background-color: #ff0023;
+  color: white;
+  font-size: 28rpx;
+}
+
+.delete-button:active {
+  opacity: 0.5;
+}
+.zindex{
+  z-index: 0;
+}

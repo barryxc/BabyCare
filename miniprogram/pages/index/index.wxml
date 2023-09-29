@@ -1,0 +1,72 @@
+<!--pages/recordService/record.wxml-->
+<edit-record-modal show="{{showModalDialog}}" record='{{record}}'>
+</edit-record-modal>
+
+
+<view>
+  <view class="custom-navbar color-accent">
+    <view class="header-fixed" wx:if="{{true}}">
+      <view class="row">
+        <image src="../../images/mine.svg" mode="aspectFit" class="icon-header-fixed" />
+        <image src="../../images/date.svg" mode="aspectFit" class="icon-header-fixed" />
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="header">
+  <view class="header-scroll" wx:if="{{!showFixed}}">
+    <view class="row" bind:tap="onDateAdd" data-diff="-1">
+      <image src="../../images/date-arrow-right.svg" class="date-arrow rotate-180" mode="scaleToFill" />
+    </view>
+    <view class="date">
+      <picker class="picker" name="day" mode="date" model:value="{{day}}" bindchange="onDateChange"> {{day}} {{week}} </picker>
+    </view>
+    <view class="row" bind:tap="onDateAdd" data-diff="1">
+      <image src="../../images/date-arrow-right.svg" class="date-arrow" mode="scaleToFill" />
+    </view>
+  </view>
+
+
+</view>
+
+
+<view class="body">
+  <view class="empty-container" wx:if="{{!records||records.length==0}}">
+    <view style="display: flex; flex-direction: column; align-items: center;">
+      <image class="empty-img" src="../../images/empty-1.svg" mode="aspectFit" />
+      <text style="font-size: 30rpx ; color: #ffffff;">快开始记录吧~</text>
+    </view>
+  </view>
+
+
+  <view class="record-row" wx:key="item" wx:for="{{records}}">
+
+    <view class="record-row-flex">
+      <swipe-item-view width='700rpx' height='100%' x='{{item.x}}' bind:expand='onExpand' data-index="{{index}}" bind:collapse='onCollapse' bind:onDelete='onDelete'>
+        <view class="record-column" style="width: 700rpx; height: 100%;" bind:tap="onTapRecordItem" data-data="{{records[index]}}">
+          <view class="record-content">
+            <text class="time">{{item.displayTime}}</text>
+            <image class="icon" src="{{item.icon}}" mode="aspectFit" />
+            <view class="content-container">
+              <text class="event">{{item.event}}</text>
+              <text class="content">{{item.content}}</text>
+            </view>
+
+            <view class="spaceing"></view>
+            <image class="img-display" wx:if="{{item.content}}" src="../../images/diary.svg" mode="aspectFit" lazy-load></image>
+            <image class="img-display" wx:if="{{item.imgSrc}}" src="../../images/view-img.svg" mode="aspectFit" lazy-load show-menu-by-longpress></image>
+          </view>
+          <view class="line"></view>
+        </view>
+
+      </swipe-item-view>
+
+    </view>
+
+  </view>
+
+
+</view>
+
+<image class="add-btn color-accent" bind:tap="recordEvent" src="../../images/add.svg"></image>

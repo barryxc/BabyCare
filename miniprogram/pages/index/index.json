@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "edit-record-modal":"../../components/editRecord/EditRecordModal"
+  },
+  "navigationBarTitleText": "",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 100,
+  "backgroundTextStyle": "dark",
+  "navigationStyle":"custom"
+
+}

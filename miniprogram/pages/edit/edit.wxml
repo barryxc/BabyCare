@@ -1,0 +1,14 @@
+<!--pages/edit/edit.wxml-->
+<view class="container">
+
+  <view class="header">
+
+
+  </view>
+
+
+  <cover-view>
+    
+  </cover-view>
+
+</view>

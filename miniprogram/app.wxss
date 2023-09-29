@@ -1,0 +1,48 @@
+/**app.wxss**/
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+button {
+  background: initial;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button::after {
+  border: none;
+}
+
+page {
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.text-style {
+  text-align: center;
+  font-size: 30rpx;
+  color: #333333;
+}
+
+.arrow-style {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.bottom-circle-btn {
+  background-color: pink;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 80rpx;
+}
+
+.color-accent{
+  background: linear-gradient(to right, rgb(255, 240, 245), rgb(200, 200, 255));
+}

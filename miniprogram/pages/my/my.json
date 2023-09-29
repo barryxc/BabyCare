@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "swiper-item-view":"../../components/swipItemView/swipItemView"
+  },
+  "navigationBarTitleText": "我的",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "navigationStyle": "custom"
+}

@@ -1,0 +1,46 @@
+<!--pages/addbaby/addbaby.wxml-->
+
+
+<view class="root-container">
+  <swipe-item-view width="100vw" height="144rpx" class="boby-area-with-line" wx:key="baby" wx:for="{{babyArr}}" wx:for-item="baby" data-index="{{index}}" bind:longpress="editBaby" index="{{index}}" bind:onDelete="onDelete" x="{{baby.offsetX}}">
+    <view style="width: 100vw;" bind:tap="editBaby" data-index="{{index}}">
+      <view class=" baby-area">
+        <image class="baby-img" src="{{baby.avatar?baby.avatar:'../../images/mine.svg'}}" mode="aspectFit" />
+        <view class="baby-text-container">
+          <view class="name-born-container">
+            <text class="large-text">{{baby.name}}</text>
+            <text class="samll-text"> (出生第{{baby.age}}天)</text>
+            <text class="gender-img" style="color:{{ baby.gender=='0' ? '#9370db':'#1e90ff'}}; ">{{baby.gender=='0'?'♀':'♂'}}</text>
+          </view>
+          <view>
+            <text class="samll-text">出生日期 : {{baby.date}}</text>
+          </view>
+
+        </view>
+
+        <!-- <view>
+          <image src="../../images/check.svg" class="check-img" mode="aspectFit" wx:if="{{baby.check}}" />
+        </view> -->
+
+      </view>
+      <view class="line"></view>
+    </view>
+  </swipe-item-view>
+
+  <view class="boby-area-with-line" bind:tap="addBaby">
+    <view class="baby-area">
+
+      <image class="add-img color-accent" src="../../images/add.svg" mode="aspectFit" />
+
+      <view class="baby-text-container">
+        <view class="name-born-container">
+          <text class="large-text">添加宝宝</text>
+        </view>
+      </view>
+    </view>
+    <view class="line"></view>
+
+  </view>
+
+
+</view>

@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/recordLife/recordLife",
+    "pages/my/my",
+    "pages/edit/edit",
+    "pages/setting/setting",
+    "pages/addbaby/addbaby",
+    "pages/stastics/stastics",
+    "pages/editBabyInfo/editBabyInfo"
+  ],
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F6F6F6",
+    "navigationBarTitleText": "宝贝",
+    "navigationBarTextStyle": "black"
+  },
+  "usingComponents": {
+    "add-baby-modal": "./components/addBabyModal/addBabyModal",
+    "swipe-item-view": "./components/swipItemView/swipItemView"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "tabBar": {
+    "custom": true,
+    "color": "#000000",
+    "selectedColor": "#000000",
+    "backgroundColor": "#000000",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/stastics/stastics",
+        "text": "统计"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的"
+      }
+    ]
+  }
+}

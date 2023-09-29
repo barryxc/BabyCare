@@ -1,0 +1,186 @@
+/* pages/addbaby/addbaby.wxss */
+
+.root-container {
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.icon-area {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle {
+  width: 160rpx;
+  height: 160rpx;
+  margin: 60rpx 100rpx 60rpx;
+  border-radius: 80rpx;
+}
+
+.circle-small {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50rpx;
+}
+
+.avatar-right {
+  margin-left: 100rpx;
+}
+
+.avatar-left {
+  margin-right: 100rpx;
+}
+
+.name {
+  margin-top: 10rpx;
+  width: 100rpx;
+  height: 40rpx;
+  text-align: center;
+  font-size: 30rpx;
+}
+
+.age {
+  margin-top: 10rpx;
+  font-size: 20rpx;
+  width: 100rpx;
+  height: 40rpx;
+  text-align: center;
+  color: #808080;
+}
+
+.header-area {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: pink;
+  flex-grow: 0;
+}
+
+.body-area {
+  width: 100%;
+  /* background-color: pink; */
+  flex-grow: 1;
+}
+
+.text-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.text-area-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+}
+
+
+.large-text {
+  text-align: center;
+  font-size: 30rpx;
+  color: #333333;
+}
+
+.middle {
+  margin: 0rpx 100rpx;
+  width: 150rpx;
+  height: 60rpx;
+}
+
+.samll-text {
+  font-size: 20rpx;
+  color: #808080;
+  text-align: center;
+}
+
+.samll-text-white {
+  font-size: 28rpx;
+  color: white;
+  text-align: center;
+}
+
+.large-text-white {
+  font-size: 50rpx;
+  color: white;
+  text-align: center;
+}
+
+.edge {
+  width: 150rpx;
+  text-align: center;
+  height: 60rpx;
+}
+
+.baby-area {
+  padding: 5px 40rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.boby-area-with-line {
+  width: 100vw;
+  margin-top: 1px;
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.boby-area-with-line:active {
+  background-color: #f1f1f1;
+}
+
+.add-img {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+}
+
+.baby-img {
+  width: 60rpx;
+  height: 60rpx;
+  padding: 1rpx;
+  border-radius: 50%;
+  background-color: #f6f6f6;
+}
+
+.check-img {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.baby-text-container {
+  height: 100rpx;
+  padding: 0rpx 20rpx;
+  margin-left: 30rpx;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.line {
+  height: 1px;
+}
+
+.arrow-img {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.gender-img {
+  margin-left: 30rpx;
+  font-size: 30rpx;
+  color: purple;
+}
