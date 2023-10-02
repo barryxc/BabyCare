@@ -1,11 +1,7 @@
 // app.js
-const {
-  callServer
-} = require("./service/server");
 
 const {
-  setUser,
-  syncUserInfo
+  syncUserInfo, setUser
 } = require("./service/user");
 
 
@@ -30,10 +26,11 @@ App({
 
       syncUserInfo().then((res) => {
         setUser(res.result);
-      }).catch(()=>{
+      }).catch((e) => {
+        console.error(e)
         wx.showToast({
           title: '同步失败',
-          icon:"error"
+          icon: "error"
         })
       });
 

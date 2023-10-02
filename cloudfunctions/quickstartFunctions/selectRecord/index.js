@@ -1,4 +1,7 @@
 const cloud = require('wx-server-sdk');
+const {
+  createIfNotExist
+} = require('../util/dbutils');
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
@@ -12,19 +15,19 @@ exports.main = async (event, context) => {
     OPENID,
     APPID,
   } = cloud.getWXContext()
-  try {
-    await db.createCollection(tableName);
-  } catch (e) {
-    console.error(e);
-  }
+  createIfNotExist(tableName);
   if (!event.childId) {
     return [];
   }
-  return await db.collection(tableName).where({
-    day: event.day,
-    childId: event.childId,
-    openId: OPENID,
-    appId: APPID
-  }).limit(100).get();
-
+  try {
+    let result = await db.collection(tableName).where({
+      day: event.day,
+      childId: event.childId,
+      openId: OPENID,
+      appId: APPID
+    }).limit(100).get();
+    return result;
+  } catch (error) {
+    console.log(error)
+  }
 };

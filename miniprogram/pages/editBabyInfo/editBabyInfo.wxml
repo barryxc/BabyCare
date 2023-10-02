@@ -1,2 +1,2 @@
-<add-baby-modal class="add-baby-dialog" show="{{true}}" bind:onConfirm="onAddConfirm"  bind:onCancel='onCancel'>
+<add-baby-modal class="add-baby-dialog" show="{{true}}" bind:onConfirm="onConfirm" bind:onCancel='onCancel' babyInfo='{{babyInfo}}'>
 </add-baby-modal>

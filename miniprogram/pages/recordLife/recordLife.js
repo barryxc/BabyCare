@@ -95,7 +95,7 @@ Page({
       return
     }
     let interval = new Date().getTime() - lastSumbitTime;
-    if (interval <= 3000) {
+    if (interval <= 1000) {
       wx.showToast({
         title: '提交太频繁了',
         icon: 'error',
@@ -196,13 +196,23 @@ Page({
 
     console.log("记录日志", record);
     insertRecord(childId, record).then((res) => {
-      wx.hideLoading();
-      wx.showToast({
-        title: "提交成功"
-      });
-      console.log("数据库更新成功" + res);
-      this.sendEevent(record);
-      wx.navigateBack();
+      if (res.errMsg.includes('ok')) {
+        wx.hideLoading();
+        wx.showToast({
+          title: "提交成功"
+        });
+        console.log("数据库更新成功" + res);
+        this.sendEevent(record);
+        wx.navigateBack();
+      } else {
+        wx.hideLoading();
+        wx.showToast({
+          title: "提交失败",
+          icon: "error"
+        });
+        console.error("数据库更新失败", e);
+        wx.navigateBack();
+      }
     }).catch(e => {
       wx.hideLoading();
       wx.showToast({

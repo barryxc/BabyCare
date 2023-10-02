@@ -2,10 +2,10 @@ const {
   diffDays
 } = require("../../service/date");
 const {
-  getChilds,
   register,
   syncUserInfo,
-  setUser
+  setUser,
+  getSelectedChild
 } = require("../../service/user")
 
 // pages/my/my.js
@@ -14,41 +14,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    babyArr: getChilds(),
-    baby: {
-      avatar: "",
-      age: "0",
-      name: "--",
-      height: "--",
-      weight: "--",
-    },
-    confirmCallback: null,
+    baby: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.refresh();
+
     register((userinfo) => {
-      this.refresh();
-    });
+      this.refreshUser();
+    })
   },
 
-  refresh() {
-    let childs = getChilds();
-    if (Array.isArray(childs) && childs.length > 0) {
-      childs.forEach((e) => {
-        if (e.check) {
-          this.setData({
-            baby: e
-          });
-        }
-      })
-    } else {
-      this.reset();
-    }
-  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -65,20 +43,16 @@ Page({
         selected: 2
       })
     }
+
+    this.refreshUser();
   },
 
-  reset() {
+  refreshUser() {
+    let child = getSelectedChild();
     this.setData({
-      baby: {
-        avatar: "../../images/boy.svg",
-        age: "0",
-        name: "--",
-        height: "--",
-        weight: "--",
-      }
-    });
+      baby: child
+    })
   },
-
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -120,60 +94,37 @@ Page({
   },
 
   //设置
-  gotoSetting() {
+  gotoSettingPage() {
     wx.navigateTo({
       url: '/pages/setting/setting',
     })
   },
 
-  // 添加宝宝
-  addBaby() {
-    showModal.call(this);
-  },
-
-  onAddConfirm: (function (res) {
-    console.log(res)
-    if (!res) {
-      return;
-    }
-    if (!res.name) {
-      wx.showToast({
-        title: '未填写昵称',
-        icon: "error"
-      })
-      return
-    }
-    if (!res.date) {
-      wx.showToast({
-        title: '未填写出生日期',
-        icon: "error"
-      })
-      return
-    }
-    let childs = getChilds();
-    childs.push(res);
-    let count = childs.length;
-
-    if (count == 1) {
-      baby = childs[0];
-      baby.check = true;
-    };
-
-    childs.forEach((e, index) => {
-      if (e.date) {
-        e.age = diffDays(e.date);
-      }
-    });
-    this.setData({
-      babyArr: childs,
-      baby: baby,
-    });
-    dismiss.call(this)
-  }),
-  gotoAdd() {
+  gotoAddChildPage() {
     wx.navigateTo({
       url: "/pages/addbaby/addbaby",
     })
-  }
+  },
 
+  shareWithFamily() {
+    wx.navigateTo({
+      url: '/pages/family/family',
+    })
+  },
+
+  previewImage() {
+    if (this.data.baby.avatar) {
+      wx.previewImage({
+        urls: [this.data.baby.avatar],
+        showmenu: true,
+        current: 0,
+        success() {
+          console.log("预览图片成功");
+        },
+        fail() {
+          console.error("预览图片失败");
+        },
+      })
+    }
+  }
 })

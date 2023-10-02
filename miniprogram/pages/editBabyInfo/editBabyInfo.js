@@ -14,18 +14,37 @@ Page({
    * 页面的初始数据
    */
   data: {
-    avatar: '',
+    type: "",
+    babyInfo: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
+    console.log("params:" + JSON.stringify(options));
+    this.data.type = options.type;
+    if (options.type == 'edit') {
+      wx.setNavigationBarTitle({
+        title: '编辑',
+        success: (res) => {},
+        fail: (res) => {},
+        complete: (res) => {},
+      })
+    }
+    if (options.type == 'add') {
+      wx.setNavigationBarTitle({
+        title: '新增',
+      })
+    }
+
     const eventChannel = this.getOpenerEventChannel();
     if (eventChannel) {
-      eventChannel.on('acceptDataFromOpenerPage', function (data) {
-        console.log(data);
-      });
+      eventChannel.on('babyInfo', (function (data) {
+        this.setData({
+          babyInfo: data
+        })
+      }).bind(this));
     }
   },
 
@@ -85,23 +104,26 @@ Page({
   async save(e) {
     try {
       let child = e;
-      console.log("触发添加宝宝👶🏻事件", child);
+      console.log("触发宝宝👶🏻事件", child);
       wx.showLoading({
         title: '',
       })
       let addResult;
-      console.log(child.avatar);
+      console.log('👶🏻头像', child.avatar);
       if (!child.avatar) {
-        addResult = await this.newChildAdd(child);
+        addResult = await this.editOrAdd(child);
       } else {
-        let uploadResult = await this.uploadImg(child.avatar)
-        if (uploadResult.fileID) {
-          child.avatar = uploadResult.fileID;
+        let str=child.avatar;
+        if (!(typeof str === "string" && str.startsWith("cloud"))) {
+          let uploadResult = await this.uploadImg(child.avatar)
+          if (uploadResult.fileID) {
+            child.avatar = uploadResult.fileID;
+          }
         }
-        addResult = await this.newChildAdd(child);
+
+        addResult = await this.editOrAdd(child);
       }
       if (addResult.result.stats.updated > 0) {
-
         user.addChild(child);
         user.getChilds().forEach((e, index) => {
           if (e.date) {
@@ -111,25 +133,35 @@ Page({
           e.offsetX = 0;
         });
 
-        this.setData({
-          babyArr: user.getChilds(),
-        });
-      }else{
+        this.getOpenerEventChannel().emit('onFinish', child)
+        wx.navigateBack();
+      } else {
         wx.showToast({
-          title: '添加失败',
-          icon:"error"
+          title: '保存失败',
+          icon: "error"
         })
       }
-      wx.navigateBack();
       wx.hideLoading();
     } catch (error) {
       console.error(error);
+      wx.showToast({
+        title: '保存失败',
+        icon: "error"
+      })
       wx.hideLoading();
     }
   },
 
-  newChildAdd(child) {
-    return childModule.addChild(child);
+  editOrAdd(child) {
+    const type = this.data.type;
+    if (type) {
+      if (type == 'edit') {
+        return childModule.modifyChildInfo(child);
+      }
+      if (type == 'add') {
+        return childModule.addChild(child);
+      }
+    }
   },
 
   uploadImg(filepath) {
@@ -137,31 +169,8 @@ Page({
   },
 
   //保存
-  onAddConfirm(e) {
-    let childs = user.getChilds();
-    let babyInfo = e.detail;
-    babyInfo.avatar = this.data.avatar;
-    let child = {
-      ...babyInfo,
-      childId: getUuid(),
-    };
-    if (!childs || (Array.isArray(childs) && childs.length == 0)) {
-      child.check = true;
-    }
-    if (!child.name) {
-      wx.showToast({
-        title: '未填写昵称',
-        icon: "error"
-      })
-      return
-    }
-    if (!child.date) {
-      wx.showToast({
-        title: '未填写出生日期',
-        icon: "error"
-      })
-      return
-    }
+  onConfirm(e) {
+    let child = e.detail;
     this.save(child);
   }
 })

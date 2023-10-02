@@ -1,28 +1,44 @@
 // components/addBabyModal/addBabyModal.js
 const {
-  getChilds:getBaby
+  getChilds: getBaby
 } = require("../../service/user");
-const { getUuid } = require("../../service/uuid");
+const {
+  getUuid
+} = require("../../service/uuid");
 
 Component({
   /**
    * 组件的属性列表
    */
   properties: {
-    date: {
-      type: String,
-    },
+    babyInfo: {},
     show: {
       type: Boolean,
       value: false,
     },
   },
 
+  lifetimes: {
+    attached: function (e) {},
+
+    ready() {
+      this.setData({
+        ...this.data.babyInfo,
+      })
+    }
+  },
+
   /**
    * 组件的初始数据
    */
   data: {
-    avatar: "",
+    childId: "",
+    avatar: '',
+    date: '',
+    name: '',
+    gender: 0,
+    weight: "",
+    height: "",
   },
 
   /**
@@ -38,16 +54,18 @@ Component({
 
     //添加宝宝
     confirm(e) {
-      let childs = getBaby();
-      let babyInfo = e.detail.value;
-      babyInfo.avatar = this.data.avatar;
+      let value = e.detail.value;
       let child = {
-        ...babyInfo,
-        childId: getUuid(),
+        ...value
       };
-      if (!childs || (Array.isArray(childs) && childs.length == 0)) {
-        child.check = true;
+      if (!this.data.childId) {
+        child.childId = getUuid(); //新增
+      } else {
+        child.childId = this.data.childId; //编辑
       }
+
+      child.avatar = this.data.avatar;
+
       if (!child.name) {
         wx.showToast({
           title: '未填写昵称',
@@ -64,6 +82,12 @@ Component({
       }
       this.triggerEvent('onConfirm', child);
     },
+
+    //日期变化
+    onDateChange(e) {
+      console.log(e)
+    },
+
     chooseImg() {
       wx.chooseImage({
         count: 1,
@@ -71,8 +95,9 @@ Component({
         sourceType: ['album', 'camera'],
         success: function (res) {
           const tempFilePaths = res.tempFilePaths
+          let avatar = tempFilePaths[0];
           this.setData({
-            avatar: tempFilePaths[0]
+            avatar,
           })
         }.bind(this)
       });

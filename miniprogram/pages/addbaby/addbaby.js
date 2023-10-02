@@ -82,7 +82,12 @@ Page({
     wx.navigateTo({
       url: '/pages/editBabyInfo/editBabyInfo?type=add',
       events: {
-        onAddFinish(data) {}
+        onFinish: (function (data) {
+          console.log("callback", data);
+          this.setData({
+            babyArr: user.getChilds(),
+          })
+        }).bind(this)
       },
       success(res) {
 
@@ -110,12 +115,16 @@ Page({
     let childs = user.getChilds();
     let child = childs[index];
     wx.navigateTo({
-      url: '/pages/editBabyInfo/editBabyInfo',
+      url: '/pages/editBabyInfo/editBabyInfo?type=edit',
       events: {
-        acceptDataFromOpenedPage(data) {}
+        onFinish: (function (data) {
+          this.setData({
+            babyArr: user.getChilds(),
+          })
+        }).bind(this),
       },
       success(res) {
-        res.eventChannel.emit('editBabyInfo', child);
+        res.eventChannel.emit('babyInfo', child);
       }
     })
   },

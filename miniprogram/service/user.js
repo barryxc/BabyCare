@@ -38,16 +38,30 @@ function getChilds() {
 
 function getSelectedChild() {
   let child = {};
-  userInfo.childs.forEach((e) => {
-    if (e.check) {
-      child = e;
-    }
-  });
+  let childs = getChilds();
+  if (childs && (Array.isArray(childs) && childs.length > 0)) {
+    child = childs[0];
+  }
+  let childId = wx.getStorageSync('selectChildId');
+  if (childId) {
+    childs.forEach((e) => {
+      if (e.childId == childId) {
+        child = e;
+      }
+    });
+  }
   return child;
 }
 
 function addChild(child) {
-  userInfo.childs.push(child);
+  let index = userInfo.childs.findIndex((e, i) => {
+    return e.childId == child.childId;
+  });
+  if (index !== -1) {
+    userInfo.childs[index] = child;
+  } else {
+    userInfo.childs.push(child);
+  }
   notify(userInfo);
 }
 
@@ -60,7 +74,6 @@ function setUserInfo(info) {
   userInfo = {
     ...info,
   };
-
   notify(userInfo);
 }
 
@@ -72,7 +85,7 @@ let lastSyncTime = 0;
 async function syncUserInfo(params) {
   let currentTime = new Date().getTime();
   let internal = currentTime - lastSyncTime;
-  if (internal < 5000) {
+  if (internal < 1000) {
     console.log("获取用户信息太频繁了...", internal);
     return
   }

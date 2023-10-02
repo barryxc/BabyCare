@@ -1,4 +1,7 @@
 const cloud = require('wx-server-sdk');
+const {
+  createIfNotExist
+} = require('../util/dbutils');
 
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
@@ -16,18 +19,19 @@ exports.main = async (event, context) => {
   } = cloud.getWXContext()
   //建表
   try {
-    await db.createCollection(tableName);
-  } catch (e) {
-    console.error(e);
+    createIfNotExist(tableName);
+    // data 字段表示需新增的 JSON 数据
+    let result = await db.collection('records').add({
+      data: {
+        ...event.record,
+        serverDate: new Date(),
+        openId: OPENID,
+        appId: APPID,
+        unionId: UNIONID,
+      }
+    });
+    return result;
+  } catch (error) {
+    console.error(error);
   }
-  // data 字段表示需新增的 JSON 数据
-  return await db.collection('records').add({
-    data: {
-      ...event.record,
-      serverDate: new Date(),
-      openId: OPENID,
-      appId: APPID,
-      unionId: UNIONID,
-    }
-  });
 }

@@ -6,7 +6,7 @@ const record = require("../../service/record.js");
 const {
   getSelectedChild,
   register,
-  deleteChild,
+  getChilds,
 } = require('../../service/user.js');
 const {
   getEventList,
@@ -19,10 +19,13 @@ let lastSyncTime = 0;
 
 Page({
 
+
   /**
    * 页面的初始数据
    */
   data: {
+    childs: [],
+    selectChild: {},
     nickName: "",
     day: getDay(),
     cache: {},
@@ -31,24 +34,25 @@ Page({
     record: {},
     eventList: [],
     navigationBarHeight: 0,
-    showFixed: false,
+    disabled: true,
+    value: 0,
   },
 
   onPageScroll(e) {
-    console.log("页面滚动", e);
     const scrollTop = e.scrollTop; // 获取滚动的位置
-    if (scrollTop >= 25) {
-      // 当滚动位置超过组件顶部时，说明组件已经达到固定位置
-      this.setData({
-        showFixed: true,
-      })
-      // 执行其他操作，比如改变组件的样式
-    } else {
-      // 执行其他操作
-      this.setData({
-        showFixed: false
-      })
-    }
+    console.log("页面滚动距离", scrollTop);
+    // if (scrollTop >= 0) {
+    //   // 当滚动位置超过组件顶部时，说明组件已经达到固定位置
+    //   this.setData({
+    //     fixed: 'sticky',
+    //   })
+    //   // 执行其他操作，比如改变组件的样式
+    // } else {
+    //   // 执行其他操作
+    //   this.setData({
+    //     fixed: 'relative',
+    //   })
+    // }
   },
 
   /**
@@ -57,6 +61,11 @@ Page({
   onLoad(options) {
     this.refreshData(getSelectedChild().childId);
     register((userinfo) => {
+      let childs = getChilds();
+      this.setData({
+        childs: childs,
+        selectChild: getSelectedChild(),
+      })
       this.refreshData(getSelectedChild().childId);
     });
     this.setData({
@@ -120,6 +129,28 @@ Page({
    */
   onPullDownRefresh() {
     this.refreshData(getSelectedChild().childId);
+  },
+
+  //切换小宝
+  onChildChange(e) {
+    try {
+      let childs = getChilds();
+      if (!childs) {
+        return
+      }
+      let child = childs[e.detail.value];
+      if (child.childId) {
+        this.setData({
+          selectChild: child
+        })
+        //本地缓存
+        wx.setStorageSync('selectChildId', child.childId)
+        this.refreshData(getSelectedChild().childId);
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   refreshData(childId) {
@@ -312,5 +343,8 @@ Page({
     } catch (error) {
       console.error(error)
     }
+  },
+
+  onTapDatePicker(e) {
   }
 });

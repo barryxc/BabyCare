@@ -9,15 +9,34 @@ page {
 }
 
 .custom-navbar {
-  display: block;
-  align-items: center;
   width: 100%;
   height: 166rpx;
+  z-index: 1001;
+  top: 0;
+  position: sticky;
 }
 
-.back-icon {
-  width: 20rpx;
-  height: 20rpx;
+.custom-navbar>.content-area {
+  width: 100%;
+  height: 110rpx;
+  box-sizing: border-box;
+  padding-left: 40rpx;
+  margin-top: 76rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.icon-area {
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+}
+
+
+.child-picker {
+  width: fit-content;
+  height: 100%;
 }
 
 .nick-text {
@@ -28,22 +47,21 @@ page {
 
 
 .header {
-  position: sticky;
-  padding: 0rpx 0rpx;
-  top: 0;
   box-sizing: border-box;
+  background: linear-gradient(to right, rgb(255, 240, 245), rgb(200, 200, 255));
   width: 100%;
-  height: 176rpx;
+  height: fit-content;
   z-index: 1000;
+  box-sizing: border-box;
+  padding: 20rpx 0rpx;
 }
 
 .header-scroll {
-  top: 0px;
   display: flex;
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, rgb(255, 240, 245), rgb(200, 200, 255));
+
   flex-direction: row;
   align-items: center;
   justify-content: center;
@@ -226,7 +244,7 @@ page {
 
 .row {
   display: flex;
-  align-items: center;
+
 }
 
 .spaceing {
@@ -311,12 +329,8 @@ page {
 
 .icon-header-fixed {
   width: 40rpx;
-  height: 40rpx;
-  background-color: white;
+  height: 100%;
   border-radius: 50%;
-  padding: 5px;
-  margin-top: 100rpx;
-  margin-left: 50rpx;
 }
 
 @keyframes fade-in {

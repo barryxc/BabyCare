@@ -22,8 +22,8 @@
   width: 160rpx;
   height: 160rpx;
   margin: 60rpx 100rpx 60rpx;
-  border-radius: 80rpx;
-  background-color: #f1f1f1;
+  border-radius: 50%;
+  background-color: white;
 }
 
 .circle-small {
@@ -145,8 +145,7 @@
 .baby-img {
   width: 60rpx;
   height: 60rpx;
-  background-color: white;
-  border-radius: 30rpx;
+  border-radius: 50%;
 }
 
 .check-img {

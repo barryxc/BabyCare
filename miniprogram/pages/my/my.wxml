@@ -5,7 +5,7 @@
     <view class="header-area  color-accent">
 
       <view class="icon-area">
-        <image class="circle" src="{{baby.avatar?baby.avatar:'../../images/avatar.svg'}}" mode="aspectFit" bind:tap="" />
+        <image class="circle" src="{{baby.avatar?baby.avatar:'../../images/child-light.svg'}}" mode="aspectFit" bind:tap="previewImage" />
       </view>
 
       <view class="text-area">
@@ -38,7 +38,7 @@
 
     </view>
 
-    <view class="boby-area-with-line" bind:tap="gotoSetting">
+    <view class="boby-area-with-line" bind:tap="gotoSettingPage">
       <view class="baby-area">
         <image class="baby-img" src="../../images/setting.svg" mode="aspectFit" />
 
@@ -54,13 +54,13 @@
       <view class="line"></view>
     </view>
 
-    <view class="boby-area-with-line" bind:tap="">
+    <view class="boby-area-with-line" bind:tap="shareWithFamily">
       <view class="baby-area">
         <image class="baby-img" src="../../images/share.svg" mode="aspectFit" />
 
         <view class="baby-text-container">
           <view class="name-born-container">
-            <text class="large-text">添加家人</text>
+            <text class="large-text">家人共享</text>
           </view>
         </view>
 
@@ -70,7 +70,7 @@
       <view class="line"></view>
     </view>
 
-    <view class="boby-area-with-line" bind:tap="gotoAdd">
+    <view class="boby-area-with-line" bind:tap="gotoAddChildPage">
       <view class="baby-area">
         <image class="baby-img" src="../../images/my-baby.svg" mode="aspectFit" />
 

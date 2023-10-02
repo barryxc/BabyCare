@@ -1,65 +1,40 @@
-const cloud = require('wx-server-sdk')
+const cloud = require('wx-server-sdk');
+const {
+  createIfNotExist,
+  fetchUserInfo
+} = require('../util/dbutils');
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 })
 const db = cloud.database()
-const _ = db.command
-const tableName = "userInfo";
+
+const userTable = "userInfo";
 
 exports.main = async (event, context) => {
   let {
     OPENID
   } = cloud.getWXContext();
   try {
-    //建表
-    try {
-      await db.createCollection(tableName);
-    } catch (e) {
-      console.error(e);
-    }
-    //查询用户记录
-    let results = await db.collection(tableName).where({
-      openId: OPENID
-    }).get();
-
-    let data = results.data;
-
-    //不存在，则创建一条用户记录
-    if (!data || (Array.isArray(data) && data.length == 0)) {
-      let userInfo = {
-        openId: OPENID,
-        name: "",
-        childs: [{
-          ...event.data,
-        }, ],
-      }
-
-      db.collection(tableName).add({
-        // data 字段表示需新增的 JSON 数据
-        data: {
-          ...userInfo,
-          when: new Date(),
-        }
-      })
-      return userInfo;
-    }
-
-    let childs = data[0].childs;
-    if (Array.isArray(childs)) {
-      childs.push(event.child);
-    } else {
+    //不存在则建表
+    createIfNotExist(userTable);
+    //获取用户信息
+    let userInfo = await fetchUserInfo();
+    let childs = userInfo.childs;
+    if (!childs) {
       childs = [];
     }
-
-    return db.collection(tableName).where({
+    childs.push(event.child);
+    return db.collection(userTable).where({
       openId: OPENID,
     }).update({
       data: {
         childs: childs,
       }
     });
-
   } catch (e) {
     console.error(e)
   }
+  return {
+    success: false
+  };
 }

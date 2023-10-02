@@ -111,9 +111,6 @@
   margin-top: 40rpx;
 }
 
-.radio{
-}
-
 @keyframes slide_up {
 
   from {

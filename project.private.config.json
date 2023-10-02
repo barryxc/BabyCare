@@ -7,6 +7,13 @@
       "list": [
         {
           "name": "",
+          "pathName": "pages/family/family",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "",
           "pathName": "pages/editBabyInfo/editBabyInfo",
           "query": "",
           "launchMode": "default",

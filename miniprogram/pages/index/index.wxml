@@ -2,20 +2,30 @@
 <edit-record-modal show="{{showModalDialog}}" record='{{record}}'>
 </edit-record-modal>
 
-
-<view>
-  <view class="custom-navbar color-accent">
-    <view class="header-fixed" wx:if="{{true}}">
-      <view class="row">
-        <image src="../../images/mine.svg" mode="aspectFit" class="icon-header-fixed" />
-        <image src="../../images/date.svg" mode="aspectFit" class="icon-header-fixed" />
-      </view>
+<view class="custom-navbar color-accent" wx:if="{{true}}" style="position: {{fixed}};">
+  <view class="content-area">
+    <view class="icon-area" bind:tap="onTapDatePicker">
+      <picker mode="selector" style="width: fit-content; height:fit-content;" range='{{childs}}' range-key="name" bind:change='onChildChange' id="child-picker" value='{{value}}'>
+        <view style="display: flex;">
+          <view style="display: flex; flex-direction: column; align-items: center;justify-content: center;height: 100rpx;">
+            <text style="font-size: 28rpx; color:#666666; width: 100%; height: fit-content; text-align: center;">{{selectChild.name?selectChild.name:'宝宝'}}</text>
+          </view>
+          <view style="display: flex;align-items: center;">
+            <image style="width: 40rpx; height: 40rpx;" src="../../images/dropdown.svg" mode="aspectFit" />
+          </view>
+        </view>
+      </picker>
+      <picker mode="date" style="width: fit-content; height: fit-content;margin-left: 20rpx;">
+        <view style="height: 100rpx; display: flex; align-items: center;">
+          <image src="../../images/date.svg" mode="aspectFit" style="width: 40rpx;height: 50rpx;" />
+        </view>
+      </picker>
     </view>
   </view>
 </view>
 
 <view class="header">
-  <view class="header-scroll" wx:if="{{!showFixed}}">
+  <view class="header-scroll">
     <view class="row" bind:tap="onDateAdd" data-diff="-1">
       <image src="../../images/date-arrow-right.svg" class="date-arrow rotate-180" mode="scaleToFill" />
     </view>
@@ -26,8 +36,6 @@
       <image src="../../images/date-arrow-right.svg" class="date-arrow" mode="scaleToFill" />
     </view>
   </view>
-
-
 </view>
 
 
