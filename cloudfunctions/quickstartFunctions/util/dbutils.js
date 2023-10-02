@@ -66,14 +66,23 @@ async function fetchUserInfo() {
       });
       if (add.errMsg.includes('ok')) {
         return userInfo;
+      } else {
+        console.error(add);
+        return {
+          success: false,
+          errorMsg: add.errMsg
+        }
       }
     }
+    return userInfo;
   } catch (error) {
     console.error(error);
+    return {
+      success: false,
+      errorMsg: error
+    };
   }
-  return {
-    success: false
-  };
+
 }
 
 module.exports = {

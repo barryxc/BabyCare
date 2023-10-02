@@ -72,6 +72,7 @@ Page({
    */
   onPullDownRefresh() {
     syncUserInfo().then((res) => {
+      debugger
       setUser(res.result);
       wx.stopPullDownRefresh();
     }).catch((e) => {
