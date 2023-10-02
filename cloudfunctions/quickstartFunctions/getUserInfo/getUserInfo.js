@@ -10,7 +10,7 @@ cloud.init({
 async function main(event, params) {
   const tableName = "userInfo";
   //建表
-  createIfNotExist(tableName);
+  await createIfNotExist(tableName);
   //查询用户信息
   let userInfo = await fetchUserInfo();
   return userInfo;

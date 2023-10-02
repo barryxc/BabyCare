@@ -37,9 +37,13 @@ function getChilds() {
 }
 
 function getSelectedChild() {
-  let child = {};
+
   let childs = getChilds();
-  if (childs && (Array.isArray(childs) && childs.length > 0)) {
+  if (!childs) {
+    childs = [];
+  }
+  let child = {};
+  if (childs.length > 0) {
     child = childs[0];
   }
   let childId = wx.getStorageSync('selectChildId');

@@ -15,7 +15,7 @@ exports.main = async (event, context) => {
     OPENID,
     APPID,
   } = cloud.getWXContext()
-  createIfNotExist(tableName);
+  await createIfNotExist(tableName);
   if (!event.childId) {
     return [];
   }

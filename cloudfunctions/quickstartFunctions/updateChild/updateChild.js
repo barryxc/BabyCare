@@ -15,7 +15,7 @@ exports.main = async (event, context) => {
     OPENID
   } = cloud.getWXContext();
   try {
-    createIfNotExist(tableName);
+    await createIfNotExist(tableName);
     //查询用户记录
     let userinfo = await fetchUserInfo();
     let childs = userinfo.childs;

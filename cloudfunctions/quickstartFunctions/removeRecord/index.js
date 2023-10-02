@@ -17,7 +17,7 @@ exports.main = async (event, context) => {
     APPID,
   } = cloud.getWXContext()
   //建表
-  createIfNotExist(tableName);
+  await createIfNotExist(tableName);
   // data 字段表示需新增的 JSON 数据
   try {
     let result = await db.collection('records').where({

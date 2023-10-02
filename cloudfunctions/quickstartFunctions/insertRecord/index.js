@@ -19,7 +19,7 @@ exports.main = async (event, context) => {
   } = cloud.getWXContext()
   //建表
   try {
-    createIfNotExist(tableName);
+    await createIfNotExist(tableName);
     // data 字段表示需新增的 JSON 数据
     let result = await db.collection('records').add({
       data: {

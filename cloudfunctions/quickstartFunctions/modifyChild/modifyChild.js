@@ -16,7 +16,7 @@ exports.main = async (event, context) => {
   } = cloud.getWXContext();
   try {
     //建表
-    createIfNotExist(tableName);
+    await createIfNotExist(tableName);
 
     //查询用户记录
     let userinfo = await fetchUserInfo();

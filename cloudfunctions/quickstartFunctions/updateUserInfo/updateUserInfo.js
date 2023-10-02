@@ -15,7 +15,7 @@ async function main(event, params) {
   } = cloud.getWXContext();
 
   //创建表
-  createIfNotExist(tableName);
+  await createIfNotExist(tableName);
 
   let userInfo = await fetchUserInfo();
 

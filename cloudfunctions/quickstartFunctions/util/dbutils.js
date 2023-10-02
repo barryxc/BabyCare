@@ -26,14 +26,18 @@ async function isExist(collectionName) {
 }
 
 async function createIfNotExist(collectionName) {
-  let exist = await isExist(collectionName);
-  if (!exist) {
-    let createReuslt = await db.createCollection(collectionName);
-    if (!createReuslt.errMsg.includes('ok')) {
-      return false;
+  try {
+    let exist = await isExist(collectionName);
+    if (!exist) {
+      let create = await db.createCollection(collectionName);
+      if (!create.errMsg.includes('ok')) {
+        return false;
+      }
     }
+  } catch (error) {
+    console.error(error);
+    return false;
   }
-  return true;
 }
 
 async function fetchUserInfo() {
@@ -64,11 +68,12 @@ async function fetchUserInfo() {
         return userInfo;
       }
     }
-
   } catch (error) {
     console.error(error);
   }
-  return userInfo;
+  return {
+    success: false
+  };
 }
 
 module.exports = {
