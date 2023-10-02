@@ -3,10 +3,6 @@ cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 });
 const db = cloud.database();
-let {
-  OPENID
-} = cloud.getWXContext();
-
 async function isExist(collectionName) {
   // 获取集合的信息
   try {
@@ -41,6 +37,10 @@ async function createIfNotExist(collectionName) {
 }
 
 async function fetchUserInfo() {
+  //踩坑，只能放在函数中调用，在全局调用获取不到 OPENID
+  let {
+    OPENID
+  } = cloud.getWXContext();
   let userTable = 'userInfo';
   let userInfo;
   try {
@@ -70,7 +70,7 @@ async function fetchUserInfo() {
         console.error(add);
         return {
           success: false,
-          errorMsg: add.errMsg
+          errorMsg: add
         }
       }
     }
