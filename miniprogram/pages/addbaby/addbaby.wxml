@@ -2,7 +2,7 @@
 
 
 <view class="root-container">
-  <swipe-item-view width="100vw" height="144rpx" class="boby-area-with-line" wx:key="baby" wx:for="{{babyArr}}" wx:for-item="baby" data-index="{{index}}" bind:longpress="editBaby" index="{{index}}" bind:onDelete="onDelete" x="{{baby.offsetX}}">
+  <swipe-item-view width="100vw" height="144rpx" class="boby-area-with-line" wx:key="baby" wx:for="{{babyArr}}" wx:for-item="baby" data-index="{{index}}" bind:longpress="editBaby" index="{{index}}" bind:onDelete="onDelete" x="{{baby.offsetX}}" showDelete='{{!baby.shared}}'>
     <view style="width: 100vw;" bind:tap="editBaby" data-index="{{index}}">
       <view class=" baby-area">
         <image class="baby-img" src="{{baby.avatar?baby.avatar:'../../images/mine.svg'}}" mode="aspectFit" />
@@ -18,9 +18,9 @@
 
         </view>
 
-        <!-- <view>
-          <image src="../../images/check.svg" class="check-img" mode="aspectFit" wx:if="{{baby.check}}" />
-        </view> -->
+        <view>
+          <image src="../../images/share.svg" style="width: 50rpx;height: 50rpx;" mode="aspectFit" wx:if="{{baby.shared}}" />
+        </view>
 
       </view>
       <view class="line"></view>

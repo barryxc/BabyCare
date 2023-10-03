@@ -55,7 +55,8 @@ async function fetchUserInfo() {
         openId: OPENID,
         name: "",
         childs: [],
-        subscribeChilds: [],
+        bind: [], //绑定
+        bound: [], //被绑定
         when: new Date(),
       }
       let add = await db.collection(userTable).add({

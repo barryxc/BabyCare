@@ -54,21 +54,24 @@
       <view class="line"></view>
     </view>
 
-    <view class="boby-area-with-line" bind:tap="shareWithFamily">
-      <view class="baby-area">
-        <image class="baby-img" src="../../images/share.svg" mode="aspectFit" />
+    <button style="width: 100%;margin: 0;padding: 0;text-align: left;font-weight: 400;" open-type="share">
+      <view class="boby-area-with-line" open-type='share'>
 
-        <view class="baby-text-container">
-          <view class="name-born-container">
-            <text class="large-text">家人共享</text>
+        <view class="baby-area">
+          <image class="baby-img" src="../../images/share.svg" mode="aspectFit" />
+
+          <view class="baby-text-container">
+            <view class="name-born-container">
+              <text class="large-text">家人共享</text>
+            </view>
           </view>
+
+          <image src="../../images/arrow.svg" class="arrow-img" mode="aspectFit" />
         </view>
-
-        <image src="../../images/arrow.svg" class="arrow-img" mode="aspectFit" />
+        <view class="line"></view>
       </view>
+    </button>
 
-      <view class="line"></view>
-    </view>
 
     <view class="boby-area-with-line" bind:tap="gotoAddChildPage">
       <view class="baby-area">

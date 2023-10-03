@@ -345,6 +345,5 @@ Page({
     }
   },
 
-  onTapDatePicker(e) {
-  }
+  onTapDatePicker(e) {}
 });

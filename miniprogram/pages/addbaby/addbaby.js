@@ -136,7 +136,9 @@ Page({
       title: '',
       content: '会删除宝宝所有历史记录，确定删除嘛？',
       complete: (res) => {
-        if (res.cancel) {}
+        if (res.cancel) {
+
+        }
         if (res.confirm) {
           let index = e.target.dataset.index;
           if (index !== undefined) {
@@ -145,11 +147,15 @@ Page({
               title: '',
             })
             childModule.removeChild(childId).then((res) => {
-              console.log('删除成功', res);
-              user.deleteChild(childId);
-              this.setData({
-                babyArr: user.getChilds(),
-              })
+              if (res.result.stats.updated > 0) {
+                console.log('删除成功', res);
+                user.deleteChild(childId);
+                this.setData({
+                  babyArr: user.getChilds(),
+                })
+              } else {
+                console.log('删除失败', res);
+              }
               wx.hideLoading();
             }).catch((e) => {
               console.error(e);

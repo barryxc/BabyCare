@@ -1,15 +1,17 @@
 // app.js
 
 const {
-  syncUserInfo, setUser
+  syncUserInfo,
+  setUser
 } = require("./service/user");
 
 
 App({
-  onLaunch: function () {
+  onLaunch: function (options) {
+    console.log("小程序启动", options)
     this.globalData = {
       title: "",
-      envId: "cloud1-3gt9kvvh7349fcdc"
+      envId: "cloud1-3gt9kvvh7349fcdc",
     };
 
     if (!wx.cloud) {
@@ -23,17 +25,32 @@ App({
         env: 'cloud1',
         traceUser: true,
       });
-
-      syncUserInfo().then((res) => {
-        setUser(res.result);
-      }).catch((e) => {
-        console.error(e)
-        wx.showToast({
-          title: '同步失败',
-          icon: "error"
-        })
-      });
-
     }
+  },
+  onShow(options) {
+    //判断来源
+    console.log("小程序显示", options)
+    if (options.query.inviteId) {
+      console.log('从分享中打开')
+      this.globalData.inviteId = options.query.inviteId
+      wx.getShareInfo({
+        shareTicket: options.shareTicket,
+        success(res) {
+          console.log(res)
+        }
+      })
+    };
+
+    //同步用户信息
+    syncUserInfo(this).then((res) => {
+      setUser(res.result);
+    }).catch((e) => {
+      console.error(e)
+      wx.showToast({
+        title: '同步失败',
+        icon: "error"
+      })
+    });
+
   }
 });

@@ -5,7 +5,8 @@ const {
   register,
   syncUserInfo,
   setUser,
-  getSelectedChild
+  getSelectedChild,
+  getUser
 } = require("../../service/user")
 
 // pages/my/my.js
@@ -14,14 +15,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    baby: {}
+    baby: {},
+    userInfo: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    //支持转发群聊
+    wx.showShareMenu({
+      withShareTicket: true
+    })
+    this.data.userInfo = getUser();
     register((userinfo) => {
       this.refreshUser();
     })
@@ -71,8 +77,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    syncUserInfo().then((res) => {
-      debugger
+    syncUserInfo(getApp()).then((res) => {
       setUser(res.result);
       wx.stopPullDownRefresh();
     }).catch((e) => {
@@ -91,7 +96,10 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage() {
-
+    return {
+      title: `${this.data.userInfo.name}邀请你加入我的家庭`,
+      path: `/pages/index/index?inviteId=${this.data.userInfo.openId}`,
+    }
   },
 
   //设置

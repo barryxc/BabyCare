@@ -1,7 +1,8 @@
 const cloud = require('wx-server-sdk');
 const {
-  createIfNotExist
+  createIfNotExist, fetchUserInfo
 } = require('../util/dbutils');
+
 cloud.init({
   env: cloud.DYNAMIC_CURRENT_ENV
 })

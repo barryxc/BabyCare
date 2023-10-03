@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentUser: {}
+    userInfo: {}
   },
 
   /**
@@ -18,7 +18,14 @@ Page({
   onLoad(options) {
     let currentUser = getUser();
     this.setData({
-      currentUser,
+      userInfo: currentUser,
+    })
+
+    wx.showShareMenu({
+      withShareTicket: true, // 是否使用带 shareTicket 的转发
+      success(res) {
+        console.log(res);
+      }
     })
   },
 
@@ -67,7 +74,11 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage() {
-
-  }
+  onShareAppMessage(object) {
+    console.log(object);
+    return {
+      title: `${this.data.userInfo.name}邀请你加入我的家庭`,
+      path: `/pages/index/index?inviteId=${this.data.userInfo.openId}`,
+    }
+  },
 })

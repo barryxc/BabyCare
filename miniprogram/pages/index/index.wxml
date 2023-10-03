@@ -15,11 +15,11 @@
           </view>
         </view>
       </picker>
-      <picker mode="date" style="width: fit-content; height: fit-content;margin-left: 20rpx;">
+      <!-- <picker mode="date" style="width: fit-content; height: fit-content;margin-left: 20rpx;"> -->
         <view style="height: 100rpx; display: flex; align-items: center;">
           <image src="../../images/date.svg" mode="aspectFit" style="width: 40rpx;height: 50rpx;" />
         </view>
-      </picker>
+      <!-- </picker> -->
     </view>
   </view>
 </view>

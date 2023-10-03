@@ -1,1 +1,16 @@
 /* pages/family/family.wxss */
+
+
+.addFamily {
+  background: rgb(205, 205, 241);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 50px;
+  border-radius: 10rpx;
+}
+
+.addFamily:active {
+  background: rgba(205, 205, 241, 0.5);
+}

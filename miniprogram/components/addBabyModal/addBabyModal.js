@@ -11,7 +11,9 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    babyInfo: {},
+    babyInfo: {
+      type: Object
+    },
     show: {
       type: Boolean,
       value: false,

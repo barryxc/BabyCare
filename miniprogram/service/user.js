@@ -86,26 +86,25 @@ function getUserInfo() {
 }
 
 let lastSyncTime = 0;
-async function syncUserInfo(params) {
-  let currentTime = new Date().getTime();
-  let internal = currentTime - lastSyncTime;
-  if (internal < 1000) {
-    console.log("获取用户信息太频繁了...", internal);
-    return
-  }
-  lastSyncTime = currentTime;
-  let result;
+async function syncUserInfo(app) {
   try {
-    result = await callServer({
+    let inviteId = app.globalData.inviteId;
+    let currentTime = new Date().getTime();
+    let internal = currentTime - lastSyncTime;
+    if (internal < 1000) {
+      console.log("获取用户信息太频繁了...", internal);
+      return
+    }
+    lastSyncTime = currentTime;
+    let result = await callServer({
       type: "getUserInfo",
+      inviteId: inviteId
     });
+    return result;
   } catch (error) {
     console.error(error);
   }
-  return result;
 }
-
-
 
 function register(listener) {
   subscribers.push(listener)
