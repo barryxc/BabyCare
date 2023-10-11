@@ -4,7 +4,7 @@ function getDateTime() {
   return dayjs().format("YYYY-MM-DD HH:mm:ss");
 }
 
-function getDay() {
+function getDate() {
   return dayjs().format("YYYY-MM-DD");
 }
 
@@ -16,32 +16,54 @@ function getShortTime() {
   return dayjs().format("HH:mm");
 }
 
-function getHour(time){
+function getHour(time) {
   return dayjs(time).format('HH');
 }
-function getMinute(time){
+
+function getMinute(time) {
   return dayjs(time).format('mm');
 }
 
-function weekDay(day,format) {
-  return dayjs(day,format).day();
+const mapWeekOfDay = {
+  0: '日',
+  1: '一',
+  2: '二',
+  3: '三',
+  4: '四',
+  5: '五',
+  6: '六',
 }
 
-function diffDays(date){
-  return dayjs().diff(date,"day");
+function weekDay(day, format) {
+  return mapWeekOfDay[dayjs(day, format).day()];
 }
 
-function addDay(date,diff){
-  return dayjs(date).add(diff,'day').format("YYYY-MM-DD");
+function diffDays(date) {
+  return dayjs().diff(date, "day");
 }
+
+function addDay(date, diff) {
+  return dayjs(date).add(diff, 'day').format("YYYY-MM-DD");
+}
+
+function getRecentDate(diff) {
+  return dayjs().add(diff, 'day').format("YYYY-MM-DD");
+}
+
+function dateInMonth(date) {
+  return dayjs(date).date();
+}
+
 
 module.exports = {
-  getDate: getDateTime,
-  getDay,
+  getDateTime,
+  getDate,
   getShortTime,
   getHour,
   getMinute,
   weekDay,
   diffDays,
   addDay,
+  getRecentDate,
+  dateInMonth
 }

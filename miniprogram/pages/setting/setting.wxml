@@ -1,22 +1,21 @@
 <!--pages/setting/setting.wxml-->
 <view class="parent">
 
-  <view class="row-flex">
-
-    <view><text>头像</text></view>
+  <button class="avatar-btn button" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+    <view style="height: 100%;display: flex; align-items: center;"><text>头像</text></view>
     <view class="margin-auto">
-      <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-        <image class="avatar" src="{{avatarUrl?avatarUrl:'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'}}"></image>
-      </button>
+      <image class="avatar" src="{{avatarUrl?avatarUrl:defaultAvatar}}"></image>
     </view>
+  </button>
 
+  <view class="nickname-row">
+    <view style="height: 100%;display: flex; align-items: center;">
+      <text>名字</text>
+    </view>
+    <input class="nickname-input" type="nickname" placeholder='请输入昵称' bindnicknamereview="bindnicknamereview" bindinput="bindInput" value="{{name}}" bindblur="onBlur">
+    </input>
   </view>
 
-  <view class="row-flex">
-    <view><text>名字</text></view>
-    <view class="margin-auto"></view>
-    <input type="nickname" placeholder='请输入昵称' class="nickname" bindnicknamereview="bindnicknamereview" bindinput="bindInput" value="{{name}}" bindblur="onBlur"></input>
-  </view>
 
 
 </view>

@@ -1,21 +1,20 @@
 let {
-  getDay,
+  getDate,
   addDay,
+  weekDay,
 } = require('../../service/date.js');
 const record = require("../../service/record.js");
 const {
   getSelectedChild,
-  register,
   getChilds,
+  eventBus,
 } = require('../../service/user.js');
 const {
   getEventList,
   getIcon
 } = require('../../service/eventlist.js');
 
-
 let lastSyncTime = 0;
-
 
 Page({
 
@@ -27,40 +26,68 @@ Page({
     childs: [],
     selectChild: {},
     nickName: "",
-    day: getDay(),
+    day: getDate(),
+    week: weekDay(),
     cache: {},
     records: [],
     showModalDialog: false,
     record: {},
+    index: '',
     eventList: [],
     navigationBarHeight: 0,
     disabled: true,
-    value: 0,
+    showDateAddBtn: false,
+    opacity: 0.3,
+    endDay: getDate(),
   },
 
   onPageScroll(e) {
     const scrollTop = e.scrollTop; // 获取滚动的位置
     console.log("页面滚动距离", scrollTop);
-    // if (scrollTop >= 0) {
-    //   // 当滚动位置超过组件顶部时，说明组件已经达到固定位置
-    //   this.setData({
-    //     fixed: 'sticky',
-    //   })
-    //   // 执行其他操作，比如改变组件的样式
-    // } else {
-    //   // 执行其他操作
-    //   this.setData({
-    //     fixed: 'relative',
-    //   })
-    // }
   },
+
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
     this.refreshData(getSelectedChild().childId);
-    register((userinfo) => {
+    eventBus.on("setUserInfo", () => {
+      let childs = getChilds();
+      this.setData({
+        childs: childs,
+        selectChild: getSelectedChild(),
+      })
+
+      if (!childs || (Array.isArray(childs) && childs.length <= 0)) {
+        wx.showModal({
+          title: '',
+          content: '请先添加小宝👶🏻',
+          complete: (res) => {
+            if (res.cancel) {
+              console.log(res)
+            }
+
+            if (res.confirm) {
+              wx.switchTab({
+                url: '/pages/my/my',
+                success(res) {
+                  setTimeout(() => {
+                    wx.navigateTo({
+                      url: '/pages/addbaby/addbaby',
+                    })
+                  }, 200)
+                }
+              })
+            }
+          }
+        })
+      };
+
+      this.refreshData(getSelectedChild().childId);
+    });
+
+    eventBus.on("childChange", (child) => {
       let childs = getChilds();
       this.setData({
         childs: childs,
@@ -79,6 +106,13 @@ Page({
     // 设置胶囊信息到 data 中
     this.setData({
       navigationBarHeight: (capsuleHeight + capsuleTop)
+    });
+
+    eventBus.on('addRecord', (res) => {
+      console.log("监听新增的记录")
+      this.data.records.push(res.data);
+      console.log(this.data.records);
+      this.rearrange(this.data.records);
     });
   },
 
@@ -134,11 +168,12 @@ Page({
   //切换小宝
   onChildChange(e) {
     try {
+      let index = e.detail.value;
       let childs = getChilds();
-      if (!childs) {
+      if (!childs || (Array.isArray(childs) && childs.length == 0)) {
         return
       }
-      let child = childs[e.detail.value];
+      let child = childs[index];
       if (child.childId) {
         this.setData({
           selectChild: child
@@ -146,6 +181,8 @@ Page({
         //本地缓存
         wx.setStorageSync('selectChildId', child.childId)
         this.refreshData(getSelectedChild().childId);
+
+        eventBus.emit("childChange", child); //事件
       }
 
     } catch (error) {
@@ -183,11 +220,14 @@ Page({
    */
   onShareAppMessage() {},
 
+  //点击item
   onTapRecordItem(e) {
     console.log("onTapRecordItem", e);
-    let record = e.currentTarget.dataset.data;
+    let record = e.currentTarget.dataset.record;
+    let index = e.currentTarget.dataset.index;
     this.setData({
       record: record,
+      index: index,
       showModalDialog: true,
     })
   },
@@ -196,7 +236,7 @@ Page({
   async loadData() {
     let currentTime = new Date().getTime();
     let interval = currentTime - lastSyncTime;
-    if (interval < 2000) {
+    if (interval < getApp().globalData.debounceTime) {
       console.log("刷新频率太快", interval);
       //从缓存中取数据
       console.log("数据取自缓存", this.data.cache);
@@ -235,16 +275,6 @@ Page({
         ele.displayTime = this.displayTime(ele.time);
         //左滑删除--归位
         ele.x = 0;
-
-        ele.showBottomAxis = true;
-        ele.showTopAxis = true;
-
-        if (index == 0) {
-          ele.showTopAxis = false;
-        }
-        if (index == data.length - 1) {
-          ele.showBottomAxis = false;
-        }
       });
     }
     if (data) {
@@ -269,20 +299,50 @@ Page({
   //修改日期，重新刷新日志
   onDateChange(e) {
     this.refreshData();
+    this.setData({
+      week: weekDay(this.data.day),
+    })
+    let date = this.data.day;
+    let currentDay = getDate();
+
+    if (date >= currentDay) {
+      this.setData({
+        opacity: 0.3
+      })
+    } else {
+      this.setData({
+        opacity: 1
+      })
+    }
+
   },
   //+1天
   onDateAdd(e) {
     let diff = e.currentTarget.dataset.diff;
     let date = addDay(this.data.day, diff);
     console.log("date", date);
-    this.setData({
-      day: date
-    })
-    wx.showLoading({
-      title: '',
-    })
-    let childId = getSelectedChild().childId;
-    this.refreshData(childId);
+    let currentDay = getDate();
+    if (date >= currentDay) {
+      this.setData({
+        opacity: 0.3
+      })
+    } else {
+      this.setData({
+        opacity: 1
+      })
+    }
+
+    if (date <= currentDay) {
+      this.setData({
+        day: date,
+        week: weekDay(date)
+      })
+      wx.showLoading({
+        title: '',
+      })
+      let childId = getSelectedChild().childId;
+      this.refreshData(childId);
+    }
   },
 
   //记录
@@ -290,14 +350,6 @@ Page({
     console.log("点击底部+按钮", e);
     wx.navigateTo({
       url: '/pages/recordLife/recordLife',
-      events: {
-        addRecord: (res) => {
-          console.log("监听新增的记录")
-          this.data.records.push(res.data);
-          console.log(this.data.records);
-          this.rearrange(this.data.records);
-        },
-      }
     })
   },
 
@@ -319,6 +371,7 @@ Page({
     console.log("侧滑折叠事件", e);
   },
 
+  //删除item
   async onDelete(e) {
     try {
       let index = e.target.dataset.index;
@@ -333,6 +386,7 @@ Page({
         this.setData({
           records: dataset,
         })
+        eventBus.emit("deleteRecord", item);
       } else {
         wx.showToast({
           title: '删除失败',
@@ -340,10 +394,21 @@ Page({
         })
       }
       wx.hideLoading();
+      this.setData({
+        showModalDialog: false
+      })
     } catch (error) {
       console.error(error)
     }
   },
 
-  onTapDatePicker(e) {}
+  onChildPickerTap(e) {
+    let childs = getChilds();
+    if (!childs || (Array.isArray(childs) && childs.length == 0)) {
+      wx.showToast({
+        title: '请先添加小宝',
+        icon: "error"
+      })
+    }
+  }
 });

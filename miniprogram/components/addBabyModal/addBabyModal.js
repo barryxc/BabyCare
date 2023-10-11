@@ -1,7 +1,7 @@
 // components/addBabyModal/addBabyModal.js
 const {
-  getChilds: getBaby
-} = require("../../service/user");
+  getDate
+} = require("../../service/date");
 const {
   getUuid
 } = require("../../service/uuid");
@@ -41,6 +41,7 @@ Component({
     gender: 0,
     weight: "",
     height: "",
+    endDay: getDate(),
   },
 
   /**
@@ -90,6 +91,7 @@ Component({
       console.log(e)
     },
 
+    //选择头像
     chooseImg() {
       wx.chooseImage({
         count: 1,

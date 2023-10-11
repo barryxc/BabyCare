@@ -4,8 +4,19 @@
   <view class="container">
     <view class="header-area  color-accent">
 
+      <view style="position: absolute; top: 100rpx;left: 30rpx; display: flex;">
+        <image src="../../images/edit-btn.svg" bind:tap="editChildInfo" style="width: 50rpx;height: 50rpx;" mode="scaleToFill" />
+        <!-- <image src="../../images/add-btn.svg" bind:tap="addChild" style="margin-left: 10rpx;width: 50rpx;height: 50rpx;" mode="scaleToFill" /> -->
+        <picker mode="selector" style="width: fit-content; height:fit-content;" range='{{childs}}' range-key="name" bind:change='onChildChange' disabled="{{disableChildPicker}}" bind:tap="onChildPickerTap">
+          <image src="../../images/group-btn.svg" style="margin-left: 10rpx;width: 50rpx;height: 50rpx;" mode="aspectFill" />
+        </picker>
+      </view>
+
       <view class="icon-area">
-        <image class="circle" src="{{baby.avatar?baby.avatar:'../../images/child-light.svg'}}" mode="aspectFit" bind:tap="previewImage" />
+        <view style="width: 160rpx;height: 160rpx;  margin: 60rpx 100rpx 60rpx;  position: relative;">
+          <image class="circle" src="{{baby.avatar?baby.avatar:defaultAvatar}}" mode="aspectFill" bind:tap="previewImage" />
+          <image style=" border-radius: 50%;right: 5rpx;bottom:10rpx;z-index: 1000;position: absolute;width: 30rpx; height: 30rpx; background-color: #00000033;" src="../../images/camera.svg" mode="aspectFill" />
+        </view>
       </view>
 
       <view class="text-area">
@@ -13,7 +24,7 @@
           <view class="edge">
             <text class="samll-text-white">{{baby.height?baby.height:"--"}}</text>
           </view>
-          <view class="middle">
+          <view class="middle" style="background-image: red">
             <text class="large-text-white">{{baby.name?baby.name:"--"}}</text>
           </view>
 
@@ -27,7 +38,7 @@
             <text class="samll-text-white">身高(cm)</text>
           </view>
           <view class="middle">
-            <text class="samll-text-white">出生{{baby.age?baby.age:0}}天</text>
+            <text class="samll-text-white">出生第{{baby.age?baby.age:0}}天</text>
           </view>
 
           <view class="edge">
@@ -40,7 +51,7 @@
 
     <view class="boby-area-with-line" bind:tap="gotoSettingPage">
       <view class="baby-area">
-        <image class="baby-img" src="../../images/setting.svg" mode="aspectFit" />
+        <image class="baby-img" src="../../images/setting.svg" mode="scaleToFill" />
 
         <view class="baby-text-container">
           <view class="name-born-container">
@@ -48,34 +59,34 @@
           </view>
         </view>
 
-        <image src="../../images/arrow.svg" class="arrow-img" mode="aspectFit" />
+        <image src="../../images/arrow.svg" class="arrow-img" mode="scaleToFill" />
       </view>
 
       <view class="line"></view>
     </view>
 
-    <button style="width: 100%;margin: 0;padding: 0;text-align: left;font-weight: 400;" open-type="share">
-      <view class="boby-area-with-line" open-type='share'>
+    <!-- <button style="width: 100%;margin: 0;padding: 0;text-align: left;font-weight: 400;" open-type="share"> -->
+    <view class="boby-area-with-line" open-type='share' bind:tap="shareWithFamily">
 
-        <view class="baby-area">
-          <image class="baby-img" src="../../images/share.svg" mode="aspectFit" />
+      <view class="baby-area">
+        <image class="baby-img" src="../../images/share.svg" mode="scaleToFill" />
 
-          <view class="baby-text-container">
-            <view class="name-born-container">
-              <text class="large-text">家人共享</text>
-            </view>
+        <view class="baby-text-container">
+          <view class="name-born-container">
+            <text class="large-text">家人共享</text>
           </view>
-
-          <image src="../../images/arrow.svg" class="arrow-img" mode="aspectFit" />
         </view>
-        <view class="line"></view>
+
+        <image src="../../images/arrow.svg" class="arrow-img" mode="scaleToFill" />
       </view>
-    </button>
+      <view class="line"></view>
+    </view>
+    <!-- </button> -->
 
 
     <view class="boby-area-with-line" bind:tap="gotoAddChildPage">
       <view class="baby-area">
-        <image class="baby-img" src="../../images/my-baby.svg" mode="aspectFit" />
+        <image class="baby-img" src="../../images/my-baby.svg" mode="scaleToFill" />
 
         <view class="baby-text-container">
           <view class="name-born-container">
@@ -83,7 +94,7 @@
           </view>
         </view>
 
-        <image src="../../images/arrow.svg" class="arrow-img" mode="aspectFit" />
+        <image src="../../images/arrow.svg" class="arrow-img" mode="scaleToFill" />
       </view>
 
       <view class="line"></view>

@@ -34,6 +34,24 @@ Component({
     onConfirm(e) {
       console.log("触发确认事件", e);
       this.triggerEvent('onConfirm', e);
+    },
+    onDelete(e) {
+      console.log("触发刪除事件", e);
+      this.triggerEvent("onDelete", e);
+    },
+    previewImg(e) {
+      if (this.data.record.imgSrc) {
+        wx.previewImage({
+          urls: [this.data.record.imgSrc],
+        })
+      }
+    },
+    dismiss() {
+      this.setData({
+        show: false
+      })
+    },
+    stopPropagation(e) {
     }
   }
 })

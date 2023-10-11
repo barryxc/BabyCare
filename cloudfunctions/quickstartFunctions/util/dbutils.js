@@ -36,23 +36,26 @@ async function createIfNotExist(collectionName) {
   }
 }
 
-async function fetchUserInfo() {
+async function fetchUserInfo(userId) {
   //踩坑，只能放在函数中调用，在全局调用获取不到 OPENID
   let {
     OPENID
   } = cloud.getWXContext();
+  if (!userId) {
+    userId = OPENID;
+  }
   let userTable = 'userInfo';
   let userInfo;
   try {
     //查询用户记录
     let query = await db.collection(userTable).where({
-      openId: OPENID
+      openId: userId
     }).get();
     userInfo = query.data[0];
     //不存在，则创建一条用户记录
     if (!userInfo) {
       userInfo = {
-        openId: OPENID,
+        openId: userId,
         name: "",
         childs: [],
         bind: [], //绑定

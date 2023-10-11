@@ -23,12 +23,13 @@ exports.main = async (event, context) => {
     let result = await db.collection('records').where({
       childId: event.childId,
       recordId: event.recordId,
-      openId: OPENID,
       appId: APPID,
     }).remove();
     return result;
   } catch (error) {
     console.error(error);
   }
-  return {};
+  return {
+    success:false
+  };
 }

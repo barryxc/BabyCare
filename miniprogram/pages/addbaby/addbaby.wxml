@@ -2,10 +2,10 @@
 
 
 <view class="root-container">
-  <swipe-item-view width="100vw" height="144rpx" class="boby-area-with-line" wx:key="baby" wx:for="{{babyArr}}" wx:for-item="baby" data-index="{{index}}" bind:longpress="editBaby" index="{{index}}" bind:onDelete="onDelete" x="{{baby.offsetX}}" showDelete='{{!baby.shared}}'>
+  <swipe-item-view width="100vw" height="120rpx" class="boby-area-with-line" wx:key="baby" wx:for="{{babyArr}}" wx:for-item="baby" data-index="{{index}}" bind:longpress="editBaby" index="{{index}}" bind:onDelete="onDelete" x="{{baby.offsetX}}" showDelete='{{!baby.shared}}'>
     <view style="width: 100vw;" bind:tap="editBaby" data-index="{{index}}">
       <view class=" baby-area">
-        <image class="baby-img" src="{{baby.avatar?baby.avatar:'../../images/mine.svg'}}" mode="aspectFit" />
+        <image class="baby-img" src="{{baby.avatar?baby.avatar:'../../images/mine.svg'}}" mode="aspectFill" />
         <view class="baby-text-container">
           <view class="name-born-container">
             <text class="large-text">{{baby.name}}</text>
@@ -15,11 +15,11 @@
           <view>
             <text class="samll-text">出生日期 : {{baby.date}}</text>
           </view>
-
         </view>
 
-        <view>
-          <image src="../../images/share.svg" style="width: 50rpx;height: 50rpx;" mode="aspectFit" wx:if="{{baby.shared}}" />
+        <view style="display: flex; flex-direction: column; align-items: center;justify-content: center; width: 100rpx;">
+          <image src="../../images/share.svg" style="width: 50rpx;height: 50rpx;" mode="scaleToFill" wx:if="{{baby.shared}}" />
+          <text style=" font-size: 16rpx; color: #d9c0e2; text-align: center;" wx:if="{{baby.shared}}">from {{baby.creator.name}}</text>
         </view>
 
       </view>
@@ -30,7 +30,7 @@
   <view class="boby-area-with-line" bind:tap="addBaby">
     <view class="baby-area">
 
-      <image class="add-img color-accent" src="../../images/add.svg" mode="aspectFit" />
+      <image class="add-img color-accent" src="../../images/add.svg" mode="scaleToFill" />
 
       <view class="baby-text-container">
         <view class="name-born-container">

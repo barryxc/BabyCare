@@ -1,17 +1,20 @@
 // app.js
-
 const {
   syncUserInfo,
   setUser
 } = require("./service/user");
 
-
 App({
+  appEvents: {
+    addRecord: 'addRecord'
+  },
+
   onLaunch: function (options) {
     console.log("小程序启动", options)
     this.globalData = {
-      title: "",
+      title: "记录宝宝成长",
       envId: "cloud1-3gt9kvvh7349fcdc",
+      debounceTime: 800
     };
 
     if (!wx.cloud) {
@@ -25,7 +28,25 @@ App({
         env: 'cloud1',
         traceUser: true,
       });
-    }
+
+      wx.authorize({
+        scope: 'scope.userInfo',
+        success() {
+          wx.getUserInfo()
+        }
+      })
+    };
+    //同步用户信息
+    syncUserInfo(this).then((res) => {
+      setUser(res.result);
+    }).catch((e) => {
+      console.error(e)
+      wx.showToast({
+        title: '同步失败',
+        icon: "error"
+      })
+    });
+
   },
   onShow(options) {
     //判断来源
@@ -40,17 +61,5 @@ App({
         }
       })
     };
-
-    //同步用户信息
-    syncUserInfo(this).then((res) => {
-      setUser(res.result);
-    }).catch((e) => {
-      console.error(e)
-      wx.showToast({
-        title: '同步失败',
-        icon: "error"
-      })
-    });
-
   }
 });

@@ -1,51 +1,47 @@
 const events = [{
-  type: 1,
-  event: "母乳",
-  icon: "../../images/breast.svg",
-}, {
-  event: "便便",
-  type: 2,
-  icon: "../../images/shit.svg",
-}, {
-  event: "尿布",
-  type: 3,
-  icon: "../../images/nbs.svg",
-}, {
-  event: "喂养",
-  type: 4,
+  type: 'feed',
+  event: "母乳/奶粉",
   icon: "../../images/formula.svg",
 }, {
-  event: "睡觉",
-  type: 5,
+  event: "便便/尿布",
+  type: "shit",
+  icon: "../../images/nbs.svg",
+}, {
+  event: "睡觉觉",
+  type: "sleep",
   icon: "../../images/sleep.svg",
 }, {
   event: "活动",
-  type: 6,
-  icon: "../../images/wake.svg",
+  type: "activity",
+  icon: "../../images/activity.svg",
 }, {
   event: "疫苗",
-  type: 7,
+  type: "vac",
   icon: "../../images/ym.svg",
 }, {
-  event: "发烧",
-  type: 8,
+  event: "感冒/发烧",
+  type: "cold",
   icon: "../../images/cold.svg",
 }, {
-  event: "身高",
-  type: 9,
+  event: "记录身高",
+  type: "height",
   icon: "../../images/height.svg",
 }, {
-  event: "体重",
-  type: 10,
+  event: "记录体重",
+  type: "weight",
   icon: "../../images/weight.svg",
 }, {
-  event: '日记',
-  type: 11,
+  event: '成长日记',
+  type: "diary",
   icon: "../../images/note.svg",
 }];
 
 function getEventList() {
   return events;
+}
+
+function isFeed(type) {
+  return type == 'feed'
 }
 
 function getIcon(type) {
@@ -61,4 +57,5 @@ function getIcon(type) {
 module.exports = {
   getEventList,
   getIcon,
+  isFeed,
 }

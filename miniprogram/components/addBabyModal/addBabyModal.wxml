@@ -5,12 +5,12 @@
   <view class="main">
     <form bindsubmit="confirm">
       <view bind:tap="chooseImg" class="row-flex">
-        <image src="{{avatar?avatar:'../../images/mine.svg'}}" class="avatar-img" mode="aspectFit" name="avatar" />
+        <image src="{{avatar?avatar:'../../images/mine.svg'}}" class="avatar-img" mode="aspectFill" name="avatar" />
       </view>
 
       <view class="line-area">
         <text class="text-color fit-content required">昵称:</text>
-        <input name="name" type="text" class="input-area" maxlength="6" placeholder="不超过5个字符" adjust-position="true" placeholder-style="color:#ababab" value="{{name}}" />
+        <input name="name" type="text" class="input-area" maxlength="8" placeholder="不超过8个字符" adjust-position="true" placeholder-style="color:#ababab" value="{{name}}" />
       </view>
 
       <view class="line-area">
@@ -24,7 +24,7 @@
 
       <view class="line-area">
         <text class="text-color fit-content required">出生日期:</text>
-        <picker mode="date" name="date" model:value="{{date}}" class="date-picker input-area" fields='day' bindchange="onDateChange">
+        <picker mode="date" name="date" model:value="{{date}}" class="date-picker input-area" fields='day' bindchange="onDateChange" end='{{endDay}}'>
           <view class="date-area">
             <image src="../../images/date.svg" class="date-img" mode="aspectFill" />
             <text class="fit-content text-color " style="margin-left: 10px;">{{date}}</text>

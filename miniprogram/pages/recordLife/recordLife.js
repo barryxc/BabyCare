@@ -11,9 +11,9 @@ const {
   tipError
 } = require('../../service/tipUtils.js');
 const {
-  getDay,
-  getShortTime,
   getDate,
+  getShortTime,
+  getDateTime,
 } = require('../../service/date.js');
 const {
   getEventList,
@@ -21,7 +21,8 @@ const {
 } = require('../../service/eventlist.js');
 
 const {
-  getSelectedChild
+  getSelectedChild,
+  eventBus
 } = require('../../service/user.js');
 const {
   getUuid
@@ -54,7 +55,7 @@ Page({
   onShow() {
     this.setData({
       icon: getIcon(getEventList()[0].type),
-      date: getDay(),
+      date: getDate(),
       time: getShortTime(),
       index: 0,
     }, () => {
@@ -88,14 +89,18 @@ Page({
     });
   },
 
+  //新增记录
   bindsubmit(e) {
     let childId = getSelectedChild().childId;
     if (!childId) {
-      showModal("未绑定宝宝");
+      wx.showToast({
+        title: '请先绑定小宝',
+        icon: 'error'
+      })
       return
     }
     let interval = new Date().getTime() - lastSumbitTime;
-    if (interval <= 1000) {
+    if (interval < getApp().globalData.debounceTime) {
       wx.showToast({
         title: '提交太频繁了',
         icon: 'error',
@@ -153,7 +158,7 @@ Page({
     this.setData({
       index: 0,
       icon: getIcon(getEventList()[0].type),
-      date: getDay(),
+      date: getDate(),
       time: getShortTime(),
       imgSrc: ""
     })
@@ -169,8 +174,7 @@ Page({
 
   //发送事件
   sendEevent(record) {
-    const eventChannel = this.getOpenerEventChannel();
-    eventChannel.emit("addRecord", {
+    eventBus.emit('addRecord', {
       data: record
     });
   },
@@ -184,7 +188,7 @@ Page({
       event: getEventList()[data.index].event,
       day: data.date,
       time: data.time,
-      clientDate: getDate(),
+      clientDate: getDateTime(),
       status: "1",
       type: getEventList()[data.index].type,
       imgSrc: data.imgSrc,

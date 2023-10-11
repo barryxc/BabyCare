@@ -1,1 +1,24 @@
 /* pages/stastics/stastics.wxss */
+
+.date-container {
+  width: 100%;
+  height: fit-content;
+  white-space: nowrap;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  box-sizing: border-box;
+}
+
+.date-item {
+  display: inline-flex;
+  flex-direction: column;
+  width: 140rpx;
+  text-align: center;
+  font-size: 28rpx;
+  color: #333;
+}
+
+
+.active {
+  color: #ff0000;
+}

@@ -23,21 +23,56 @@
   padding: 0;
 }
 
-.row-flex {
+.avatar-btn {
   display: flex;
+  width: 100%;
   background-color: white;
-  margin-top: 1px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 0rpx 16rpx 0rpx;
+  margin: 0;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 140rpx;
+  height: 120rpx;
 }
 
-.nickname {
-  width: 200rpx;
+.avatar-btn:active {
+  opacity: 0.3;
+}
+
+.avatar-btn:not([size=min]) {
+  width: 100%;
+  height: 120rpx;
+  padding: 0rpx 16rpx 0rpx;
+  margin: 0;
+  font-weight: normal;
+}
+
+.avatar-btn:active:not([size=min]) {
+  padding: 0rpx 16rpx 0rpx;
+  margin: 0;
+  opacity: 0.3;
+}
+
+.nickname-row {
+  width: 100%;
+  display: flex;
   margin-right: 10rpx;
+  height: 120rpx;
+  text-align: right;
+  white-space: nowrap;
+  background-color: white;
+  margin-top: 1rpx;
+  padding: 0rpx 16rpx 0rpx;
+  box-sizing: border-box;
+}
+
+.nickname-row:active {
+  opacity: 0.3;
+}
+
+.nickname-input {
+  margin-left: auto;
+  flex-grow: 1;
   height: 100%;
   text-align: right;
   white-space: nowrap;

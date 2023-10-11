@@ -134,7 +134,7 @@ Page({
     let childs = user.getChilds();
     wx.showModal({
       title: '',
-      content: '会删除宝宝所有历史记录，确定删除嘛？',
+      content: '会删除宝宝所有历史记录，确定删除？',
       complete: (res) => {
         if (res.cancel) {
 

@@ -2,11 +2,12 @@ const {
   diffDays
 } = require("../../service/date");
 const {
-  register,
+  eventBus,
   syncUserInfo,
   setUser,
   getSelectedChild,
-  getUser
+  getUser,
+  getChilds,
 } = require("../../service/user")
 
 // pages/my/my.js
@@ -15,8 +16,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    defaultAvatar: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
     baby: {},
-    userInfo: {}
+    userInfo: {},
+    childs: [{
+      name: "aa"
+    }],
+    disableChildPicker: true
   },
 
   /**
@@ -28,9 +34,13 @@ Page({
       withShareTicket: true
     })
     this.data.userInfo = getUser();
-    register((userinfo) => {
+    eventBus.on("childChange", (child) => {
       this.refreshUser();
-    })
+    });
+    eventBus.on("setUserInfo", (child) => {
+      this.refreshUser();
+    });
+    this.refreshUser();
   },
 
   /**
@@ -49,15 +59,23 @@ Page({
         selected: 2
       })
     }
-
-    this.refreshUser();
   },
 
   refreshUser() {
-    let child = getSelectedChild();
+    let childs = getChilds();
+    let disable = !childs || (Array.isArray(childs) && childs.length <= 0);
     this.setData({
-      baby: child
+      disableChildPicker: disable,
     })
+    let child = getSelectedChild();
+    let age = diffDays(child.date);
+    if (age >= 0) {
+      child.age = age+1;
+    }
+    this.setData({
+      baby: child,
+      childs: childs
+    });
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -98,7 +116,7 @@ Page({
   onShareAppMessage() {
     return {
       title: `${this.data.userInfo.name}邀请你加入我的家庭`,
-      path: `/pages/index/index?inviteId=${this.data.userInfo.openId}`,
+      path: `/pages/index/index?inviteId=${this.data.userInfo.openId}&expire=${new Date().getTime()}`,
     }
   },
 
@@ -121,19 +139,84 @@ Page({
     })
   },
 
+  //预览头像
   previewImage() {
-    if (this.data.baby.avatar) {
-      wx.previewImage({
-        urls: [this.data.baby.avatar],
-        showmenu: true,
-        current: 0,
-        success() {
-          console.log("预览图片成功");
-        },
-        fail() {
-          console.error("预览图片失败");
-        },
-      })
+    wx.previewImage({
+      urls: [this.data.baby.avatar ? this.data.baby.avatar : this.data.defaultAvatar],
+      showmenu: true,
+      current: 0,
+      success() {
+        console.log("预览图片成功");
+      },
+      fail() {
+        console.error("预览图片失败");
+      },
+    })
+  },
+
+  //picker点击监听
+  onChildPickerTap(e) {
+    console.log("onChildPickerTap");
+    if (this.data.disableChildPicker) {
+      this.showToast();
     }
+  },
+
+  //提醒添加小宝
+  showToast() {
+    wx.showToast({
+      title: '请先添加小宝',
+      icon: 'error'
+    })
+  },
+
+  //切换小宝
+  onChildChange(e) {
+    try {
+      let childs = getChilds();
+      if (!childs || (Array.isArray(childs) && childs.length == 0)) {
+        return
+      }
+      let child = childs[e.detail.value];
+      if (child.childId) {
+        this.setData({
+          selectChild: child
+        })
+        //本地缓存
+        wx.setStorageSync('selectChildId', child.childId)
+        this.refreshUser();
+
+        eventBus.emit("childChange", child); //事件
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  //编辑
+  editChildInfo(e) {
+    let child = getSelectedChild();
+    if (!child || !child.childId) {
+      this.showToast();
+      return
+    }
+
+    wx.navigateTo({
+      url: '/pages/editBabyInfo/editBabyInfo?type=edit',
+      events: {
+        onFinish: (function (data) {
+          this.refreshUser();
+        }).bind(this),
+      },
+      success(res) {
+        res.eventChannel.emit('babyInfo', child);
+      }
+    })
+  },
+
+  addChild(e) {
+    console.log(e)
   }
+
 })

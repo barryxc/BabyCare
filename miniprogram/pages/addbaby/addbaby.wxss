@@ -130,6 +130,7 @@
 
 .boby-area-with-line {
   width: 100vw;
+  height: 120rpx;
   margin-top: 1px;
   display: flex;
   background-color: white;
@@ -148,9 +149,8 @@
 }
 
 .baby-img {
-  width: 60rpx;
-  height: 60rpx;
-  padding: 1rpx;
+  width: 70rpx;
+  height: 70rpx;
   border-radius: 50%;
   background-color: #f6f6f6;
 }

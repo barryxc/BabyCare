@@ -6,6 +6,7 @@
   "enablePullDownRefresh": true,
   "onReachBottomDistance": 100,
   "backgroundTextStyle": "dark",
-  "navigationStyle":"custom"
+  "navigationStyle":"custom",
+  "disableScroll": false
 
 }

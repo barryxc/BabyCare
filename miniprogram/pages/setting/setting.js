@@ -2,7 +2,6 @@ const {
   callServer
 } = require("../../service/server");
 const {
-  setUser,
   getUser
 } = require("../../service/user");
 
@@ -13,7 +12,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
+    defaultAvatar: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
+    avatarUrl: '',
     name: "",
   },
 
@@ -74,12 +74,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage() {
-
   },
+
   onChooseAvatar(e) {
     let avatarUrl = e.detail.avatarUrl;
-    console.log(avatarUrl);
-
+    console.log("选择头像：", avatarUrl);
     if (avatarUrl) {
       callServer({
         avatarUrl: avatarUrl,
@@ -96,10 +95,11 @@ Page({
     }
   },
   bindnicknamereview(e) {
-    console.log(e, this.data.name);
+    console.log("bindnicknamereview",e, this.data.name);
   },
+  //失去焦点
   onBlur(e) {
-    console.log("onblur", e);
+    console.log("失去焦点", e);
     let value = e.detail.value;
     if (value) {
       callServer({
@@ -116,12 +116,9 @@ Page({
       })
     }
   },
+  //输入昵称
   bindInput(e) {
     console.log("输入昵称", e, this.data.name);
   },
-  gotoAdd() {
-    wx.navigateTo({
-      url: "/pages/addbaby/addbaby",
-    })
-  }
+
 })

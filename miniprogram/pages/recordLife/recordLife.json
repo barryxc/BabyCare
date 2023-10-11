@@ -1,6 +1,5 @@
 {
   "navigationBarTitleText": "成长日记",
   "usingComponents": {
-    "cloud-tip-modal": "/components/cloudTipModal/index"
   }
 }

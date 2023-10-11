@@ -20,37 +20,59 @@ async function main(event, params) {
     await createIfNotExist(tableName);
     //查询用户信息
     let userInfo = await fetchUserInfo();
-    if (!event.inviteId && !userInfo.bind) {
-      return userInfo;
-    }
 
-    let bind = userInfo.bind;
-    if (!bind) {
-      bind = [];
-    }
-    let set = new Set(bind);
-    if (event.inviteId) {
-      set.add(event.inviteId);
-    }
-    bind = [...set];
-    let bindResult = await db.collection(tableName).where({
-      openId: OPENID
-    }).update({
-      data: {
-        bind: bind
+    //被邀請了,排除自己点击的情况
+    if (event.inviteId && event.inviteId != userInfo.openId) {
+      //绑定邀请人
+      let bind = userInfo.bind;
+      if (!bind) {
+        bind = [];
       }
-    });
-    if (!bindResult.errMsg.includes('ok')) {
-      console.error('更新失败', bindResult);
-      return userInfo;
+      let set = new Set(bind);
+      set.add(event.inviteId);
+      bind = [...set];
+      let bindResult = await db.collection(tableName).where({
+        openId: OPENID
+      }).update({
+        data: {
+          bind: bind
+        }
+      });
+      if (!bindResult.errMsg.includes('ok')) {
+        console.error('更新失败', bindResult);
+        return userInfo;
+      }
+
+      //双向绑定
+      //获取邀请的用户信息
+      let inviteUser = await fetchUserInfo(event.inviteId);
+      let bound = inviteUser.bound;
+      if (!bound) {
+        bound = [];
+      }
+      set = new Set(bound);
+      set.add(OPENID);
+      bound = [...set];
+
+      bindResult = await db.collection(tableName).where({
+        openId: event.inviteId,
+      }).update({
+        data: {
+          bound: bound
+        }
+      });
+
+      if (!bindResult.errMsg.includes('ok')) {
+        console.error('更新失败', bindResult);
+        return userInfo;
+      }
     }
 
-    if (Array.isArray(bind)) {
+    //把绑定的账号下的childs都追加到当前用户上
+    let bind = userInfo.bind;
+    if (bind && Array.isArray(bind)) {
       for (const ele of bind) {
-        let query = await db.collection(tableName).where({
-          openId: ele
-        }).get();
-        let inviteUser = query.data[0];
+        let inviteUser = await fetchUserInfo(ele);
         if (!inviteUser) {
           continue;
         }
@@ -60,6 +82,10 @@ async function main(event, params) {
         //打上标记
         for (const child of inviteUser.childs) {
           child.shared = true;
+          child.creator = {
+            name: inviteUser.name,
+            openId: inviteUser.openId,
+          };
         }
         if (!userInfo.childs) {
           userInfo.childs = [...childs];
@@ -69,8 +95,18 @@ async function main(event, params) {
       }
     }
 
-    return userInfo;
+    //把訂閱的用戶掛連上
+    let bound = userInfo.bound;
+    if (bound) {
+      let boundUsers = [];
+      for (const ele of bound) {
+        let boundUser = await fetchUserInfo(ele);
+        boundUsers.push(boundUser);
+      }
+      userInfo.boundUsers = boundUsers;
+    }
 
+    return userInfo;
   } catch (error) {
     console.error(error);
   }

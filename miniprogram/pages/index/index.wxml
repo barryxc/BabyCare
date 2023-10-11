@@ -1,39 +1,34 @@
 <!--pages/recordService/record.wxml-->
-<edit-record-modal show="{{showModalDialog}}" record='{{record}}'>
+<edit-record-modal show="{{showModalDialog}}" data-index="{{index}}" record='{{record}}' bind:onDelete='onDelete'>
 </edit-record-modal>
 
 <view class="custom-navbar color-accent" wx:if="{{true}}" style="position: {{fixed}};">
   <view class="content-area">
-    <view class="icon-area" bind:tap="onTapDatePicker">
-      <picker mode="selector" style="width: fit-content; height:fit-content;" range='{{childs}}' range-key="name" bind:change='onChildChange' id="child-picker" value='{{value}}'>
+    <view class="icon-area">
+      <picker id="childPicker" mode="selector" style="width: fit-content; height:fit-content;" range='{{childs}}' range-key="name" bind:change='onChildChange' value='{{value}}' wx:if="{{childs.length>=0}}" disabled="{{!childs||(childs.length==0)}}"  bind:tap="onChildPickerTap">
         <view style="display: flex;">
-          <view style="display: flex; flex-direction: column; align-items: center;justify-content: center;height: 100rpx;">
-            <text style="font-size: 28rpx; color:#666666; width: 100%; height: fit-content; text-align: center;">{{selectChild.name?selectChild.name:'宝宝'}}</text>
-          </view>
           <view style="display: flex;align-items: center;">
-            <image style="width: 40rpx; height: 40rpx;" src="../../images/dropdown.svg" mode="aspectFit" />
+            <image style="width: 50rpx; height: 50rpx;" src="../../images/group-btn.svg" mode="scaleToFill" />
+          </view>
+          <view style="margin-left: 10rpx;display: flex; flex-direction: column; align-items: center;justify-content: center;height: 100rpx;">
+            <text style="font-size: 30rpx; color:#666666; width: 100%; height: fit-content; text-align: center;">{{selectChild.name?selectChild.name:''}}</text>
           </view>
         </view>
       </picker>
-      <!-- <picker mode="date" style="width: fit-content; height: fit-content;margin-left: 20rpx;"> -->
-        <view style="height: 100rpx; display: flex; align-items: center;">
-          <image src="../../images/date.svg" mode="aspectFit" style="width: 40rpx;height: 50rpx;" />
-        </view>
-      <!-- </picker> -->
     </view>
   </view>
 </view>
 
 <view class="header">
   <view class="header-scroll">
-    <view class="row" bind:tap="onDateAdd" data-diff="-1">
+    <view class="date-btn" bind:tap="onDateAdd" data-diff="-1">
       <image src="../../images/date-arrow-right.svg" class="date-arrow rotate-180" mode="scaleToFill" />
     </view>
     <view class="date">
-      <picker class="picker" name="day" mode="date" model:value="{{day}}" bindchange="onDateChange"> {{day}} {{week}} </picker>
+      <picker class="picker" name="day" mode="date" model:value="{{day}}" bindchange="onDateChange" end='{{endDay}}'> {{day}} 周{{week}} </picker>
     </view>
-    <view class="row" bind:tap="onDateAdd" data-diff="1">
-      <image src="../../images/date-arrow-right.svg" class="date-arrow" mode="scaleToFill" />
+    <view class="date-btn" bind:tap="onDateAdd" data-diff="1">
+      <image src="../../images/date-arrow-right.svg" class="date-arrow" mode="scaleToFill" style="opacity: {{opacity}};" />
     </view>
   </view>
 </view>
@@ -42,7 +37,7 @@
 <view class="body">
   <view class="empty-container" wx:if="{{!records||records.length==0}}">
     <view style="display: flex; flex-direction: column; align-items: center;">
-      <image class="empty-img" src="../../images/empty-1.svg" mode="aspectFit" />
+      <image class="empty-img" src="../../images/empty-1.svg" mode="scaleToFill" />
       <text style="font-size: 30rpx ; color: #ffffff;">快开始记录吧~</text>
     </view>
   </view>
@@ -51,19 +46,19 @@
   <view class="record-row" wx:key="item" wx:for="{{records}}">
 
     <view class="record-row-flex">
-      <swipe-item-view width='700rpx' height='100%' x='{{item.x}}' bind:expand='onExpand' data-index="{{index}}" bind:collapse='onCollapse' bind:onDelete='onDelete'>
-        <view class="record-column" style="width: 700rpx; height: 100%;" bind:tap="onTapRecordItem" data-data="{{records[index]}}">
+      <swipe-item-view width='710rpx' height='100%' x='{{item.x}}' bind:expand='onExpand' data-index="{{index}}" bind:collapse='onCollapse' bind:onDelete='onDelete'>
+        <view class="record-column" style="width: 710rpx; height: 100%;" bind:tap="onTapRecordItem" data-index="{{index}}" data-record="{{records[index]}}">
           <view class="record-content">
             <text class="time">{{item.displayTime}}</text>
-            <image class="icon" src="{{item.icon}}" mode="aspectFit" />
+            <image class="icon" src="{{item.icon}}" mode="scaleToFill" />
             <view class="content-container">
               <text class="event">{{item.event}}</text>
               <text class="content">{{item.content}}</text>
             </view>
 
             <view class="spaceing"></view>
-            <image class="img-display" wx:if="{{item.content}}" src="../../images/diary.svg" mode="aspectFit" lazy-load></image>
-            <image class="img-display" wx:if="{{item.imgSrc}}" src="../../images/view-img.svg" mode="aspectFit" lazy-load show-menu-by-longpress></image>
+            <image class="img-display" wx:if="{{item.content}}" src="../../images/diary.svg" mode="scaleToFill" lazy-load></image>
+            <image class="img-display" wx:if="{{item.imgSrc}}" src="../../images/view-img.svg" mode="scaleToFill" lazy-load show-menu-by-longpress></image>
           </view>
           <view class="line"></view>
         </view>

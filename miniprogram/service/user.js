@@ -2,42 +2,43 @@ const {
   callServer
 } = require("./server");
 
-const subscribers = [];
-
-// 用户信息
-var userInfo = {
-  _name: "",
-
-  get name() {
-    return this._name;
+let eventBus = {
+  // 事件总线对象
+  _events: {},
+  // 触发事件
+  emit: function (eventName, data) {
+    if (this._events[eventName]) {
+      this._events[eventName].forEach(callback => {
+        callback(data);
+      });
+    }
   },
-  set name(value) {
-    this._name = value;
-    this.onChange(this);
+  // 监听事件
+  on: function (eventName, callback) {
+    if (!this._events[eventName]) {
+      this._events[eventName] = [];
+    }
+    this._events[eventName].push(callback);
   },
-
-  onChange(params) {
-    notify(params);
-  },
-
-  _childs: [],
-
-  get childs() {
-    return this._childs;
-  },
-  set childs(value) {
-    this._childs = value;
-    this.onChange(this);
+  // 取消监听事件
+  off: function (eventName, callback) {
+    if (this._events[eventName]) {
+      this._events[eventName] = this._events[eventName].filter(cb => cb !== callback);
+    }
   }
 };
 
+// 用户信息
+let userInfo = {
+  name: "",
+  childs: [],
+};
 
 function getChilds() {
   return userInfo.childs;
 }
 
 function getSelectedChild() {
-
   let childs = getChilds();
   if (!childs) {
     childs = [];
@@ -66,19 +67,20 @@ function addChild(child) {
   } else {
     userInfo.childs.push(child);
   }
-  notify(userInfo);
+  eventBus.emit("childChange", child.childId);
 }
+
 
 function removeChild(childId) {
   userInfo.childs = userInfo.childs.filter((e) => childId != e.childId);
-  notify(userInfo);
+  eventBus.emit("childChange", childId);
 }
 
 function setUserInfo(info) {
   userInfo = {
     ...info,
   };
-  notify(userInfo);
+  eventBus.emit("setUserInfo", userInfo);
 }
 
 function getUserInfo() {
@@ -91,7 +93,7 @@ async function syncUserInfo(app) {
     let inviteId = app.globalData.inviteId;
     let currentTime = new Date().getTime();
     let internal = currentTime - lastSyncTime;
-    if (internal < 1000) {
+    if (internal < 800) {
       console.log("获取用户信息太频繁了...", internal);
       return
     }
@@ -106,19 +108,10 @@ async function syncUserInfo(app) {
   }
 }
 
-function register(listener) {
-  subscribers.push(listener)
-}
-
-function unRegister(listener) {
-  subscribers = subscribers.filter(sub => sub !== listener);
-}
-
-function notify() {
-  subscribers.forEach(sub => sub(userInfo));
-}
-
 module.exports = {
+
+  eventBus,
+
   setUser: setUserInfo,
   getUser: getUserInfo,
 
@@ -126,11 +119,6 @@ module.exports = {
   addChild: addChild,
   getSelectedChild,
   deleteChild: removeChild,
-
-  register,
-  unRegister,
-  notify,
-
 
   syncUserInfo,
 };

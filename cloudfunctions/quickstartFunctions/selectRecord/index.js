@@ -1,6 +1,7 @@
 const cloud = require('wx-server-sdk');
 const {
-  createIfNotExist
+  createIfNotExist,
+  fetchUserInfo
 } = require('../util/dbutils');
 
 cloud.init({
@@ -19,13 +20,14 @@ exports.main = async (event, context) => {
   if (!event.childId) {
     return [];
   }
+
   try {
     let result = await db.collection(tableName).where({
       day: event.day,
       childId: event.childId,
-      openId: OPENID,
       appId: APPID
     }).limit(100).get();
+
     return result;
   } catch (error) {
     console.log(error)
