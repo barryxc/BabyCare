@@ -91,6 +91,7 @@ let lastSyncTime = 0;
 async function syncUserInfo(app) {
   try {
     let inviteId = app.globalData.inviteId;
+    let expire = app.globalData.expire;
     let currentTime = new Date().getTime();
     let internal = currentTime - lastSyncTime;
     if (internal < 800) {
@@ -100,7 +101,8 @@ async function syncUserInfo(app) {
     lastSyncTime = currentTime;
     let result = await callServer({
       type: "getUserInfo",
-      inviteId: inviteId
+      inviteId: inviteId,
+      expire: expire
     });
     return result;
   } catch (error) {

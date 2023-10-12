@@ -12,7 +12,7 @@
     <view style="height: 100%;display: flex; align-items: center;">
       <text>名字</text>
     </view>
-    <input class="nickname-input" type="nickname" placeholder='请输入昵称' bindnicknamereview="bindnicknamereview" bindinput="bindInput" value="{{name}}" bindblur="onBlur">
+    <input class="nickname-input" auto-focus="true" type="nickname" placeholder='请输入昵称' bindnicknamereview="bindnicknamereview" bindinput="bindInput" value="{{name}}" bindblur="onBlur">
     </input>
   </view>
 

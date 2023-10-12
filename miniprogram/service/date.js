@@ -55,6 +55,10 @@ function dateInMonth(date) {
 }
 
 
+function afterXMinutes(interval){
+  return dayjs().add(interval,'minute').format('YYYY-MM-DD HH:mm:ss')
+}
+
 module.exports = {
   getDateTime,
   getDate,
@@ -65,5 +69,6 @@ module.exports = {
   diffDays,
   addDay,
   getRecentDate,
-  dateInMonth
+  dateInMonth,
+  afterXMinutes
 }

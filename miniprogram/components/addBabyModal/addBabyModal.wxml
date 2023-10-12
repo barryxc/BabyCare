@@ -34,12 +34,12 @@
 
       <view class="line-area">
         <text class="text-color fit-content">体重:</text>
-        <input name="weight" type="digit" class="input-area" maxlength="5" placeholder="单位 kg" placeholder-style="color:#ababab" adjust-position="true" maxlength="5" bindinput="inputWeightChange" value="{{weight}}" />
+        <input name="weight" type="digit" class="input-area" maxlength="5" placeholder="单位kg(不超过100)" placeholder-style="color:#ababab" adjust-position="true" maxlength="5" bindinput="inputWeightChange" value="{{weight}}" />
       </view>
 
       <view class="line-area">
         <text class="text-color fit-content">身高:</text>
-        <input name="height" type="digit" class="input-area" maxlength="5" placeholder="单位 cm" placeholder-style="color:#ababab" adjust-position="true" maxlength="5" bindinput="inputHeightChange" value="{{height}}" />
+        <input name="height" type="digit" class="input-area" maxlength="5" placeholder="单位cm(不超过200)" placeholder-style="color:#ababab" adjust-position="true" maxlength="5" bindinput="inputHeightChange" value="{{height}}" />
       </view>
 
 

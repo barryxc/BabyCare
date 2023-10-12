@@ -66,10 +66,6 @@
   box-sizing: border-box;
 }
 
-.nickname-row:active {
-  opacity: 0.3;
-}
-
 .nickname-input {
   margin-left: auto;
   flex-grow: 1;

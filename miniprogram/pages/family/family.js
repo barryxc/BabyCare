@@ -2,6 +2,10 @@ const {
   getUser
 } = require("../../service/user")
 
+const {
+  afterXMinutes
+} = require('../../service/date')
+
 // pages/family/family.js
 Page({
 
@@ -76,10 +80,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage(object) {
-    console.log(object);
+    let expire = afterXMinutes(15);
+    console.log(object,"过期时间",expire);
     return {
       title: `${this.data.userInfo.name}邀请你加入我的家庭`,
-      path: `/pages/index/index?inviteId=${this.data.userInfo.openId}`,
+      path: `/pages/index/index?inviteId=${this.data.userInfo.openId}&expire=${expire}`,
     }
   },
 })

@@ -54,6 +54,7 @@ App({
     if (options.query.inviteId) {
       console.log('从分享中打开')
       this.globalData.inviteId = options.query.inviteId
+      this.globalData.expire = options.query.expire
       wx.getShareInfo({
         shareTicket: options.shareTicket,
         success(res) {

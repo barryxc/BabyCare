@@ -194,10 +194,8 @@ Page({
   editChildInfo(e) {
     let child = getSelectedChild();
     if (!child || !child.childId) {
-      this.showToast();
       return
     }
-
     wx.navigateTo({
       url: '/pages/editBabyInfo/editBabyInfo?type=edit',
       events: {
