@@ -36,9 +36,9 @@ exports.main = async (event, context) => {
       }
     }
     let oldChildInfo = childs[index];
-
-    //存在头像，则删除头像
-    if (oldChildInfo.avatar) {
+    let newChildInfo = event.child;
+    //头像更新，则删除旧的头像
+    if (newChildInfo && newChildInfo.avatar != oldChildInfo.avatar && oldChildInfo.avatar) {
       let deleteResult = await cloud.deleteFile({
         fileList: [oldChildInfo.avatar]
       })
@@ -49,7 +49,7 @@ exports.main = async (event, context) => {
         }
       }
     }
-    
+
     //更新小宝信息
     childs[index] = event.child;
 
