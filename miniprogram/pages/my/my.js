@@ -70,7 +70,7 @@ Page({
     let child = getSelectedChild();
     let age = diffDays(child.date);
     if (age >= 0) {
-      child.age = age+1;
+      child.age = age + 1;
     }
     this.setData({
       baby: child,
@@ -113,8 +113,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage() {
-  },
+  onShareAppMessage() {},
 
   //设置
   gotoSettingPage() {
@@ -194,6 +193,7 @@ Page({
   editChildInfo(e) {
     let child = getSelectedChild();
     if (!child || !child.childId) {
+      this.showToast();
       return
     }
     wx.navigateTo({
