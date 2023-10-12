@@ -63,13 +63,15 @@ Page({
 
   refreshUser() {
     let childs = getChilds();
-    let disable = !childs || (Array.isArray(childs) && childs.length <= 0);
+    let exist = childs && (Array.isArray(childs) && childs.length > 0);
+
     this.setData({
-      disableChildPicker: disable,
+      disableChildPicker: !exist,
     })
+
     let child = getSelectedChild();
     let age = diffDays(child.date);
-    if (age >= 0) {
+    if (exist && age >= 0) {
       child.age = age + 1;
     }
     this.setData({

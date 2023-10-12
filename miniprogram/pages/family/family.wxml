@@ -6,7 +6,7 @@
         <view style="width:710rpx; height: 100%; background-color: white; border-radius: 10rpx;display: flex;">
 
           <view style=" margin-left: 30rpx; display: flex; align-items: center;">
-            <image src="{{userInfo.avatarUrl?userInfo.avatarUrl:defaultAvatar}}" style="width: 50rpx; height: 50rpx;border-radius: 50%;margin-top: auto; margin-bottom: auto; background-color: #f1f1f1; padding: 10rpx;" mode="scaleToFill" />
+            <image src="{{userInfo.avatarUrl?userInfo.avatarUrl:defaultAvatar}}" class="avatar" mode="scaleToFill" />
           </view>
 
           <view style=" margin-left: 30rpx; display: flex; flex-direction: column;align-items: center;justify-content: center;">
@@ -25,11 +25,11 @@
     </view>
 
     <view style="display: flex; flex-direction: row; align-items: center; justify-content: center; height: 148rpx;margin-top: 20rpx" wx:for="{{userInfo.boundUsers}}" wx:key="item">
-      <swipe-item-view width='700rpx' height='100%' style="width: 750rpx; height: 100%; padding: 0rpx 100rpx; box-sizing: content-box;">
-        <view style="width:700rpx; height: 100%; background-color: white; border-radius: 10rpx;display: flex;">
+      <swipe-item-view width='710rpx' height='100%' style="width: 750rpx; height: 100%; padding: 0rpx 100rpx; box-sizing: content-box;">
+        <view style="width:710rpx; height: 100%; background-color: white; border-radius: 10rpx;display: flex;">
 
           <view style=" margin-left: 30rpx; display: flex; align-items: center;">
-            <image src="{{item.avatarUrl?item.avatarUrl:defaultAvatar}}" style="width: 50rpx; height: 50rpx;border-radius: 50%;margin-top: auto; margin-bottom: auto; background-color: #f1f1f1; padding: 10rpx;" mode="scaleToFill" />
+            <image src="{{item.avatarUrl?item.avatarUrl:defaultAvatar}}" class="avatar" mode="aspectFit" />
           </view>
 
           <view style=" margin-left: 30rpx; display: flex; flex-direction: column;align-items: center;justify-content: center;">

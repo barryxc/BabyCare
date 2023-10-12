@@ -1,7 +1,15 @@
 /* pages/family/family.wxss */
 
-page{
+page {
   width: 100vw;
+}
+
+.avatar {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 50%;
+  background-color: #f1f1f1;
+  padding: 0rpx;
 }
 
 .addFamily {

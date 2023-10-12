@@ -2,6 +2,9 @@ const {
   callServer
 } = require("../../service/server");
 const {
+  upload
+} = require("../../service/upload");
+const {
   getUser
 } = require("../../service/user");
 
@@ -73,15 +76,18 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage() {
-  },
+  onShareAppMessage() {},
 
-  onChooseAvatar(e) {
+  async onChooseAvatar(e) {
     let avatarUrl = e.detail.avatarUrl;
     console.log("选择头像：", avatarUrl);
-    if (avatarUrl) {
+    if (!avatarUrl) {
+      return
+    }
+    let uploadResut = await upload(avatarUrl);
+    if (uploadResut.fileID) {
       callServer({
-        avatarUrl: avatarUrl,
+        avatarUrl: uploadResut.fileID,
         type: "updateUserInfo",
       }).then((res) => {
         let user = getUser();
@@ -95,7 +101,7 @@ Page({
     }
   },
   bindnicknamereview(e) {
-    console.log("bindnicknamereview",e, this.data.name);
+    console.log("bindnicknamereview", e, this.data.name);
   },
   //失去焦点
   onBlur(e) {
