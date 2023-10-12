@@ -132,7 +132,7 @@ Page({
     if (!this.data['imgSrc']) {
       this.doUploadRecord(this.data)
     } else {
-      upload(this.data['imgSrc']).then((resp) => {
+      upload(this.data['imgSrc'], 'record_img').then((resp) => {
         if (resp.fileID) {
           //本地路径
           this.data.localImgSrc = this.data.imgSrc;

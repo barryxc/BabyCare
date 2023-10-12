@@ -85,7 +85,7 @@ Page({
     if (!avatarUrl) {
       return
     }
-    let uploadResut = await upload(avatarUrl);
+    let uploadResut = await upload(avatarUrl, 'user_avatar');
     if (uploadResut.fileID) {
       callServer({
         avatarUrl: uploadResut.fileID,

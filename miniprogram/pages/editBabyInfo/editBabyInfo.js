@@ -129,7 +129,7 @@ Page({
 
         addResult = await this.editOrAdd(child);
       }
-      
+
       if (addResult.result.success) {
         user.addChild(child);
         user.getChilds().forEach((e, index) => {
@@ -172,13 +172,12 @@ Page({
   },
 
   uploadImg(filepath) {
-    return uploadCore.upload(filepath);
+    return uploadCore.upload(filepath, 'child_avatar');
   },
 
   //保存
   onConfirm(e) {
     let child = e.detail;
-    debugger
     this.save(child);
   }
 })
