@@ -381,7 +381,7 @@ Page({
       let childId = getSelectedChild().childId;
       let deleteResult = await record.deteleRecord(childId, item.recordId);
 
-      if (deleteResult.result.stats.removed > 0) {
+      if (deleteResult.result.success) {
         const dataset = this.data.records.filter((record, i) => i != index);
         this.setData({
           records: dataset,
