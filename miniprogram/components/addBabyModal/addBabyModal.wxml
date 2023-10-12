@@ -5,7 +5,7 @@
   <view class="main">
     <form bindsubmit="confirm">
       <view bind:tap="chooseImg" class="row-flex">
-        <image src="{{avatar?avatar:'../../images/mine.svg'}}" class="avatar-img" mode="aspectFill" name="avatar" />
+        <image src="{{avatar?avatar:defaultAvatar}}" class="avatar-img" mode="aspectFill" name="avatar" />
       </view>
 
       <view class="line-area">
@@ -33,13 +33,13 @@
       </view>
 
       <view class="line-area">
-        <text class="text-color fit-content">体重:</text>
-        <input name="weight" type="digit" class="input-area" maxlength="5" placeholder="单位kg(不超过100)" placeholder-style="color:#ababab" adjust-position="true" maxlength="5" bindinput="inputWeightChange" value="{{weight}}" disabled="{{babyInfo.shared}}" />
+        <text class="text-color fit-content">体重:(kg)</text>
+        <input name="weight" type="digit" class="input-area" maxlength="5" placeholder="不超过100" placeholder-style="color:#ababab" adjust-position="true" maxlength="5" bindinput="inputWeightChange" value="{{weight}}" disabled="{{babyInfo.shared}}" />
       </view>
 
       <view class=" line-area">
-        <text class="text-color fit-content">身高:</text>
-        <input name="height" type="digit" class="input-area" maxlength="5" placeholder="单位cm(不超过200)" placeholder-style="color:#ababab" adjust-position="true" maxlength="5" bindinput="inputHeightChange" value="{{height}}" disabled="{{babyInfo.shared}}" />
+        <text class="text-color fit-content">身高:(cm)</text>
+        <input name="height" type="digit" class="input-area" maxlength="5" placeholder="不超过200" placeholder-style="color:#ababab" adjust-position="true" maxlength="5" bindinput="inputHeightChange" value="{{height}}" disabled="{{babyInfo.shared}}" />
       </view>
 
 

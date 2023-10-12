@@ -5,7 +5,7 @@
   <swipe-item-view width="100vw" height="120rpx" class="boby-area-with-line" wx:key="baby" wx:for="{{babyArr}}" wx:for-item="baby" data-index="{{index}}" bind:longpress="editBaby" index="{{index}}" bind:onDelete="onDelete" x="{{baby.offsetX}}" showDelete='{{!baby.shared}}'>
     <view style="width: 100vw;" bind:tap="editBaby" data-index="{{index}}">
       <view class=" baby-area">
-        <image class="baby-img" src="{{baby.avatar?baby.avatar:'../../images/mine.svg'}}" mode="aspectFill" />
+        <image class="baby-img" src="{{baby.avatar?baby.avatar:defaultAvatar}}" mode="aspectFill" />
         <view class="baby-text-container">
           <view class="name-born-container">
             <text class="large-text">{{baby.name}}</text>

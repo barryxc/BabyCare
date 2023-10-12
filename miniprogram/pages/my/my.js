@@ -8,6 +8,7 @@ const {
   getSelectedChild,
   getUser,
   getChilds,
+  defaultAvatar,
 } = require("../../service/user")
 
 // pages/my/my.js
@@ -16,7 +17,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    defaultAvatar: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
+    defaultAvatar: defaultAvatar,
     baby: {},
     userInfo: {},
     childs: [{

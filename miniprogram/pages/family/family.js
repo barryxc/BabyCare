@@ -1,5 +1,6 @@
 const {
-  getUser
+  getUser,
+  defaultAvatar
 } = require("../../service/user")
 
 const {
@@ -13,7 +14,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    defaultAvatar: "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0",
+    defaultAvatar: defaultAvatar,
     userInfo: {},
   },
 
@@ -81,7 +82,7 @@ Page({
    */
   onShareAppMessage(object) {
     let expire = afterXMinutes(15);
-    console.log(object,"过期时间",expire);
+    console.log(object, "过期时间", expire);
     return {
       title: `${this.data.userInfo.name}邀请你加入我的家庭`,
       path: `/pages/index/index?inviteId=${this.data.userInfo.openId}&expire=${expire}`,

@@ -2,6 +2,8 @@ const {
   callServer
 } = require("./server");
 
+let defaultAvatar = "https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0";
+
 let eventBus = {
   // 事件总线对象
   _events: {},
@@ -111,7 +113,7 @@ async function syncUserInfo(app) {
 }
 
 module.exports = {
-
+  defaultAvatar,
   eventBus,
 
   setUser: setUserInfo,

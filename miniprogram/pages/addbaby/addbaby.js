@@ -1,7 +1,7 @@
 // pages/addbaby/addbaby.js
 const childModule = require("../../service/child");
 const date = require("../../service/date");
-const uploadCore = require("../../service/upload");
+const { defaultAvatar } = require("../../service/user");
 const user = require("../../service/user");
 
 Page({
@@ -10,6 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    defaultAvatar:defaultAvatar,
     babyArr: [],
     showModal: false,
     confirmCallback: null,

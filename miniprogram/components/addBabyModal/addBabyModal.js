@@ -3,6 +3,9 @@ const {
   getDate
 } = require("../../service/date");
 const {
+  defaultAvatar
+} = require("../../service/user");
+const {
   getUuid
 } = require("../../service/uuid");
 
@@ -34,6 +37,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    defaultAvatar: defaultAvatar,
     childId: "",
     avatar: '',
     date: '',
