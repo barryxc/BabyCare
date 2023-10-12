@@ -25,7 +25,7 @@ exports.main = async (event, context) => {
       data: {
         ...event.record,
         serverDate: new Date(),
-        openId: OPENID,
+        creatorId:OPENID,
         appId: APPID,
         unionId: UNIONID,
       }

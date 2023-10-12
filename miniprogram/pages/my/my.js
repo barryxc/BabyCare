@@ -139,8 +139,11 @@ Page({
 
   //预览头像
   previewImage() {
+    if (!this.data.baby.avatar) {
+      return
+    }
     wx.previewImage({
-      urls: [this.data.baby.avatar ? this.data.baby.avatar : this.data.defaultAvatar],
+      urls: [this.data.baby.avatar],
       showmenu: true,
       current: 0,
       success() {

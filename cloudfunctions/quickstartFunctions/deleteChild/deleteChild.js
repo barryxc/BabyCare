@@ -14,7 +14,8 @@ const records = 'records';
 
 exports.main = async (event, context) => {
   let {
-    OPENID
+    OPENID,
+    APPID,
   } = cloud.getWXContext();
   try {
     //建表
@@ -31,8 +32,8 @@ exports.main = async (event, context) => {
 
     //删除小宝下面的所有历史记录，无论小宝是否存在
     let deleteResult = await db.collection(records).where({
-      openId: OPENID,
-      childId: event.childId
+      childId: event.childId,
+      appId: APPID,
     }).remove();
 
     if (!deleteResult.errMsg.includes('ok')) {
@@ -52,7 +53,7 @@ exports.main = async (event, context) => {
       }
     }
 
-    //如果小宝存在头像
+    //如果小宝存在头像,则删除小宝的头像
     if (child.avatar) {
       let deleteFileResult = await cloud.deleteFile({
         fileList: [child.avatar]
