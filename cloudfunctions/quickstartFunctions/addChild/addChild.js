@@ -24,17 +24,30 @@ exports.main = async (event, context) => {
       childs = [];
     }
     childs.push(event.child);
-    return db.collection(userTable).where({
+    let result = await db.collection(userTable).where({
       openId: OPENID,
     }).update({
       data: {
         childs: childs,
       }
     });
+
+    if (!result.errMsg.includes('ok') || result.stats.updated <= 0) {
+      return {
+        success: false,
+        errMsg: result
+      }
+    }
+    
+    return {
+      success: true
+    };
   } catch (e) {
     console.error(e)
+    return {
+      success: false,
+      errMsg: e
+    };
   }
-  return {
-    success: false
-  };
+
 }

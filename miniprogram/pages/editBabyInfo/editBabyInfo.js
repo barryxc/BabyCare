@@ -129,7 +129,8 @@ Page({
 
         addResult = await this.editOrAdd(child);
       }
-      if (addResult.result.stats.updated >= 0) {
+      debugger
+      if (addResult.result.success) {
         user.addChild(child);
         user.getChilds().forEach((e, index) => {
           if (e.date) {
