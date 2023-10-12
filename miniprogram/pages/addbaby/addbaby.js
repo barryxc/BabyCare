@@ -21,7 +21,11 @@ Page({
   onLoad(options) {
     let childs = user.getChilds();
     childs.forEach(e => {
-      e.age = date.diffDays(e.date);
+      let age = date.diffDays(e.date);
+      if (age >= 0) {
+        e.age = age + 1;
+      }
+
     });
     this.setData({
       babyArr: childs,

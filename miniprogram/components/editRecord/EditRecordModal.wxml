@@ -7,7 +7,7 @@
     </view>
     <view class="body">
 
-      <picker mode="date" style="width: 100%;">
+      <picker mode="date" style="width: 100%;" disabled="true">
         <view class="row">
           <text class="label">日期</text>
           <view style="margin-left: auto;"></view>
@@ -23,7 +23,7 @@
         <image src="../../images/arrow.svg" class='arrow-style' mode="scaleToFill"></image>
       </view>
 
-      <view class="row">
+      <view class="row note">
         <text class="label">备忘录</text>
         <view style="margin-left: auto;"></view>
         <text class="content">{{record.content}}</text>
@@ -39,7 +39,7 @@
 
     </view>
 
-    <view class="footer">
+    <view class="footer" wx:if="{{false}}">
       <text bind:tap="onCancel" class="cancel-style click-style">取消</text>
       <!-- <text type="default" bind:tap="onDelete" class="delete-style click-style">删除</text> -->
       <text type="default" bind:tap="onConfirm" class="modify-style click-style">修改</text>

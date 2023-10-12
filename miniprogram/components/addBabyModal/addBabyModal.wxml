@@ -10,7 +10,7 @@
 
       <view class="line-area">
         <text class="text-color fit-content required">昵称:</text>
-        <input name="name" type="text" class="input-area" maxlength="8" placeholder="不超过8个字符" adjust-position="true" placeholder-style="color:#ababab" value="{{name}}" />
+        <input name="name" type="text" class="input-area" maxlength="6" placeholder="不超过6个字符" adjust-position="true" placeholder-style="color:#ababab" value="{{name}}" />
       </view>
 
       <view class="line-area">

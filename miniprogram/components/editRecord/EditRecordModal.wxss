@@ -91,15 +91,26 @@
   width: 100rpx;
   display: inline-block;
   color: #333333;
+  white-space: nowrap;
 }
 
 .content {
   font-size: 28rpx;
   color: #666666;
   overflow-x: scroll;
-  flex-grow: 1;
+  margin-left: auto;
   text-align: end;
   white-space: nowrap;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: 30rpx;
+  white-space: normal;
+}
+
+.note {
+  height: fit-content;
+  min-height: 120rpx;
 }
 
 .footer {

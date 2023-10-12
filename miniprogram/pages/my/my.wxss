@@ -73,6 +73,7 @@
 }
 
 .text-area {
+  margin-top: 60rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,13 +109,13 @@
 
 .samll-text-white {
   font-size: 28rpx;
-  color: white;
+  color: #f6f6f6;
   text-align: center;
 }
 
 .large-text-white {
   font-size: 40rpx;
-  color: white;
+  color: #f6f6f6;
   text-align: center;
 }
 

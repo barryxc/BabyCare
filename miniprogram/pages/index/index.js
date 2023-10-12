@@ -410,5 +410,20 @@ Page({
         icon: "error"
       })
     }
+
+  },
+  displayImg(e) {
+    let index = e.currentTarget.dataset.index;
+    let record = this.data.records[index];
+    if (!record) {
+      return
+    }
+
+    let img = record.imgSrc;
+    if (img) {
+      wx.previewImage({
+        urls: [img],
+      })
+    }
   }
 });

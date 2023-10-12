@@ -13,10 +13,14 @@
       </view>
 
       <view class="icon-area">
-        <view style="width: 160rpx;height: 160rpx;  margin: 60rpx 100rpx 60rpx;  position: relative;">
-          <image class="circle" src="{{baby.avatar?baby.avatar:defaultAvatar}}" mode="aspectFill" bind:tap="previewImage" />
-          <image style=" border-radius: 50%;right: 5rpx;bottom:10rpx;z-index: 1000;position: absolute;width: 30rpx; height: 30rpx; background-color: #00000033;" src="../../images/camera.svg" mode="aspectFill" />
+        <view style="width: 160rpx;height: 160rpx;  margin: 60rpx 100rpx 0rpx;  position: relative;">
+          <image class="circle" src="{{baby.avatar?baby.avatar:defaultAvatar}}" mode="aspectFill" bind:tap="previewImage" bind:longpress="editChildInfo" />
+          <image style=" border-radius: 50%;right: 0rpx;bottom:0rpx;z-index: 1000;position: absolute;width: 40rpx; height: 40rpx; background-color: #00000033;" src="../../images/edit-white.svg" mode="aspectFill" />
         </view>
+      </view>
+
+      <view style="text-align: center;">
+        <!-- <text style="font-size: 18rpx;color: #888888;">长按头像编辑</text> -->
       </view>
 
       <view class="text-area">

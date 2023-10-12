@@ -113,7 +113,7 @@ Page({
       if (!child.avatar) {
         addResult = await this.editOrAdd(child);
       } else {
-        let str=child.avatar;
+        let str = child.avatar;
         if (!(typeof str === "string" && str.startsWith("cloud"))) {
           let uploadResult = await this.uploadImg(child.avatar)
           if (uploadResult.fileID) {
@@ -123,7 +123,7 @@ Page({
 
         addResult = await this.editOrAdd(child);
       }
-      if (addResult.result.stats.updated > 0) {
+      if (addResult.result.stats.updated >= 0) {
         user.addChild(child);
         user.getChilds().forEach((e, index) => {
           if (e.date) {

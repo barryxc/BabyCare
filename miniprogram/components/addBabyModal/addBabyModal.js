@@ -83,6 +83,23 @@ Component({
         })
         return
       }
+      let weight = child.weight;
+      if (weight && (Number.isNaN(Number(weight)) || child.weight >= 100)) {
+        wx.showToast({
+          title: '体重不符合要求',
+          icon: "error"
+        })
+        return
+      }
+
+      let height = child.height;
+      if (height && (Number.isNaN(Number(height)) || height >= 100)) {
+        wx.showToast({
+          title: '身高不符合要求',
+          icon: "error"
+        })
+        return
+      }
       this.triggerEvent('onConfirm', child);
     },
 

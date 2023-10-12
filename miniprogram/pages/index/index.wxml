@@ -5,7 +5,7 @@
 <view class="custom-navbar color-accent" wx:if="{{true}}" style="position: {{fixed}};">
   <view class="content-area">
     <view class="icon-area">
-      <picker id="childPicker" mode="selector" style="width: fit-content; height:fit-content;" range='{{childs}}' range-key="name" bind:change='onChildChange' value='{{value}}' wx:if="{{childs.length>=0}}" disabled="{{!childs||(childs.length==0)}}"  bind:tap="onChildPickerTap">
+      <picker id="childPicker" mode="selector" style="width: fit-content; height:fit-content;" range='{{childs}}' range-key="name" bind:change='onChildChange' value='{{value}}' wx:if="{{childs.length>=0}}" disabled="{{!childs||(childs.length==0)}}" bind:tap="onChildPickerTap">
         <view style="display: flex;">
           <view style="display: flex;align-items: center;">
             <image style="width: 50rpx; height: 50rpx;" src="../../images/group-btn.svg" mode="scaleToFill" />
@@ -58,7 +58,7 @@
 
             <view class="spaceing"></view>
             <image class="img-display" wx:if="{{item.content}}" src="../../images/diary.svg" mode="scaleToFill" lazy-load></image>
-            <image class="img-display" wx:if="{{item.imgSrc}}" src="../../images/view-img.svg" mode="scaleToFill" lazy-load show-menu-by-longpress></image>
+            <image class="img-display" data-index="{{index}}" wx:if="{{item.imgSrc}}" src="../../images/view-img.svg" mode="scaleToFill" lazy-load show-menu-by-longpress catch:tap="displayImg"></image>
           </view>
           <view class="line"></view>
         </view>

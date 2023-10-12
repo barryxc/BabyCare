@@ -17,19 +17,18 @@
   position: relative;
   background-color: white;
   border-radius: 10rpx;
-  width: 80%;
+  width: 85%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  animation: slide_up 0.8s;
 }
 
 .avatar-img {
   margin-top: 30rpx;
   padding: 0rpx;
-  width: 130rpx;
-  height: 130rpx;
+  width: 140rpx;
+  height: 140rpx;
   border-radius: 50%;
   border-width: 1rpx;
   background-color: #f6f6f6;
@@ -108,7 +107,7 @@
   margin-top: 40rpx;
 }
 
-@keyframes slide_up {
+/* @keyframes slide_up {
 
   from {
     transform: translateY(100vh);
@@ -117,4 +116,4 @@
   to {
     transform: translateY(0);
   }
-}
+} */
