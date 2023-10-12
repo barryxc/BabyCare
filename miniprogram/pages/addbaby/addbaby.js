@@ -151,7 +151,6 @@ Page({
               title: '',
             })
             childModule.removeChild(childId).then((res) => {
-              debugger
               if (res.result.success) {
                 console.log('删除成功', res);
                 user.deleteChild(childId);

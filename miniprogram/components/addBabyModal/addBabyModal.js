@@ -17,7 +17,7 @@ Component({
     show: {
       type: Boolean,
       value: false,
-    },
+    }
   },
 
   lifetimes: {
@@ -110,6 +110,9 @@ Component({
 
     //选择头像
     chooseImg() {
+      if (this.data.babyInfo.shared) {
+        return
+      }
       wx.chooseImage({
         count: 1,
         sizeType: ['original', 'compressed'],

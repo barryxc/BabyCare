@@ -10,21 +10,21 @@
 
       <view class="line-area">
         <text class="text-color fit-content required">昵称:</text>
-        <input name="name" type="text" class="input-area" maxlength="6" placeholder="不超过6个字符" adjust-position="true" placeholder-style="color:#ababab" value="{{name}}" />
+        <input name="name" type="text" class="input-area" maxlength="6" placeholder="不超过6个字符" adjust-position="true" placeholder-style="color:#ababab" value="{{name}}" disabled="{{babyInfo.shared}}" />
       </view>
 
       <view class="line-area">
         <text class="text-color fit-content required">性别:</text>
         <radio-group name='gender'>
-          <radio value="1" checked="{{gender!=0}}" class="radio"><text class="text-color">男宝</text></radio>
-          <radio value="0" class="radio" style="margin-left: 50rpx;" checked="{{gender==0}}"><text class="text-color">女宝</text></radio>
+          <radio value="1" checked="{{gender!=0}}" class="radio" disabled="{{babyInfo.shared}}"><text class="text-color">男宝</text></radio>
+          <radio value="0" class="radio" style="margin-left: 50rpx;" disabled="{{babyInfo.shared}}" checked="{{gender==0}}"><text class="text-color">女宝</text></radio>
         </radio-group>
       </view>
 
 
       <view class="line-area">
         <text class="text-color fit-content required">出生日期:</text>
-        <picker mode="date" name="date" model:value="{{date}}" class="date-picker input-area" fields='day' bindchange="onDateChange" end='{{endDay}}'>
+        <picker mode="date" name="date" model:value="{{date}}" class="date-picker input-area" fields='day' bindchange="onDateChange" end='{{endDay}}' disabled="{{babyInfo.shared}}">
           <view class="date-area">
             <image src="../../images/date.svg" class="date-img" mode="aspectFill" />
             <text class="fit-content text-color " style="margin-left: 10px;">{{date}}</text>
@@ -34,17 +34,17 @@
 
       <view class="line-area">
         <text class="text-color fit-content">体重:</text>
-        <input name="weight" type="digit" class="input-area" maxlength="5" placeholder="单位kg(不超过100)" placeholder-style="color:#ababab" adjust-position="true" maxlength="5" bindinput="inputWeightChange" value="{{weight}}" />
+        <input name="weight" type="digit" class="input-area" maxlength="5" placeholder="单位kg(不超过100)" placeholder-style="color:#ababab" adjust-position="true" maxlength="5" bindinput="inputWeightChange" value="{{weight}}" disabled="{{babyInfo.shared}}" />
       </view>
 
-      <view class="line-area">
+      <view class=" line-area">
         <text class="text-color fit-content">身高:</text>
-        <input name="height" type="digit" class="input-area" maxlength="5" placeholder="单位cm(不超过200)" placeholder-style="color:#ababab" adjust-position="true" maxlength="5" bindinput="inputHeightChange" value="{{height}}" />
+        <input name="height" type="digit" class="input-area" maxlength="5" placeholder="单位cm(不超过200)" placeholder-style="color:#ababab" adjust-position="true" maxlength="5" bindinput="inputHeightChange" value="{{height}}" disabled="{{babyInfo.shared}}" />
       </view>
 
 
       <view class="footer">
-        <view class="line-area">
+        <view class="line-area" wx:if="{{!babyInfo.shared}}">
           <button type="warn" size="mini" form-type="reset" bind:tap="cancel">取消</button>
           <button type="primary" form-type="submit" size="mini" style="margin-left: 100rpx;">确认</button>
         </view>

@@ -15,7 +15,7 @@ Page({
    */
   data: {
     type: "",
-    babyInfo: {}
+    babyInfo: {},
   },
 
   /**
@@ -42,8 +42,14 @@ Page({
     if (eventChannel) {
       eventChannel.on('babyInfo', (function (data) {
         this.setData({
-          babyInfo: data
+          babyInfo: data,
         })
+        //来自分享
+        if (data.shared) {
+          wx.setNavigationBarTitle({
+            title: '预览',
+          })
+        }
       }).bind(this));
     }
   },
