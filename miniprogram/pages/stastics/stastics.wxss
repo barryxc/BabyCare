@@ -2,7 +2,7 @@
 
 .date-container {
   width: 100%;
-  height: fit-content;
+  height: 130rpx;
   white-space: nowrap;
   padding-left: 10rpx;
   padding-right: 10rpx;
@@ -12,8 +12,10 @@
 .date-item {
   display: inline-flex;
   flex-direction: column;
-  width: 140rpx;
+  width: 14%;
   text-align: center;
+  justify-content: center;
+  align-items: center;
   font-size: 28rpx;
   color: #333;
 }

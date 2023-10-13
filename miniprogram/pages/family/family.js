@@ -1,12 +1,14 @@
 const {
   getUser,
-  defaultAvatar
+  defaultAvatar,
 } = require("../../service/user")
 
 const {
   afterXMinutes
-} = require('../../service/date')
-
+} = require('../../service/date');
+const {
+  callServer
+} = require("../../service/server");
 // pages/family/family.js
 Page({
 
@@ -88,4 +90,44 @@ Page({
       path: `/pages/index/index?inviteId=${this.data.userInfo.openId}&expire=${expire}`,
     }
   },
+
+  async onDeleteItem(e) {
+    try {
+      console.log(e)
+      debugger
+      let index = e.target.dataset.index;
+      if (index == -1) {
+        return
+      }
+      let userId = this.data.userInfo.boundUsers[index].openId;
+      if (!userId) {
+        return
+      }
+      wx.showLoading({
+        title: '',
+      });
+      let res = await callServer({
+        type: "unBoundUser",
+        userId: userId,
+      });
+      if (res.result.success) {
+        this.data.userInfo.boundUsers = this.data.userInfo.boundUsers.filter((e) => e.openId != userId);
+        this.setData({
+          userInfo: this.data.userInfo
+        })
+        wx.showToast({
+          title: '删除成功',
+          icon: 'success'
+        })
+      } else {
+        wx.showToast({
+          title: '删除失败',
+          icon: 'error'
+        })
+      }
+    } catch (error) {
+      console.error(error)
+    }
+    wx.hideLoading();
+  }
 })

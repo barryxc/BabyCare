@@ -159,16 +159,20 @@ Page({
   onChildPickerTap(e) {
     console.log("onChildPickerTap");
     if (this.data.disableChildPicker) {
-      this.showToast();
+      this.toAddChild();
     }
   },
 
   //提醒添加小宝
-  showToast() {
+  toAddChild() {
     wx.showToast({
-      title: '请先添加小宝',
-      icon: 'error'
+      title: '请先添加宝宝',
+      icon:'error'
     })
+    setTimeout(() => {
+      this.addChild()
+    }, 300);
+   
   },
 
   //切换小宝
@@ -199,7 +203,7 @@ Page({
   editChildInfo(e) {
     let child = getSelectedChild();
     if (!child || !child.childId) {
-      this.showToast();
+      this.toAddChild();
       return
     }
     wx.navigateTo({
@@ -216,7 +220,16 @@ Page({
   },
 
   addChild(e) {
-    console.log(e)
+    wx.navigateTo({
+      url: '/pages/editBabyInfo/editBabyInfo?type=add',
+      events: {
+        onFinish: (function (data) {
+          this.refreshUser();
+        }).bind(this),
+      },
+      success(res) {
+      }
+    })
   }
 
 })

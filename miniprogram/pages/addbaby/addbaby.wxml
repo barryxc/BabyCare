@@ -10,7 +10,7 @@
           <view class="name-born-container">
             <text class="large-text">{{baby.name}}</text>
             <text class="samll-text"> (出生第{{baby.age}}天)</text>
-            <text class="gender-img" style="color:{{ baby.gender=='0' ? '#9370db':'#1e90ff'}}; ">{{baby.gender=='0'?'♀':'♂'}}</text>
+            <image src="{{baby.gender=='0'?'../../images/girl.svg':'../../images/boy.svg'}}" style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFill" />
           </view>
           <view>
             <text class="samll-text">出生日期 : {{baby.date}}</text>
@@ -23,7 +23,6 @@
         </view>
 
       </view>
-      <view class="line"></view>
     </view>
   </swipe-item-view>
 

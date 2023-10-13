@@ -35,7 +35,6 @@ Page({
     index: '',
     eventList: [],
     navigationBarHeight: 0,
-    disabled: true,
     showDateAddBtn: false,
     opacity: 0.3,
     endDay: getDate(),
@@ -58,32 +57,6 @@ Page({
         childs: childs,
         selectChild: getSelectedChild(),
       })
-
-      if (!childs || (Array.isArray(childs) && childs.length <= 0)) {
-        wx.showModal({
-          title: '',
-          content: '请先添加小宝👶🏻',
-          complete: (res) => {
-            if (res.cancel) {
-              console.log(res)
-            }
-
-            if (res.confirm) {
-              wx.switchTab({
-                url: '/pages/my/my',
-                success(res) {
-                  setTimeout(() => {
-                    wx.navigateTo({
-                      url: '/pages/addbaby/addbaby',
-                    })
-                  }, 200)
-                }
-              })
-            }
-          }
-        })
-      };
-
       this.refreshData(getSelectedChild().childId);
     });
 
@@ -99,20 +72,19 @@ Page({
       eventList: getEventList(),
     })
 
-    // 获取胶囊信息
-    const rect = wx.getMenuButtonBoundingClientRect();
-    const capsuleHeight = rect.height;
-    const capsuleTop = rect.top;
-    // 设置胶囊信息到 data 中
-    this.setData({
-      navigationBarHeight: (capsuleHeight + capsuleTop)
-    });
-
     eventBus.on('addRecord', (res) => {
-      console.log("监听新增的记录")
-      this.data.records.push(res.data);
-      console.log(this.data.records);
-      this.rearrange(this.data.records);
+      console.log("监听新增记录", res)
+      if (!this.data.cache[res.date]) {
+        this.date.cache[res.date] = [];
+      }
+      //新增记录添加到缓存
+      this.data.cache[res.date].push(res.data)
+
+      //如果新增记录的是当前页面所选择的日期，则刷新页面
+      if (res.date == this.data.day) {
+        this.rearrange(this.data.cache[res.date]);
+      }
+
     });
   },
 
@@ -190,6 +162,7 @@ Page({
     }
   },
 
+  //刷新页面
   refreshData(childId) {
     if (!childId) {
       this.setData({
@@ -238,6 +211,9 @@ Page({
     let interval = currentTime - lastSyncTime;
     if (interval < getApp().globalData.debounceTime) {
       console.log("刷新频率太快", interval);
+      wx.showToast({
+        title: '刷新太频繁了',
+      })
       //从缓存中取数据
       console.log("数据取自缓存", this.data.cache);
       return this.data.cache[this.data.day]
@@ -367,6 +343,7 @@ Page({
       records: this.data.records
     })
   },
+  //item折叠
   onCollapse(e) {
     console.log("侧滑折叠事件", e);
   },
@@ -402,16 +379,7 @@ Page({
     }
   },
 
-  onChildPickerTap(e) {
-    let childs = getChilds();
-    if (!childs || (Array.isArray(childs) && childs.length == 0)) {
-      wx.showToast({
-        title: '请先添加小宝',
-        icon: "error"
-      })
-    }
-
-  },
+  //图片预览
   displayImg(e) {
     let index = e.currentTarget.dataset.index;
     let record = this.data.records[index];
@@ -425,5 +393,30 @@ Page({
         urls: [img],
       })
     }
+  },
+  onChildPickerTap() {
+    let childs = getChilds();
+    let disabled = !childs || childs.length == 0;
+    if (disabled) {
+      wx.showToast({
+        title: '请先添加宝宝',
+        icon: 'error'
+      })
+      setTimeout(() => {
+        this.addChild()
+      }, 300);
+    }
+  },
+  //添加小宝
+  addChild() {
+    wx.navigateTo({
+      url: '/pages/editBabyInfo/editBabyInfo?type=add',
+      events: {
+        onFinish: (function (data) {
+          this.refreshUser();
+        }).bind(this),
+      },
+      success(res) {}
+    })
   }
 });

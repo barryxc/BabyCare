@@ -5,6 +5,7 @@ const removeRecord = require('./removeRecord/index');
 
 const getUserInfo = require("./getUserInfo/getUserInfo");
 const updateUserInfo = require("./updateUserInfo/updateUserInfo");
+const unBoundUser = require("./unBoundUser/unBoundUser");
 
 const addChild = require("./addChild/addChild");
 const deleteChild = require("./deleteChild/deleteChild");
@@ -34,7 +35,9 @@ exports.main = async (event, context) => {
       //修改用户信息
     case 'updateUserInfo':
       return await updateUserInfo.main(event, context);
-
+      //删除bound用户
+    case 'unBoundUser':
+      return await unBoundUser.main(event, context);
 
       //添加宝宝
     case 'addChild':

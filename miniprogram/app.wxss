@@ -43,6 +43,12 @@ page {
   border-radius: 80rpx;
 }
 
-.color-accent{
+.color-accent {
   background: linear-gradient(to right, rgb(255, 240, 245), rgb(200, 200, 255));
+}
+
+.bottom-custom-bar {
+  width: 100%;
+  height: 96rpx;
+  padding-bottom: env(safe-area-inset-bottom);
 }

@@ -94,7 +94,7 @@ Page({
     let childId = getSelectedChild().childId;
     if (!childId) {
       wx.showToast({
-        title: '请先绑定小宝',
+        title: '请先添加宝宝信息',
         icon: 'error'
       })
       return
@@ -175,6 +175,7 @@ Page({
   //发送事件
   sendEevent(record) {
     eventBus.emit('addRecord', {
+      date: record.day,
       data: record
     });
   },

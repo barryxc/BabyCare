@@ -24,11 +24,12 @@ Page({
   data: {
     selectIndex: 0,
     color: "#7A7E83",
-    selectedColor: "#c8c8ff",
+    selectedColor: "#ff80ca",
     cache: [],
     statstics: [],
+    weeks: [],//周
     dates: [], // 日期数据
-    dateSelectIndex: 0,
+    dateSelectIndex: 0, //选中的索引
   },
 
   /**
@@ -37,7 +38,8 @@ Page({
   onLoad(options) {
 
     let dates = [];
-    for (let day = -30; day <= 0; day++) {
+    let weeks = [];
+    for (let day = -34; day <= 0; day++) {
       let date = getRecentDate(day);
       let weekOfDay = weekDay(date, 'YYYY-MM-DD');
       let dateIn = dateInMonth(date);
@@ -46,9 +48,15 @@ Page({
         date,
         dateInMonth: dateIn,
       })
+      if (dates.length == 7) {
+        weeks.push(dates);
+        dates = [];
+      }
     }
+    let length = weeks.length - 1;
     this.setData({
-      dates
+      weeks,
+      dates: weeks[length],
     })
     this.setData({
       dateSelectIndex: this.data.dates.length - 1,
@@ -194,6 +202,8 @@ Page({
       currentIndex: e.detail.current
     });
   },
+
+  //选中日期
   selectDate(e) {
     let index = e.currentTarget.dataset.index;
     if (this.data.dateSelectIndex == index) {
@@ -203,22 +213,20 @@ Page({
       dateSelectIndex: index
     })
     let date = this.data.dates[index].date;
-    console.log(date)
+    console.log('选中日期', date)
     this.refresh();
   },
-  //开始滑动
-  onDragStart(e) {
-    let scrollLeft = e.detail.scrollLeft;
-    console.log("onDragStart:" + scrollLeft);
-  },
 
-  //滑动结束
-  onDragEnd(e) {
-    let scrollLeft = e.detail.scrollLeft;
-    console.log("onDragEnd:" + scrollLeft);
-    // console.log(scrollLeft);
+  //滑动日期
+  onWeekScroll(e) {
+    let current = e.detail.current;
+    console.log(current)
+    let dates = this.data.weeks[current];
+    console.log("滑动日期", dates)
     this.setData({
-      scrollLeft: scrollLeft
+      dates,
+      dateSelectIndex: 6
     })
+    this.refresh()
   }
 })

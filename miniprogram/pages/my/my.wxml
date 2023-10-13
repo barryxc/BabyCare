@@ -5,23 +5,22 @@
     <view class="header-area  color-accent">
 
       <view style="position: absolute; top: 100rpx;left: 30rpx; display: flex;">
-        <image src="../../images/edit-btn.svg" bind:tap="editChildInfo" style="width: 50rpx;height: 50rpx;" mode="scaleToFill" />
-        <!-- <image src="../../images/add-btn.svg" bind:tap="addChild" style="margin-left: 10rpx;width: 50rpx;height: 50rpx;" mode="scaleToFill" /> -->
         <picker mode="selector" style="width: fit-content; height:fit-content;" range='{{childs}}' range-key="name" bind:change='onChildChange' disabled="{{disableChildPicker}}" bind:tap="onChildPickerTap">
-          <image src="../../images/group-btn.svg" style="margin-left: 10rpx;width: 50rpx;height: 50rpx;" mode="aspectFill" />
+          <image src="../../images/switch-baby.svg" style="width: 50rpx;height: 50rpx;" mode="aspectFill" />
         </picker>
+        <image src="../../images/edit-btn.svg" bind:tap="editChildInfo" style="width: 50rpx;height: 50rpx;margin-left: 12rpx;" mode="aspectFill" />
+        <image src="../../images/add-btn.svg" bind:tap="addChild" style="width: 50rpx;height: 50rpx;margin-left: 12rpx;" mode="aspectFill" />
       </view>
 
       <view class="icon-area">
         <view style="width: 160rpx;height: 160rpx;  margin: 60rpx 100rpx 0rpx;  position: relative;">
-          <image class="circle" src="{{baby.avatar?baby.avatar:defaultAvatar}}" mode="aspectFill" bind:tap="previewImage" bind:longpress="editChildInfo" />
-          <image style=" border-radius: 50%;right: 0rpx;bottom:0rpx;z-index: 1000;position: absolute;width: 40rpx; height: 40rpx; background-color: #00000033;" src="../../images/edit-white.svg" mode="aspectFill" />
+          <image class="circle" src="{{baby.avatar?baby.avatar:defaultAvatar}}" mode="aspectFill" catch:tap="previewImage" />
+          <image style=" border-radius: 50%;right: 10rpx;bottom:5rpx;z-index: 1000;position: absolute;width: 30rpx; height: 30rpx; background-color: #00000033;" src="{{baby.gender==0?'../../images/girl.svg':'../../images/boy.svg'}}" mode="aspectFill" catch:tap="" />
         </view>
       </view>
 
-      <view style="text-align: center;">
-        <!-- <text style="font-size: 18rpx;color: #888888;">长按头像编辑</text> -->
-      </view>
+      <!-- <view style="text-align: center;">
+      </view> -->
 
       <view class="text-area">
         <view class="text-area-row">
@@ -30,6 +29,7 @@
           </view>
           <view class="middle" style="background-image: red">
             <text class="large-text-white">{{baby.name?baby.name:"--"}}</text>
+            <!-- <image src="{{baby.gender==0?'../../images/girl.svg':'../../images/boy.svg'}}" style="width: 30rpx;height: 30rpx;margin-left: 10rpx;" mode="aspectFill" /> -->
           </view>
 
           <view class="edge">

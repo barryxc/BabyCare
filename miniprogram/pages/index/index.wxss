@@ -3,8 +3,7 @@ page {
   flex-direction: column;
   display: flex;
   width: 100vw;
-  height: 100vh;
-  overflow-x: hidden;
+  min-height: 100vh;
   background-color: #f6f6f6;
 }
 
@@ -35,6 +34,7 @@ page {
   width: fit-content;
   height: fit-content;
   display: flex;
+  align-items: center;
 }
 
 
@@ -57,7 +57,7 @@ page {
   height: fit-content;
   z-index: 1000;
   box-sizing: border-box;
-  padding: 20rpx 0rpx;
+  padding: 40rpx 0rpx;
 }
 
 .header-scroll {
@@ -98,9 +98,9 @@ page {
   display: flex;
   flex-direction: column;
   background-color: #f6f6f6;
-  height: 100%;
+  flex-grow: 1;
   box-sizing: border-box;
-  padding-bottom: 180rpx;
+  width: 100%;
 }
 
 .nick {

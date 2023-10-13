@@ -9,7 +9,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  animation: fade_in 1s;
+  animation: fade_in 0.3s;
 }
 
 .modal-container {
@@ -24,7 +24,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: slide_up 0.5s;
+  animation: slide_up 0.3s;
 }
 
 .header {

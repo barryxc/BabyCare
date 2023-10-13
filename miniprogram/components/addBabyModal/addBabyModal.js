@@ -9,6 +9,8 @@ const {
   getUuid
 } = require("../../service/uuid");
 
+let lastConfirmTime;
+
 Component({
   /**
    * 组件的属性列表
@@ -61,6 +63,14 @@ Component({
 
     //添加宝宝
     confirm(e) {
+      let now = Date.now();
+      if (now - lastConfirmTime < 800) {
+        wx.showToast({
+          title: '点击太频繁了',
+        })
+        return
+      }
+      lastConfirmTime = now;
       let value = e.detail.value;
       let child = {
         ...value
