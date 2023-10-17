@@ -2,7 +2,7 @@
 <van-tabs active="{{feedType}}" bind:change='onChange'>
 
   <!-- 母乳亲喂 -->
-  <van-tab style="margin-top: 2rpx;" title='母乳亲喂' name='breast_feed_by_self'>
+  <van-tab style="margin-top: 2rpx;" title='母乳亲喂' name='breast_feed_by_self' disabled="{{lock?'breast_feed_by_self'!=feedType:false}}">
     <form bindsubmit="bindsubmit" bindreset="bindreset">
 
       <view style="display: flex;flex-direction: column;;">
@@ -84,7 +84,7 @@
   </van-tab>
 
   <!-- 母乳瓶喂 -->
-  <van-tab style="margin-top: 2rpx;" title='母乳瓶喂' name='breast_feed_with_bottle'>
+  <van-tab style="margin-top: 2rpx;" title='母乳瓶喂' name='breast_feed_with_bottle'  disabled="{{lock?'breast_feed_with_bottle'!=feedType:false}}">
     <form bindsubmit="bindsubmit" bindreset="bindreset">
       <view style="display: flex;flex-direction: column;;">
 
@@ -146,7 +146,7 @@
   </van-tab>
 
   <!-- 奶粉瓶喂 -->
-  <van-tab style="margin-top: 2rpx;" title='奶粉瓶喂' name='formula_feed_with_bottle'>
+  <van-tab style="margin-top: 2rpx;" title='奶粉瓶喂' name='formula_feed_with_bottle' disabled="{{lock?'formula_feed_with_bottle'!=feedType:false}}">
     <form bindsubmit="bindsubmit" bindreset="bindreset">
       <view style="display: flex;flex-direction: column;;">
 

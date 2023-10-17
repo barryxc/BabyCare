@@ -1,9 +1,9 @@
 <!--pages/addbaby/addbaby.wxml-->
-
-
 <view class="root-container">
-  <swipe-item-view width="100vw" height="120rpx" class="boby-area-with-line" wx:key="baby" wx:for="{{babyArr}}" wx:for-item="baby" data-index="{{index}}" bind:longpress="editBaby" index="{{index}}" bind:onDelete="onDelete" x="{{baby.offsetX}}" showDelete='{{!baby.shared}}'>
+  <swipe-item-view class="boby-area-with-line" wx:key="baby" wx:for="{{babyArr}}" wx:for-item="baby" data-index="{{index}}" bind:longpress="editBaby" index="{{index}}" bind:onDelete="onDelete" x="{{baby.offsetX}}" showDelete='{{!baby.shared}}'>
+
     <view style="width: 100vw;" bind:tap="editBaby" data-index="{{index}}">
+
       <view class=" baby-area">
         <image class="baby-img" src="{{baby.avatar?baby.avatar:defaultAvatar}}" mode="aspectFill" />
         <view class="baby-text-container">
@@ -21,9 +21,10 @@
           <image src="../../images/share.svg" style="width: 50rpx;height: 50rpx;" mode="scaleToFill" wx:if="{{baby.shared}}" />
           <text style=" font-size: 16rpx; color: #d9c0e2; text-align: center;" wx:if="{{baby.shared}}">from {{baby.creator.name}}</text>
         </view>
-
       </view>
+
     </view>
+
   </swipe-item-view>
 
   <view class="boby-area-with-line" bind:tap="addBaby">

@@ -31,13 +31,13 @@ Component({
   },
 
   lifetimes: {
-    ready() {
+    attached() {
       let record = this.data.record;
       this.setData({
         startTime: Date.now(),
         ...record
       })
-    },
+    }
   },
   observers: {
     'startTime': function (data) {

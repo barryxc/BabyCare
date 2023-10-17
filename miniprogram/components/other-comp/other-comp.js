@@ -33,15 +33,15 @@ Component({
       name: "第一次翻身"
     }]
   },
-  
+
   lifetimes: {
-    ready() {
+    attached() {
       let record = this.data.record;
       this.setData({
         dateTime: Date.now(),
         ...record
       })
-    },
+    }
   },
 
   observers: {
@@ -73,7 +73,7 @@ Component({
       if (this.data.selectIndex === -1) {
         wx.showToast({
           title: '未选中自定义内容',
-          icon:"error"
+          icon: "error"
         })
         return
       }

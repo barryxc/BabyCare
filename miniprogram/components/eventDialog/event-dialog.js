@@ -50,13 +50,19 @@ Component({
   },
 
   lifetimes: {
-    ready() {
+    attached(){
       console.log("event dialog on ready");
       let event = getEventTitle(this.data.type);
       let icon = getIcon(this.data.type);
+      //设置星标
+      if (this.data.record.star) {
+        this.setData({
+          star: this.data.record.star
+        })
+      }
       this.setData({
         icon,
-        event
+        event,
       })
     }
   },

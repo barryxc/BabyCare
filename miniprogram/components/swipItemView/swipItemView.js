@@ -40,10 +40,10 @@ Component({
       try {
         let width = 0;
         if (this.data.showDelete) {
-          width = 100;
+          width = 200;
         }
         if (this.data.showEdit) {
-          width += 100;
+          width += 200;
         }
         const systemInfo = wx.getSystemInfoSync();
         const screenWidth = systemInfo.screenWidth;

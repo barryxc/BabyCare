@@ -4,13 +4,13 @@
 <view class="custom-navbar color-accent" wx:if="{{true}}">
 
   <view class="icon-area">
-    <picker mode="date">
+    <!-- <picker mode="date">
 
       <view style="display: flex;align-items: center;">
         <image src="../../images/date.svg" mode='aspectFit  ' style="width: 50rpx;height: 50rpx;" />
       </view>
 
-    </picker>
+    </picker> -->
 
     <picker id="childPicker" mode="selector" style="width: fit-content; height:fit-content;" range='{{childs}}' range-key="name" bind:change='onChildChange' value='{{value}}' wx:if="{{childs.length>=0}}" disabled="{{!childs||(childs.length==0)}}" bind:tap="onChildPickerTap">
       <view style="display: flex;flex-direction: row;margin-left: 20rpx;">
@@ -51,11 +51,11 @@
             <image class="icon" src="{{item.ext.icon}}" mode="aspectFill" />
             <text class="time">{{item.ext.time}}</text>
           </view>
-
+          <view style="margin-left: auto;"></view>
           <view style="display: flex;align-items: center;  margin-left: 32rpx;height: 30rpx">
             <text>{{item.ext.status}}</text>
-            <image wx:if="{{item.star}}" src="../../images/star.svg" mode="aspectFill" style="width: 40rpx;height: 40rpx;margin-right: 20rpx;" />
-            <image class="img-display" data-index="{{index}}" wx:if="{{item.imgSrc}}" src="../../images/view-img.svg" mode="scaleToFill" lazy-load catch:tap="previewImage"></image>
+            <image class="img-display" data-index="{{index}}" wx:if="{{item.imgSrc}}" src="../../images/view-img.svg" mode="scaleToFill" lazy-load catch:tap="previewImage" style="{{item.star?'margin-right:20rpx':''}}"></image>
+            <image wx:if="{{item.star}}" src="../../images/star.svg" mode="aspectFill" style="width: 40rpx;height: 40rpx;" />
           </view>
         </view>
 

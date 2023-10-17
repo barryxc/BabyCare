@@ -40,7 +40,7 @@ Component({
   },
 
   lifetimes: {
-    ready() {
+    attached() {
       this.setData({
         startTime: minutesAgo(10),
         endTime: Date.now(),
@@ -92,7 +92,7 @@ Component({
 
       this.triggerEvent('submit', {
         ...this.data,
-        
+
         activity: this.data.activities[this.data.selectIndex],
         date: format(this.data.endTime, 'YYYY-MM-DD'),
         time: format(this.data.endTime, "HH:mm"),

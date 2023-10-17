@@ -108,12 +108,12 @@ Component({
   },
 
   lifetimes: {
-    ready() {
+    attached(){
       this.setData({
         dateTime: Date.now(),
         ...this.data.record
       })
-    },
+    }
   },
 
   observers: {

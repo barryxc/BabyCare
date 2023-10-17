@@ -45,6 +45,7 @@ Component({
     leftBreastFeeding: false,
     rightBreastFeeding: false,
 
+    lock: false,
 
   },
 
@@ -73,12 +74,19 @@ Component({
   },
 
   lifetimes: {
-    ready() {
+    attached() {
       console.log('onReady')
       this.setData({
         dateTime: Date.now(),
         ...this.data.record
       })
+
+      //存在recordId,属于编辑状态
+      if (this.data.recordId) {
+        this.setData({
+          lock: true
+        })
+      }
 
       //恢复计时器状态
       if (this.data.leftBreastFeeding) {
@@ -149,6 +157,10 @@ Component({
         })
         return
       }
+      //状态锁定🔒
+      this.setData({
+        lock: true
+      })
       let now = Date.now();
       let item = {
         ...this.data,

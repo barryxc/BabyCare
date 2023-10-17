@@ -36,8 +36,7 @@ Component({
   },
 
   lifetimes: {
-    ready() {
-      debugger
+    attached(){
       let record = this.data.record;
       this.setData({
         dateTime: Date.now(),
