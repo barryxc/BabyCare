@@ -8,32 +8,15 @@
     <view style="background-color: white;border-radius:0rpx 8rpx 8rpx 0rpx;padding: 20rpx  40rpx 20rpx;height: fit-content; align-items: center;display: flex;margin-left: 1rpx;" bind:tap="changePage" data-index="1">
       <text style="font-size: 28rpx;color: {{selectIndex==1?selectedColor:color}}" bind:tap="changePage" data-index="1">成长</text>
     </view>
-
-
   </view>
 
   <view style=" flex-grow: 1;width: 100%; height: 100rpx; display: flex;">
-    <swiper style="flex-grow: 1;height: 100%;" bindchange='onBindChange' current='{{selectIndex}}' disabled='{{true}}'>
+    <swiper style="flex-grow: 1;height: 100%;" bindchange='onBindChangePage' current='{{selectIndex}}' disabled='{{true}}'>
       <swiper-item>
         <view style="display: flex;flex-direction: column;  justify-content: flex-start;width: 100%;height: 100%;">
-          <swiper class="date-container color-accent" bindchange="onWeekScroll" current="{{weeks.length-1}}">
+          <week-date-switcher class="" model:value="{{date}}" bind:onChange="onDateChange"></week-date-switcher>
 
-            <swiper-item wx:for="{{[0,1,2,3,4]}}" style="height: 100%;width: 100%;" wx:key="index" wx:for-index="weekIndex">
-              <view wx:for-index="dateIndex" wx:for="{{dates}}" wx:key="dateIndex" class="date-item" id="item-{{dateIndex}}" bind:tap="selectDate" data-index="{{dateIndex}}">
-                <view style="width: 60rpx;height: fit-content;">
-                  <text style="font-size: 28rpx; color: #666666;">{{item.weekOfDay}}</text>
-                </view>
-                <view style="display: flex;text-align: center; margin-top: 20rpx;margin-bottom: 20rpx; width: 60rpx;height: 60rpx; border-radius: 50%;background-color: {{dateSelectIndex==dateIndex? '#ff4050':'' }};align-items: center;justify-content: center;">
-                  <text style="font-size: 28rpx; color:{{dateSelectIndex==dateIndex? 'white':'black' }}">{{item.dateInMonth}}</text>
-                </view>
-              </view>
-            </swiper-item>
-          </swiper>
-
-
-
-          <!-- <scroll-view scroll-y="{{true}}" style="width: 100%;flex-grow: 1;"> -->
-          <view style="width: 100%;display: flex;flex-wrap: wrap; overflow-y: auto;flex-grow: 1;" flex-shrink1>
+          <view style="width: 100%;display: flex;flex-wrap: wrap; overflow-y: auto; padding-bottom: 10rpx;">
             <view wx:for="{{statstics}}" wx:key="item" style="width: 50%;height:200rpx;justify-content: center;display: flex;margin-top: 30rpx;">
 
               <view style="width: 90%;height:200rpx;background-color: white; border-radius: 20rpx;display: flex;box-shadow: 0rpx 2rpx 2rpx #aaaaaa; flex-direction: column;">
@@ -53,7 +36,7 @@
                 </view>
 
                 <view style="display: flex; flex-direction: row; width: 100%;height: fit-content; padding:20rpx 20rpx 0rpx;box-sizing: border-box;" wx:if="{{item.showProgress}}">
-                  <progress style="width: 100%;" percent="{{item.percent?item.percent:1}}" stroke-width="3" border-radius='20rpx' />
+                  <!-- <progress style="width: 100%;" percent="{{item.percent?item.percent:1}}" stroke-width="3" border-radius='20rpx' /> -->
                 </view>
               </view>
 

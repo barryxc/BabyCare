@@ -9,7 +9,8 @@
     "pages/stastics/stastics",
     "pages/editBabyInfo/editBabyInfo",
     "pages/family/family",
-    "pages/imagepreview/imagepreview"
+    "pages/imagepreview/imagepreview",
+    "pages/custom-page/custom-page"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
@@ -20,7 +21,15 @@
   },
   "usingComponents": {
     "add-baby-modal": "./components/addBabyModal/addBabyModal",
-    "swipe-item-view": "./components/swipItemView/swipItemView"
+    "swipe-item-view": "./components/swipItemView/swipItemView",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "custom-add-area":"./components/custom-add-area/custom-add-area",
+    "date-time-picker":"./components/date-time-picker/date-time-picker",
+    "van-tab": "@vant/weapp/tab/index",
+    "van-tabs": "@vant/weapp/tabs/index",
+    "week-date-switcher":"./components/week-date-switcher/week-date-switcher"
+ 
   },
   "sitemapLocation": "sitemap.json",
   "style": "v2",

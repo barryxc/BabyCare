@@ -1,0 +1,7 @@
+<van-popup show="{{ show }}" position="bottom" custom-style="height: fit-content" bind:close="onClose" z-index="10001">
+  <van-datetime-picker type="datetime" value="{{ value?value:now }}" min bind:confirm="onConfirm"  max-date='{{maxDate}}' bind:cancel="onCancel" position='bottom' />
+</van-popup>
+
+<view style="width: 100%;height: fit-content;" bind:tap="showPicker">
+  <slot></slot>
+</view>

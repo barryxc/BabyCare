@@ -6,13 +6,12 @@
       <image wx:if="{{icon}}" src="{{icon}}" mode="scaleToFill" class="icon-img" />
     </view>
     <view class="body">
-
       <picker mode="date" style="width: 100%;" disabled="true">
         <view class="row">
           <text class="label">日期</text>
           <view style="margin-left: auto;"></view>
           <text class="content">{{ record.day }} </text>
-          <image src="../../images/arrow.svg" class='arrow-style' mode="scaleToFill"></image>
+          <!-- <image src="../../images/arrow.svg" class='arrow-style' mode="scaleToFill"></image> -->
         </view>
       </picker>
 
@@ -20,14 +19,14 @@
         <text class="label">时间</text>
         <view style="margin-left: auto;"></view>
         <text class="content">{{ record.time }} </text>
-        <image src="../../images/arrow.svg" class='arrow-style' mode="scaleToFill"></image>
+        <!-- <image src="../../images/arrow.svg" class='arrow-style' mode="scaleToFill"></image> -->
       </view>
 
       <view class="row note">
         <text class="label">备忘录</text>
         <view style="margin-left: auto;"></view>
         <text class="content">{{record.content}}</text>
-        <image src="../../images/arrow.svg" class='arrow-style' mode="scaleToFill"></image>
+        <!-- <image src="../../images/arrow.svg" class='arrow-style' mode="scaleToFill"></image> -->
       </view>
 
       <view class="img-row">
@@ -41,7 +40,6 @@
 
     <view class="footer" wx:if="{{false}}">
       <text bind:tap="onCancel" class="cancel-style click-style">取消</text>
-      <!-- <text type="default" bind:tap="onDelete" class="delete-style click-style">删除</text> -->
       <text type="default" bind:tap="onConfirm" class="modify-style click-style">修改</text>
     </view>
 

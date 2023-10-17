@@ -1,0 +1,42 @@
+<form bindsubmit="bindsubmit" bindreset="bindreset">
+
+  <view style="width: 100%;height: fit-content ;display: flex;justify-content: center;align-items: center;">
+    <custom-add-area bindchange="onChange" class="custom-add-area" data="{{activities}}" selectIndex='{{selectIndex}}' bind:onItemsChanged='onItemsChanged'></custom-add-area>
+  </view>
+
+  <date-time-picker model:value='{{startTime}}'>
+    <view style="display: flex; width:100%;height: 100rpx;background-color: white;margin-top: 2rpx;align-items: center;padding:0 32rpx 0;box-sizing: border-box;justify-content: space-between;">
+      <view><text>开始时间</text></view>
+      <view><text>{{startTimeFormat}}</text></view>
+    </view>
+  </date-time-picker>
+
+  <date-time-picker model:value='{{endTime}}'>
+    <view style="display: flex; width:100%;height: 100rpx;background-color: white;margin-top: 1rpx;align-items: center;padding:0 32rpx 0;box-sizing: border-box;justify-content: space-between;;">
+      <view><text>结束时间</text></view>
+      <view><text>{{endTimeFormat}}</text></view>
+    </view>
+  </date-time-picker>
+
+  <view class="flex-row" bind:tap="selectImg" style="margin-top: 1rpx;">
+    <view class="label">
+      <text>图片</text>
+    </view>
+    <view wx:if="true" class="code_box" catch:tap="selectImg">
+      <image class="code_img" mode="aspectFill" model:src="{{imgSrc?imgSrc:'../../images/select-img.svg'}}"></image>
+    </view>
+    <view style="margin-right: 32rpx;">
+      <image src="../../images/arrow.svg" style="width: 30rpx;height:30rpx" mode="aspectFit" />
+    </view>
+  </view>
+
+  <view style="background-color: white;margin-top: 1rpx;height: 200rpx;">
+    <textarea name="conent" type="text" class="content" placeholder="备注" maxlength="70" auto-height="true" placeholder-style="color:#e3e3e3;font-size:32rpx" model:value="{{content}}"></textarea>
+  </view>
+
+  <view class="submi-area">
+    <button form-type="reset" class="submit-button-reset " hover-class="submit-button-reset-hover">取消</button>
+    <button form-type="submit" class="submit-button-confirm color-accent" hover-class="submit-button-confirm-hover">开始</button>
+  </view>
+
+</form>

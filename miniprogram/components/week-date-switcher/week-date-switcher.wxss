@@ -1,0 +1,33 @@
+/* components/week-date-switcher/week-date-switcher.wxss */
+
+
+.color-accent {
+  background: linear-gradient(to right, rgb(255, 240, 245), rgb(200, 200, 255));
+}
+
+.date-container {
+  width: 100%;
+  height: 180rpx;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+
+.date-item {
+  display: inline-flex;
+  flex-direction: column;
+
+  height: 100%;
+  text-align: center;
+  
+  justify-content: center;
+  align-items: center;
+
+  font-size: 28rpx;
+  color: #333;
+}
+
+
+.active {
+  color: #ff0000;
+}

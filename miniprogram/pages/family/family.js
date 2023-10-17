@@ -94,7 +94,6 @@ Page({
   async onDeleteItem(e) {
     try {
       console.log(e)
-      debugger
       let index = e.target.dataset.index;
       if (index == -1) {
         return

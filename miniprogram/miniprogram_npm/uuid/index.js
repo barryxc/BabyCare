@@ -4,7 +4,7 @@ var __DEFINE__ = function(modId, func, req) { var m = { exports: {}, _tempexport
 var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return require(source); if(!__MODS__[modId].status) { var m = __MODS__[modId].m; m._exports = m._tempexports; var desp = Object.getOwnPropertyDescriptor(m, "exports"); if (desp && desp.configurable) Object.defineProperty(m, "exports", { set: function (val) { if(typeof val === "object" && val !== m._exports) { m._exports.__proto__ = val.__proto__; Object.keys(val).forEach(function (k) { m._exports[k] = val[k]; }); } m._tempexports = val }, get: function () { return m._tempexports; } }); __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); } return __MODS__[modId].m.exports; };
 var __REQUIRE_WILDCARD__ = function(obj) { if(obj && obj.__esModule) { return obj; } else { var newObj = {}; if(obj != null) { for(var k in obj) { if (Object.prototype.hasOwnProperty.call(obj, k)) newObj[k] = obj[k]; } } newObj.default = obj; return newObj; } };
 var __REQUIRE_DEFAULT__ = function(obj) { return obj && obj.__esModule ? obj.default : obj; };
-__DEFINE__(1695375668525, function(require, module, exports) {
+__DEFINE__(1697167110092, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -84,8 +84,8 @@ var _stringify = _interopRequireDefault(require("./stringify.js"));
 var _parse = _interopRequireDefault(require("./parse.js"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-}, function(modId) {var map = {"./v1.js":1695375668526,"./v3.js":1695375668531,"./v4.js":1695375668535,"./v5.js":1695375668537,"./nil.js":1695375668539,"./version.js":1695375668540,"./validate.js":1695375668529,"./stringify.js":1695375668528,"./parse.js":1695375668533}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668526, function(require, module, exports) {
+}, function(modId) {var map = {"./v1.js":1697167110093,"./v3.js":1697167110098,"./v4.js":1697167110102,"./v5.js":1697167110104,"./nil.js":1697167110106,"./version.js":1697167110107,"./validate.js":1697167110096,"./stringify.js":1697167110095,"./parse.js":1697167110100}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1697167110093, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -193,8 +193,8 @@ function v1(options, buf, offset) {
 
 var _default = v1;
 exports.default = _default;
-}, function(modId) { var map = {"./rng.js":1695375668527,"./stringify.js":1695375668528}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668527, function(require, module, exports) {
+}, function(modId) { var map = {"./rng.js":1697167110094,"./stringify.js":1697167110095}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1697167110094, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -220,7 +220,7 @@ function rng() {
   return rnds8Pool.slice(poolPtr, poolPtr += 16);
 }
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668528, function(require, module, exports) {
+__DEFINE__(1697167110095, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -265,8 +265,8 @@ function stringify(arr, offset = 0) {
 
 var _default = stringify;
 exports.default = _default;
-}, function(modId) { var map = {"./validate.js":1695375668529}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668529, function(require, module, exports) {
+}, function(modId) { var map = {"./validate.js":1697167110096}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1697167110096, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -284,8 +284,8 @@ function validate(uuid) {
 
 var _default = validate;
 exports.default = _default;
-}, function(modId) { var map = {"./regex.js":1695375668530}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668530, function(require, module, exports) {
+}, function(modId) { var map = {"./regex.js":1697167110097}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1697167110097, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -295,7 +295,7 @@ exports.default = void 0;
 var _default = /^(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|00000000-0000-0000-0000-000000000000)$/i;
 exports.default = _default;
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668531, function(require, module, exports) {
+__DEFINE__(1697167110098, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -312,8 +312,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const v3 = (0, _v.default)('v3', 0x30, _md.default);
 var _default = v3;
 exports.default = _default;
-}, function(modId) { var map = {"./v35.js":1695375668532,"./md5.js":1695375668534}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668532, function(require, module, exports) {
+}, function(modId) { var map = {"./v35.js":1697167110099,"./md5.js":1697167110101}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1697167110099, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -394,8 +394,8 @@ function v35(name, version, hashfunc) {
   generateUUID.URL = URL;
   return generateUUID;
 }
-}, function(modId) { var map = {"./stringify.js":1695375668528,"./parse.js":1695375668533}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668533, function(require, module, exports) {
+}, function(modId) { var map = {"./stringify.js":1697167110095,"./parse.js":1697167110100}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1697167110100, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -441,8 +441,8 @@ function parse(uuid) {
 
 var _default = parse;
 exports.default = _default;
-}, function(modId) { var map = {"./validate.js":1695375668529}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668534, function(require, module, exports) {
+}, function(modId) { var map = {"./validate.js":1697167110096}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1697167110101, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -467,7 +467,7 @@ function md5(bytes) {
 var _default = md5;
 exports.default = _default;
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668535, function(require, module, exports) {
+__DEFINE__(1697167110102, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -511,8 +511,8 @@ function v4(options, buf, offset) {
 
 var _default = v4;
 exports.default = _default;
-}, function(modId) { var map = {"./native.js":1695375668536,"./rng.js":1695375668527,"./stringify.js":1695375668528}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668536, function(require, module, exports) {
+}, function(modId) { var map = {"./native.js":1697167110103,"./rng.js":1697167110094,"./stringify.js":1697167110095}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1697167110103, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -529,7 +529,7 @@ var _default = {
 };
 exports.default = _default;
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668537, function(require, module, exports) {
+__DEFINE__(1697167110104, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -546,8 +546,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 const v5 = (0, _v.default)('v5', 0x50, _sha.default);
 var _default = v5;
 exports.default = _default;
-}, function(modId) { var map = {"./v35.js":1695375668532,"./sha1.js":1695375668538}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668538, function(require, module, exports) {
+}, function(modId) { var map = {"./v35.js":1697167110099,"./sha1.js":1697167110105}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1697167110105, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -572,7 +572,7 @@ function sha1(bytes) {
 var _default = sha1;
 exports.default = _default;
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668539, function(require, module, exports) {
+__DEFINE__(1697167110106, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -582,7 +582,7 @@ exports.default = void 0;
 var _default = '00000000-0000-0000-0000-000000000000';
 exports.default = _default;
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1695375668540, function(require, module, exports) {
+__DEFINE__(1697167110107, function(require, module, exports) {
 
 
 Object.defineProperty(exports, "__esModule", {
@@ -604,8 +604,8 @@ function version(uuid) {
 
 var _default = version;
 exports.default = _default;
-}, function(modId) { var map = {"./validate.js":1695375668529}; return __REQUIRE__(map[modId], modId); })
-return __REQUIRE__(1695375668525);
+}, function(modId) { var map = {"./validate.js":1697167110096}; return __REQUIRE__(map[modId], modId); })
+return __REQUIRE__(1697167110092);
 })()
 //miniprogram-npm-outsideDeps=["crypto"]
 //# sourceMappingURL=index.js.map

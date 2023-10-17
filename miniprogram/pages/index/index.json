@@ -1,12 +1,15 @@
 {
   "usingComponents": {
-    "edit-record-modal":"../../components/editRecord/EditRecordModal"
+    "edit-record-modal": "../../components/editRecord/EditRecordModal",
+    "add-btn-drop": "../../components/addBtnDrop/AddBtnDrop",
+    "event-dialog": "../../components/eventDialog/event-dialog"
+
   },
   "navigationBarTitleText": "",
   "enablePullDownRefresh": true,
   "onReachBottomDistance": 100,
   "backgroundTextStyle": "dark",
-  "navigationStyle":"custom",
+  "navigationStyle": "custom",
   "disableScroll": false
 
 }

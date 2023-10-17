@@ -52,3 +52,13 @@ page {
   height: 96rpx;
   padding-bottom: env(safe-area-inset-bottom);
 }
+
+.custom-add-area {
+  width: 100%;
+  height: fit-content;
+  min-height: 200rpx;
+  padding: 30rpx;
+  background-color: white;
+  margin-top: 0rpx;
+  box-sizing: border-box;
+}

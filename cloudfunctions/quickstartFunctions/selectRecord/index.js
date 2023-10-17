@@ -23,7 +23,7 @@ exports.main = async (event, context) => {
 
   try {
     let result = await db.collection(tableName).where({
-      day: event.day,
+      date: event.date,
       childId: event.childId,
       appId: APPID
     }).limit(100).get();

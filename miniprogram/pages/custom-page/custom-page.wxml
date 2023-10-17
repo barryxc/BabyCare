@@ -1,0 +1,64 @@
+<!--pages/custom-page/custom-page.wxml-->
+<add-drop-btn style="width: 200rpx;height: 200rpx;position: fixed;bottom: 100rpx;right: 100rpx;" height='100' width='100'></add-drop-btn>
+
+<!-- <custom-add-area style="width: 100%; height: 300rpx;background-color:  white; padding: 20rpx;">
+</custom-add-area> -->
+
+
+<!-- <activity-comp style="width: 100%;">
+</activity-comp> -->
+
+
+<button bind:tap="show">点击</button>
+
+<!-- <date-time-picker show="{{show}}"></date-time-picker> -->
+<!-- <van-popup show="{{ show }}" bind:close="onClose">内容</van-popup> -->
+
+<!-- <van-popup show="{{ show }}"  position="top" custom-style="height: 20%;" bind:close="onClose" /> -->
+
+<!-- <van-popup show="{{ show }}" position="top" custom-style="height: 50%;" bind:close="onClose">
+    <van-datetime-picker type="datetime" value="{{ currentDate }}" min-date="{{ minDate }}" max-date="{{ maxDate }}" bind:input="onInput" />
+  </van-popup> -->
+
+
+<!-- <week-date-switcher class=""></week-date-switcher> -->
+
+
+<swipe-item-view width='710rpx' height='100%'>
+
+  <view class="record-column" style="width: 710rpx; height: 100%;" bind:tap="onTapRecordItem" data-index="{{index}}" showDelete='{{true}}'>
+
+    <!-- 第一行 -->
+    <view style="display: flex;flex-direction: row;">
+
+      <view style="display: flex;align-items: center;height: 30rpx;">
+        <image class="icon" src="{{item.ext.icon}}" mode="aspectFill" />
+        <text class="time">{{item.ext.time}}</text>
+      </view>
+
+      <view style="display: flex;align-items: center;  margin-left: 32rpx;height: 30rpx">
+        <text>{{item.ext.desc}}</text>
+        <image wx:if="{{item.star}}" src="../../images/star.svg" mode="aspectFill" style="width: 40rpx;height: 40rpx;" />
+        <image class="img-display" data-index="{{index}}" wx:if="{{item.imgSrc}}" src="../../images/view-img.svg" mode="scaleToFill" lazy-load catch:tap="previewImage"></image>
+      </view>
+    </view>
+
+    <!-- 第二行 -->
+    <view style="display: flex;flex-direction: row;align-items: center; margin-top: 30rpx;">
+      <view class="content-container">
+        <text class="event">{{item.ext.title}}</text>
+      </view>
+      <view style="margin-left: auto;"></view>
+      <view class="content-container" wx:if="{{true}}" class="{{item.ext.content_clickable?'clickable':''}}">
+        <text class="{{ item.ext.content_clickable?'font-red':'font-gray'  }}">{{item.ext.content}}</text>
+      </view>
+    </view>
+
+    <!-- 第三行 -->
+    <view style="margin-top: 10rpx;">
+      <text style="font-size: 30rpx;">{{item.content}}</text>
+    </view>
+
+  </view>
+
+</swipe-item-view>

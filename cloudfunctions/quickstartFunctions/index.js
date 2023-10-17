@@ -22,7 +22,7 @@ exports.main = async (event, context) => {
     case 'updateRecord':
       return await updateRecord.main(event, context);
       //添加
-    case 'insertRecord':
+    case 'insertOrReplaceRecord':
       return await insertRecord.main(event, context);
       //删除
     case 'deleteRecord':

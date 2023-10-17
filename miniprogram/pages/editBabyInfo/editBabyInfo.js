@@ -119,14 +119,10 @@ Page({
       if (!child.avatar) {
         addResult = await this.editOrAdd(child);
       } else {
-        let str = child.avatar;
-        if (!(typeof str === "string" && str.startsWith("cloud"))) {
-          let uploadResult = await this.uploadImg(child.avatar)
-          if (uploadResult.fileID) {
-            child.avatar = uploadResult.fileID;
-          }
+        let uploadResult = await this.uploadImg(child.avatar)
+        if (uploadResult.fileID) {
+          child.avatar = uploadResult.fileID;
         }
-
         addResult = await this.editOrAdd(child);
       }
 

@@ -9,22 +9,17 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  animation: fade_in 0.3s;
 }
 
 .modal-container {
   background-color: #f6f6f6;
-  position: fixed;
-  border-radius: 30rpx;
-  bottom: 0rpx;
-  left: 0;
-  right: 0;
+  border-radius: 10rpx;
+  width: 90%;
   height: fit-content;
   min-height: 300px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: slide_up 0.3s;
 }
 
 .header {
@@ -46,7 +41,7 @@
 .body {
   display: flex;
   width: 100%;
-  border-radius: 2px;
+  border-radius: 30rpx;
   flex-grow: 1;
   flex-direction: column;
   align-items: center;
@@ -71,6 +66,7 @@
   padding: 0rpx 20rpx;
   background-color: white;
   box-sizing: border-box;
+  border-radius: 0 0 30rpx 30rpx;
   margin-top: 1px;
   display: flex;
   align-items: center;
@@ -168,7 +164,7 @@
   opacity: 0.5;
 }
 
-@keyframes slide_up {
+/* @keyframes slide_up {
   from {
     transform: translateY(100%)
   }
@@ -187,4 +183,4 @@
   to {
     background-color: rgba(0, 0, 0, 0.5);
   }
-}
+} */

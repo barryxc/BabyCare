@@ -1,0 +1,39 @@
+<!--components/custom-add-area/custom-add-area.wxml-->
+<van-popup show="{{showAddDialog}}" position='center'>
+  <form bindsubmit="submit" bindreset="reset">
+
+    <view style="width: 100%;padding:32rpx;">
+      请输入
+    </view>
+    <view style="padding: 50rpx 32rpx 30rpx;">
+      <input value="{{addContent}}" type="text" placeholder="内容" name='content' style="width: 100%;height: fit-content;" maxlength="30" />
+    </view>
+
+    <view style="display: flex;">
+      <button type="mini" form-type="reset">取消</button>
+      <button type="primary" form-type="submit">添加</button>
+    </view>
+  </form>
+
+</van-popup>
+
+
+
+<view style="width: 100%;height:fit-content; display: flex;flex-wrap: wrap;overflow-wrap: break-word;">
+  <view wx:for="{{data}}" wx:key="index" style="position: relative;height: fit-content;width: fit-content;">
+
+    <view class="{{selectIndex==index?'item-btn-select':'item-btn'}}" bind:tap="onClick" data-index="{{index}}">
+      <text class="{{selectIndex==index?'label-select':'label'}}">{{item.name}}</text>
+
+      <view wx:if="{{editable}}" catch:tap="deleteItem" data-index="{{index}}" style="display: inline-flex;position: absolute;right: 0rpx;top: 0rpx;">
+        <image src="../../images/close_fill.svg" mode="aspectFit" style="width: 30rpx;height: 30rpx;" />
+      </view>
+    </view>
+
+  </view>
+
+
+  <view style="width: fit-content; height: 60rpx;margin-left: 10rpx;display: flex; align-items: center;" wx:if="{{editable}}">
+    <image src="../../images/add-btn.svg" mode="aspectFit" class="add-btn" bind:tap="clickAddBtn" />
+  </view>
+</view>

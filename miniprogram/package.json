@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "@vant/weapp": "^1.11.0",
+    "@vant/weapp": "^1.11.1",
     "chart.js": "^4.4.0",
     "dayjs": "^1.11.9",
     "uuid": "^9.0.1"

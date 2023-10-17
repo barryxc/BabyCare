@@ -36,24 +36,27 @@ Component({
   },
 
   lifetimes: {
-    attached() {
-      if (this.data.showDelete) {
-        this.createSelectorQuery().select('.delete-button').boundingClientRect((rect) => {
-          if (rect) {
-            this.setData({
-              hideWidth: this.data.hideWidth + rect.width,
-            })
-          }
-        }).exec();
-      }
-      if (this.data.showEdit) {
-        this.createSelectorQuery().select('.delete-button').boundingClientRect((rect) => {
-          if (rect) {
-            this.setData({
-              hideWidth: this.data.hideWidth + rect.width,
-            })
-          }
-        }).exec();
+    ready() {
+      try {
+        let width = 0;
+        if (this.data.showDelete) {
+          width = 100;
+        }
+        if (this.data.showEdit) {
+          width += 100;
+        }
+        const systemInfo = wx.getSystemInfoSync();
+        const screenWidth = systemInfo.screenWidth;
+        // rpx转px
+        function rpxToPx(rpx) {
+          return rpx * screenWidth / 750;
+        }
+        const pxValue = rpxToPx(width);
+        this.setData({
+          hideWidth: pxValue
+        })
+      } catch (error) {
+        console.error(error)
       }
     },
   },
@@ -78,9 +81,8 @@ Component({
     async touchEnd(e) {
       const currentX = e.changedTouches[0].clientX;
       const offsetX = currentX - this.data.startX;
-
-      // 超过40%
-      if (Math.abs(offsetX) >= this.data.hideWidth * 0.4) {
+      //超过50%自动伸缩
+      if (Math.abs(offsetX) >= this.data.hideWidth * 0.5) {
         // 左滑，展开布局
         if (offsetX < 0) {
           this.setData({

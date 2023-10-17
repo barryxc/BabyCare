@@ -7,6 +7,17 @@
       "list": [
         {
           "name": "",
+          "pathName": "pages/custom-page/custom-page",
+          "query": "",
+          "launchMode": "default",
+          "scene": null,
+          "groupInfo": {
+            "groupIdx": 0,
+            "groupName": "测试模拟群0"
+          }
+        },
+        {
+          "name": "",
           "pathName": "pages/index/index",
           "query": "inviteId=1234567890&expire=2023-10-12 14:34:52",
           "launchMode": "default",

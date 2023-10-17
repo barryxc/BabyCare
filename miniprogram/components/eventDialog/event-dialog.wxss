@@ -1,0 +1,32 @@
+/* components/eventDialog/event-dialog.wxss */
+.mask {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.content {
+  background-color: #f6f6f6;
+  border-radius: 10rpx;
+  width: 90vw;
+  height: fit-content;
+  max-height: 80vh;
+  display: flex;
+  overflow-y: scroll;
+  flex-direction: column;
+  align-items: center;
+}
+
+.component {
+  width: 100%;
+}
+
+.color-accent {
+  background: linear-gradient(to right, rgb(255, 240, 245), rgb(200, 200, 255));
+}

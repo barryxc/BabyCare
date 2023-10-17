@@ -1,0 +1,56 @@
+/* components/custom-add-area/custom-add-area.wxss */
+
+
+.label {
+  font-size: 22rpx;
+}
+
+.label-select {
+  font-size: 22rpx;
+  color: red;
+}
+
+.item-btn {
+  width: fit-content;
+  height: fit-content;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  margin: 10rpx 10rpx 10rpx;
+  padding: 10rpx 20rpx;
+  box-sizing: border-box;
+  border-width: 2rpx;
+  border-color: #aaaaaa;
+  border-style: solid;
+  border-radius: 10rpx;
+  text-overflow: ellipsis;
+}
+
+
+.item-btn-select {
+  width: fit-content;
+  height: fit-content;
+  text-align: center;
+  display: flex;
+  padding: 10rpx 20rpx;
+  align-items: center;
+  margin: 10rpx 10rpx 10rpx;
+  box-sizing: border-box;
+  border-width: 2rpx;
+  border-color: red;
+  border-style: solid;
+  border-radius: 10rpx;
+}
+
+.item-btn:active {
+  background-color: rgba(200, 200, 200, 0.3);
+}
+
+.add-btn {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.add-btn:active {
+  opacity: 0.3;
+}

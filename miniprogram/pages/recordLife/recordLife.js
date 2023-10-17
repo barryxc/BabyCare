@@ -36,34 +36,64 @@ Page({
    * 页面的初始数据
    */
   data: {
+    // 事件类型
     index: 0,
-    icon: "",
+    type: "",
+
     date: "",
     time: "",
-    content: "",
-    showUploadTip: false,
-    haveGetImgSrc: false,
-    envId: 'cloud1-3gt9kvvh7349fcdc',
-    imgSrc: '',
-    range: getEventList(),
+
+    content: "", //备注
+    imgSrc: '', //图片
+
+    //睡觉状态
+    sleepStatus: '', //0,1
+    //结束时间
+    wakeDate: "",
+    wakeTime: "",
+
+    //喂养
+    feedType: "0", //母乳亲喂、母乳瓶喂、奶粉瓶喂
+    leftBra: "",
+    rightBra: "",
+    feedTime: "",
+    volume: "", //容量
+    feedStatus: '',
+    feedEndDate: "",
+    feedEndTime: "",
+
+    //尿布状态
+    nbsStatus: "", //0便便 1 
+
+    //身高：
+    bodyHeight: "",
+    //体重
+    bodyWeight: "",
+    //活动
+    acvitiy: "",
+
   },
 
   onLoad(options) {
+    let type = options.type;
+    let index = options.index;
 
+    let event = getEventList()[index].event;
+    wx.setNavigationBarTitle({
+      title: event,
+    })
+    this.setData({
+      type,
+      index
+    })
   },
 
   onShow() {
     this.setData({
-      icon: getIcon(getEventList()[0].type),
       date: getDate(),
       time: getShortTime(),
-      index: 0,
-    }, () => {
-      console.log("envId:" + this.data.envId);
     });
-
   },
-
 
   selectImg() {
     // 让用户选择一张图片
@@ -80,15 +110,6 @@ Page({
     });
   },
 
-  binEventChange(event) {
-    let value = event.detail.value;
-    console.log(value);
-    let list = getEventList();
-    this.setData({
-      icon: getIcon(list[value].type)
-    });
-  },
-
   //新增记录
   bindsubmit(e) {
     let childId = getSelectedChild().childId;
@@ -99,6 +120,7 @@ Page({
       })
       return
     }
+
     let interval = new Date().getTime() - lastSumbitTime;
     if (interval < getApp().globalData.debounceTime) {
       wx.showToast({
@@ -108,19 +130,17 @@ Page({
       console.log("提交太频繁了,距离上次提交间隔", interval);
       return
     }
+
     lastSumbitTime = new Date().getTime();
     //表单数据
     let values = e.detail.value;
     console.log("表单数据:" + JSON.stringify(values))
-    console.log("模型数据:" + JSON.stringify(this.data))
-    if (this.data.index == undefined) {
-      showModal("未填写事件标题");
-      return
-    }
+
     if (!this.data['date']) {
       showModal("未选择日期");
       return
     }
+
     if (!this.data['time']) {
       showModal("未选择时间");
       return
@@ -133,7 +153,7 @@ Page({
       this.doUploadRecord(this.data)
     } else {
       upload(this.data['imgSrc'], 'record_img').then((resp) => {
-        if (resp.fileID) {
+        if (resp.success) {
           //本地路径
           this.data.localImgSrc = this.data.imgSrc;
           //云路径
@@ -153,34 +173,24 @@ Page({
     }
   },
 
+  //重置
   bindreset(e) {
-    console.log("重置" + JSON.stringify(e))
     this.setData({
-      index: 0,
-      icon: getIcon(getEventList()[0].type),
       date: getDate(),
       time: getShortTime(),
       imgSrc: ""
     })
   },
 
-  bindcDateChange(e) {
-    console.log("日期变化了")
-  },
-
-  bindTimeChange(e) {
-    console.log("时间变化了")
-  },
-
-  //发送事件
+  //通知新增记录
   sendEevent(record) {
     eventBus.emit('addRecord', {
-      date: record.day,
+      date: record.date,
       data: record
     });
   },
 
-  //新增记录
+  //上传记录
   doUploadRecord(data) {
     let child = getSelectedChild();
     let childId = child.childId;

@@ -5,9 +5,11 @@
     <view class="header-area  color-accent">
 
       <view style="position: absolute; top: 100rpx;left: 30rpx; display: flex;">
+      
         <picker mode="selector" style="width: fit-content; height:fit-content;" range='{{childs}}' range-key="name" bind:change='onChildChange' disabled="{{disableChildPicker}}" bind:tap="onChildPickerTap">
           <image src="../../images/switch-baby.svg" style="width: 50rpx;height: 50rpx;" mode="aspectFill" />
         </picker>
+
         <image src="../../images/edit-btn.svg" bind:tap="editChildInfo" style="width: 50rpx;height: 50rpx;margin-left: 12rpx;" mode="aspectFill" />
         <image src="../../images/add-btn.svg" bind:tap="addChild" style="width: 50rpx;height: 50rpx;margin-left: 12rpx;" mode="aspectFill" />
       </view>

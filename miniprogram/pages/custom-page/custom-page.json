@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "add-drop-btn":"../../components/addBtnDrop/AddBtnDrop",
+    "custom-add-area":"../../components/custom-add-area/custom-add-area",
+    "activity-comp":"../../components/activity-comp/activity-com",
+    "date-time-picker":"../../components/date-time-picker/date-time-picker",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
+    "van-popup": "@vant/weapp/popup/index"
+  }
+}

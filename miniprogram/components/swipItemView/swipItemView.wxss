@@ -17,8 +17,7 @@
 
 .delete-button {
   position: relative;
-  flex-shrink: 0;
-  width: 120rpx;
+  width: 200rpx;
   height: 100%;
   display: flex;
   align-items: center;

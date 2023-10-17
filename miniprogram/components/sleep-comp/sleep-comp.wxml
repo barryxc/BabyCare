@@ -1,0 +1,47 @@
+<!--睡眠 -->
+<view class="container">
+  <form bindsubmit="bindsubmit" bindreset="bindreset">
+    <view style="width: 100%;height: 200rpx ;display: flex;justify-content: center;align-items: center;">
+      <text style="font-size: 100rpx;font-weight: 500;color: #444444;">{{costTimeText?costTimeText:'00:00'}}</text>
+    </view>
+
+    <view style="display: flex;align-items: center;justify-content: center;flex-direction: column;">
+
+      <date-time-picker style="width: 100%;height: 100rpx;" model:value="{{startTime}}">
+        <view style="display: flex; align-items: center;justify-content: center;">
+          <text>开始时间</text>
+          <view style="margin-left: 12rpx;width: fit-content;min-width: 300rpx;">
+            <text>{{startTimeFormat}}</text>
+            <view style="height: 1rpx; background-color: black;width: 100%;"></view>
+          </view>
+        </view>
+      </date-time-picker>
+
+      <date-time-picker style="width: 100%;height: 100rpx;" model:value='{{endTime}}'>
+        <view style="display:flex; align-items: center;justify-content: center;position: relative;">
+
+          <view style="display: inline-flex; align-items: center;justify-content: center;position: relative;">
+            <text>结束时间</text>
+            <view style="margin-left: 12rpx;width: fit-content;min-width: 300rpx;position: relative;">
+              <text>{{endTimeFormat}}</text>
+              <view style="height: 1rpx; background-color: black;width:  100%;">
+              </view>
+            </view>
+
+            <view style="right: -40rpx; position: absolute;" catch:tap="onSleeping">
+              <image src="../../images/sleep.svg" mode="aspectFit" style="width: 40rpx;height: 40rpx;" />
+            </view>
+          </view>
+
+
+        </view>
+      </date-time-picker>
+
+    </view>
+
+    <view class="submi-area">
+      <button form-type="reset" class="submit-button-reset " hover-class="submit-button-reset-hover">取消</button>
+      <button form-type="submit" class="submit-button-confirm color-accent" hover-class="submit-button-confirm-hover">{{confirmText}}</button>
+    </view>
+  </form>
+</view>

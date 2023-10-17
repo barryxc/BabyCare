@@ -1,53 +1,5 @@
-<view>
-  <form bindsubmit="bindsubmit" bindreset="bindreset">
-    <view class="form">
-      <view>
-        <picker name="index" id="picker-event" model:value="{{index}}" required="true" mode="selector" range="{{range}}" range-key="event" bindchange="binEventChange">
-          <view class="row">
-            <label class="label" for="">事件</label>
-            <label class="margin-left-auto" for="picker-event">{{range[index].event}}</label>
-            <image class="icon" model:src="{{icon}}" mode="scaleToFill" />
-            <image class="less arrow-style" src="../../images/arrow.svg"></image>
-          </view>
-        </picker>
-      </view>
-
-      <picker mode="date" id="date-picker" name="date" model:value="{{date}}" bindchange="bindcDateChange" fields="day">
-        <view class="row">
-          <label class="label" for="">日期</label>
-          <label class="margin-left-auto">{{date}}</label>
-          <image class="less arrow-style" src="../../images/arrow.svg"></image>
-        </view>
-      </picker>
-
-      <picker mode="time" id="#time-picker" name="time" bindchange="bindTimeChange" model:value="{{time}}" header-text="{{time}}" fields="seconds">
-        <view class="row">
-          <label class="label" for="">时间</label>
-          <label class="margin-left-auto">{{time}}</label>
-          <image class="less arrow-style" src="../../images/arrow.svg"></image>
-        </view>
-
-      </picker>
-
-      <view class="row high-row">
-        <view class="desc">
-          <label class="label" for="">备忘录</label>
-          <textarea name="conent" type="text" class="content" placeholder="请输入文字,不超过140个字" maxlength="140" auto-height="true" placeholder-style="color:#e3e3e3" model:value="{{content}}"></textarea>
-        </view>
-      </view>
-
-      <view class="row" bind:tap="selectImg">
-        <text class="label">选择图片</text>
-        <view wx:if="true" class="code_box" catch:tap="selectImg">
-          <image class="code_img" mode="scaleToFill" model:src="{{imgSrc?imgSrc:'../../images/select-img.svg'}}"></image>
-        </view>
-      </view>
-
-      <view class="submi-area">
-        <button form-type="reset" class="submit-button-reset " hover-class="submit-button-reset-hover">清空</button>
-        <button form-type="submit" class="submit-button-confirm color-accent" hover-class="submit-button-confirm-hover">记录</button>
-      </view>
-    </view>
-  </form>
-
-</view>
+<sleep-comp wx:if="{{type=='sleep'}}"></sleep-comp>
+<feed-comp wx:if="{{type=='feed'}}"></feed-comp>
+<food-comp wx:if="{{type=='food'}}"></food-comp>
+<nbs-comp wx:if="{{type=='shit'}}"></nbs-comp>
+<activity-comp wx:if="{{type=='activity'}}"></activity-comp>

@@ -5,16 +5,13 @@ const {
 } = require("./service/user");
 
 App({
-  appEvents: {
-    addRecord: 'addRecord'
-  },
 
   onLaunch: function (options) {
     console.log("小程序启动", options)
     this.globalData = {
       title: "记录宝宝成长",
       envId: "cloud1-3gt9kvvh7349fcdc",
-      debounceTime: 800
+      debounceTime: 500
     };
 
     if (!wx.cloud) {

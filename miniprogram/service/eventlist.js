@@ -1,46 +1,36 @@
 const events = [{
-    type: 'feed',
-    event: "母乳/奶粉",
-    icon: "../../images/formula.svg",
-  }, {
-    event: "便便/尿布",
-    type: "shit",
-    icon: "../../images/nbs.svg",
-  }, {
-    event: "辅食",
-    type: "food",
-    icon: "../../images/food.svg",
-  }
-  , {
-    event: "睡觉觉",
-    type: "sleep",
-    icon: "../../images/sleep.svg",
-  }, {
-    event: "活动",
-    type: "activity",
-    icon: "../../images/activity.svg",
-  }, {
-    event: "疫苗",
-    type: "vac",
-    icon: "../../images/ym.svg",
-  }, {
-    event: "感冒/发烧",
-    type: "cold",
-    icon: "../../images/cold.svg",
-  }, {
-    event: "记录身高",
-    type: "height",
-    icon: "../../images/height.svg",
-  }, {
-    event: "记录体重",
-    type: "weight",
-    icon: "../../images/weight.svg",
-  }, {
-    event: '成长日记',
-    type: "diary",
-    icon: "../../images/note.svg",
-  }
-];
+  type: 'feed',
+  event: "喂奶",
+  icon: "../../images/breast.svg",
+}, {
+  event: "换尿布",
+  type: "shit",
+  icon: "../../images/nbs.svg",
+}, {
+  event: "辅食",
+  type: "food",
+  icon: "../../images/food.svg",
+}, {
+  event: "睡觉觉",
+  type: "sleep",
+  icon: "../../images/sleep.svg",
+}, {
+  event: "活动",
+  type: "activity",
+  icon: "../../images/activity.svg",
+}, {
+  event: "用药",
+  type: "medicine",
+  icon: "../../images/medicine.svg",
+}, {
+  event: '身高体重',
+  type: "growth",
+  icon: "../../images/growth.svg",
+}, {
+  event: '重要时刻',
+  type: "other",
+  icon: "../../images/star.svg",
+}];
 
 function getEventList() {
   return events;
@@ -48,6 +38,14 @@ function getEventList() {
 
 function isFeed(type) {
   return type == 'feed'
+}
+
+function getEventTitle(type) {
+  let index = events.findIndex((e) => type == e.type);
+  if (index != -1) {
+    return events[index].event;
+  }
+  return '';
 }
 
 function getIcon(type) {
@@ -64,4 +62,5 @@ module.exports = {
   getEventList,
   getIcon,
   isFeed,
+  getEventTitle,
 }

@@ -1,0 +1,16 @@
+<!--components/week-date-switcher/week-date-switcher.wxml-->
+<swiper class="date-container color-accent" bindchange="onWeekScroll" current="{{weeks.length-1}}">
+  <swiper-item wx:for="{{weeks}}" style="height: 100%;width: 100%;display: flex;justify-content: space-around;align-items: center;" wx:key="index" wx:for-index="weekIndex">
+    <view style="height: 100%;width: 100%;display: flex;align-items: center;justify-content:space-around;">
+      <view wx:for-index="dateIndex" wx:for="{{dates}}" wx:key="dateIndex" class="date-item" id="item-{{dateIndex}}" bind:tap="selectDate" data-index="{{dateIndex}}">
+        <view style="width: 60rpx;height: fit-content;">
+          <text style="font-size: 30rpx; color: #6a6a6a;">{{item.weekOfDay}}</text>
+        </view>
+        <view style="display: flex;text-align: center; margin-top: 20rpx;margin-bottom: 20rpx; width: 60rpx;height: 60rpx; border-radius: 50%;background-color: {{dateSelectIndex==dateIndex? '#ff4050':'' }};align-items: center;justify-content: center;">
+          <text style="font-size: 30rpx; color:{{dateSelectIndex==dateIndex? 'white':'#6a6a6a' }}">{{item.dateInMonth}}</text>
+        </view>
+      </view>
+
+    </view>
+  </swiper-item>
+</swiper>

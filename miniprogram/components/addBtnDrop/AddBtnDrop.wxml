@@ -1,0 +1,17 @@
+<!--components/addBtnDrop/AddBtnDrop.wxml-->
+<view style="width: 100%;height: 100%;display: flex;align-items: center;justify-content: center;position: relative;">
+  <view wx:if="{{open}}" style="right: 0;bottom: 130rpx;" class="add-btn-container {{open?'slide-up':'slide-down'}}">
+    <view wx:for="{{data}}" wx:key="index" catch:tap="onItemClick" data-index="{{index}}" class="flex-center">
+      <view>
+        <image src="{{item.icon}}" mode="aspectFill" style="width: 80rpx;height: 80rpx;" />
+      </view>
+      <text style="font-size: 20rpx;">{{item.event}}</text>
+    </view>
+  </view>
+
+
+  <view style="height:100%;width: 100%;display: flex;align-items: center;justify-content: center;" class="color-accent" bind:tap="clickAddBtn" class="{{open?'add-btn-rotate':'add-btn'}}">
+    <image src="../../images/add.svg" mode="aspectFill" style="width: 80%;height: 80%;" />
+  </view>
+
+</view>

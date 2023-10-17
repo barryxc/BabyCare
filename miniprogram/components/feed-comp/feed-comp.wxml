@@ -1,0 +1,210 @@
+<!-- 喂奶-->
+<van-tabs active="{{feedType}}" bind:change='onChange'>
+
+  <!-- 母乳亲喂 -->
+  <van-tab style="margin-top: 2rpx;" title='母乳亲喂' name='breast_feed_by_self'>
+    <form bindsubmit="bindsubmit" bindreset="bindreset">
+
+      <view style="display: flex;flex-direction: column;;">
+        <view class="flex-row" style="justify-content: center;padding: 50rpx;">
+
+          <view style="text-align: center;display: flex;flex-direction: column;align-items: center;">
+            <image src="{{leftBreastFeeding?'../../images/pause.svg':'../../images/play.svg'}}" mode="aspectFit" style="width: 100rpx;height: 100rpx;" bind:tap="countLeft" />
+            <view style="margin-top: 20rpx;"><text>左边</text></view>
+            <view style="height: 40rpx;">
+              <text style="font-size: 22rpx;">{{leftTimeFormat}}</text>
+            </view>
+          </view>
+
+          <view style=" display: flex;flex-direction: column;justify-content: center;margin-left: 30rpx;margin-right: 30rpx; text-align: center;">
+            <view>
+              <text style="font-size: 40rpx;">总时长</text>
+            </view>
+            <view>
+              <text style="font-size: 30rpx;">
+                {{totalTimeFormat?totalTimeFormat:"00:00"}}
+              </text>
+            </view>
+          </view>
+
+
+          <view style="display: flex;flex-direction: column;align-items: center;">
+
+            <image bind:tap="countRight" src="{{rightBreastFeeding?'../../images/pause.svg':'../../images/play.svg'}}" mode="aspectFit" style="width: 100rpx;height: 100rpx;" />
+            <view style="margin-top: 20rpx;"><text>右边</text></view>
+            <view style="height: 40rpx;">
+              <text style="font-size: 22rpx;">{{rightTimeFormat}}</text>
+            </view>
+          </view>
+        </view>
+
+        <date-time-picker style="margin-top: 1rpx;" model:value='{{dateTime}}'>
+          <view class="flex-row line-height">
+            <view class="label">
+              <text>时间</text>
+            </view>
+
+            <view style="margin-left: auto;">
+              <text>{{dateTimeFormat}}</text>
+            </view>
+
+            <view style="margin-right: 32rpx;">
+              <image src="../../images/arrow.svg" style="width: 30rpx;height:30rpx" mode="aspectFit" />
+            </view>
+
+          </view>
+        </date-time-picker>
+
+
+        <view class="flex-row" bind:tap="selectImg" style="margin-top: 1rpx;">
+          <view class="label">
+            <text>图片</text>
+          </view>
+          <view wx:if="true" class="code_box" catch:tap="selectImg">
+            <image class="code_img" mode="aspectFill" src="{{imgSrc?imgSrc:'../../images/select-img.svg'}}"></image>
+          </view>
+          <view style="margin-right: 32rpx;">
+            <image src="../../images/arrow.svg" style="width: 30rpx;height:30rpx" mode="aspectFit" />
+          </view>
+        </view>
+
+
+        <view style="background-color: white;margin-top: 1rpx;height: 200rpx;">
+          <input name="content" type="text" class="content" placeholder="备注" maxlength="70" auto-height="true" placeholder-style="color:#e3e3e3;font-size:32rpx" value="{{content}}"></input>
+        </view>
+
+        <view class="submi-area">
+          <button form-type="reset" class="submit-button-reset " hover-class="submit-button-reset-hover">取消</button>
+          <button form-type="submit" class="submit-button-confirm color-accent" hover-class="submit-button-confirm-hover">保存</button>
+        </view>
+
+      </view>
+
+    </form>
+  </van-tab>
+
+  <!-- 母乳瓶喂 -->
+  <van-tab style="margin-top: 2rpx;" title='母乳瓶喂' name='breast_feed_with_bottle'>
+    <form bindsubmit="bindsubmit" bindreset="bindreset">
+      <view style="display: flex;flex-direction: column;;">
+
+        <view class="flex-row line-height">
+          <view class="label">
+            <text>容量</text>
+          </view>
+          <view style="margin-left: auto">
+            <input type="digit" name='volume' value="{{volume}}" placeholder="请输入" style="text-align: end;" maxlength="5"></input>
+          </view>
+          <view style="margin-left: 32rpx;margin-right: 32rpx;">
+            <text>ml</text>
+          </view>
+        </view>
+
+
+        <date-time-picker style="margin-top: 1rpx;" model:value='{{dateTime}}'>
+          <view class="flex-row line-height">
+            <view class="label">
+              <text>时间</text>
+            </view>
+
+            <view style="margin-left: auto;">
+              <text>{{dateTimeFormat}}</text>
+            </view>
+
+            <view style="margin-right: 32rpx;">
+              <image src="../../images/arrow.svg" style="width: 30rpx;height:30rpx" mode="aspectFit" />
+            </view>
+
+          </view>
+        </date-time-picker>
+
+
+        <view class="flex-row" bind:tap="selectImg" style="margin-top: 1rpx;">
+          <view class="label">
+            <text>图片</text>
+          </view>
+          <view wx:if="true" class="code_box" catch:tap="selectImg">
+            <image class="code_img" mode="aspectFill" src="{{imgSrc?imgSrc:'../../images/select-img.svg'}}"></image>
+          </view>
+          <view style="margin-right: 32rpx;">
+            <image src="../../images/arrow.svg" style="width: 30rpx;height:30rpx" mode="aspectFit" />
+          </view>
+        </view>
+
+
+        <view style="background-color: white;margin-top: 1rpx;height: 200rpx;">
+          <input name="content" type="text" class="content" placeholder="备注" maxlength="70" auto-height="true" placeholder-style="color:#e3e3e3;font-size:32rpx" value="{{content}}"></input>
+        </view>
+
+        <view class="submi-area">
+          <button form-type="reset" class="submit-button-reset " hover-class="submit-button-reset-hover">取消</button>
+          <button form-type="submit" class="submit-button-confirm color-accent" hover-class="submit-button-confirm-hover">保存</button>
+        </view>
+
+      </view>
+    </form>
+  </van-tab>
+
+  <!-- 奶粉瓶喂 -->
+  <van-tab style="margin-top: 2rpx;" title='奶粉瓶喂' name='formula_feed_with_bottle'>
+    <form bindsubmit="bindsubmit" bindreset="bindreset">
+      <view style="display: flex;flex-direction: column;;">
+
+        <view class="flex-row line-height">
+          <view class="label">
+            <text>容量</text>
+          </view>
+          <view style="margin-left: auto">
+            <input type="number" name='volume' value="{{volume}}" placeholder="请输入" style="text-align: end;" maxlength="5"></input>
+          </view>
+          <view style="margin-left: 32rpx;margin-right: 32rpx;">
+            <text>ml</text>
+          </view>
+        </view>
+
+
+        <date-time-picker style="margin-top: 1rpx;" model:value='{{dateTime}}'>
+          <view class="flex-row line-height">
+            <view class="label">
+              <text>时间</text>
+            </view>
+
+            <view style="margin-left: auto;">
+              <text>{{dateTimeFormat}}</text>
+            </view>
+
+            <view style="margin-right: 32rpx;">
+              <image src="../../images/arrow.svg" style="width: 30rpx;height:30rpx" mode="aspectFit" />
+            </view>
+
+          </view>
+        </date-time-picker>
+
+
+        <view class="flex-row" bind:tap="selectImg" style="margin-top: 1rpx;">
+          <view class="label">
+            <text>图片</text>
+          </view>
+          <view wx:if="true" class="code_box" catch:tap="selectImg">
+            <image class="code_img" mode="aspectFill" src="{{imgSrc?imgSrc:'../../images/select-img.svg'}}"></image>
+          </view>
+          <view style="margin-right: 32rpx;">
+            <image src="../../images/arrow.svg" style="width: 30rpx;height:30rpx" mode="aspectFit" />
+          </view>
+        </view>
+
+        <view style="background-color: white;margin-top: 1rpx;height: 200rpx;">
+          <input name="content" type="text" class="content" placeholder="备注" maxlength="70" auto-height="true" placeholder-style="color:#e3e3e3;font-size:32rpx" value="{{content}}"></input>
+        </view>
+
+        <view class="submi-area">
+          <button form-type="reset" class="submit-button-reset " hover-class="submit-button-reset-hover">取消</button>
+          <button form-type="submit" class="submit-button-confirm color-accent" hover-class="submit-button-confirm-hover">保存</button>
+        </view>
+
+      </view>
+    </form>
+  </van-tab>
+
+
+</van-tabs>

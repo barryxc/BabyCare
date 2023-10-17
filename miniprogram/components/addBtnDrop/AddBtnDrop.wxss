@@ -1,0 +1,86 @@
+.slide-up {
+  animation: slide-up 0.5s;
+  transition-duration: 0.5s;
+}
+
+.add-btn-container {
+  padding: 10rpx;
+  overflow: auto;
+  width: 560rpx;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  z-index: 1000;
+  background-color: #eeeeee;
+  border-radius: 10rpx;
+}
+
+.slide-down {
+  transition-duration: 0.5s;
+  animation: slide-out 0.5s;
+}
+
+.slide-up:active {
+  animation: slide-up 0.5s;
+  transition-duration: 0.5s;
+  opacity: 0.5;
+}
+
+
+
+.add-btn {
+  transition-property: all;
+  transition-duration: 0.5s;
+}
+
+.add-btn:active {
+  transition-property: all;
+  transition-duration: 0.5s;
+  opacity: 0.5;
+}
+
+.add-btn-rotate {
+  transform: rotate(45deg);
+  transition-duration: 0.5s;
+}
+
+.add-btn-rotate:active {
+  transform: rotate(45deg);
+  transition-duration: 0.5s;
+  opacity: 0.5;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+
+
+@keyframes slide-out {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(100vh);
+  }
+}
+
+.flex-center {
+  display: flex;
+  width: 137rpx;
+  height: 136rpx;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  margin: 1rpx;
+}

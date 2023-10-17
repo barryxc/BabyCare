@@ -86,7 +86,7 @@ Page({
       return
     }
     let uploadResut = await upload(avatarUrl, 'user_avatar');
-    if (uploadResut.fileID) {
+    if (uploadResut.success) {
       callServer({
         avatarUrl: uploadResut.fileID,
         type: "updateUserInfo",

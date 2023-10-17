@@ -1,14 +1,14 @@
 <!--components/swipItemView/swipItemView.wxml-->
-
-
-<movable-area class="list-item-container" id="area" style="width: {{width}}; height:{{height}};">
-  <movable-view class="list-item" style="width: fit-content; height: {{height}};" x="{{x}}" direction="horizontal" damping="50" friction="10" bindtouchmove="onMovableChange" out-of-bounds bindtouchstart="touchStart" bindtouchend='touchEnd' bindchange='onSlide' data-index="{{index}}">
-    <slot></slot>
-    <view class="delete-button red" id="delete" wx:if="{{showDelete}}" bind:tap="onDelete" data-index="{{index}}">
-      <text>删除</text>
-    </view>
-    <view class="delete-button gray" id='edit' wx:if="{{showEdit}}" bind:tap="" data-index="{{index}}">
-      <text>编辑</text>
+<movable-area class="list-item-container" style="width: 100%; height:fit-content;">
+  <movable-view class="list-item" style="width: fit-content; height: fit-content;" x="{{x}}" direction="horizontal" damping="50" friction="10" bindtouchmove="onMovableChange" out-of-bounds bindtouchstart="touchStart" bindtouchend='touchEnd' bindchange='onSlide' data-index="{{index}}">
+    <view style="width: fit-content;display: flex;">
+      <slot></slot>
+      <view class="delete-button red" wx:if="{{showDelete}}" bind:tap="onDelete" data-index="{{index}}">
+        <text>删除</text>
+      </view>
+      <view class="delete-button gray" wx:if="{{showEdit}}" bind:tap="" data-index="{{index}}">
+        <text>编辑</text>
+      </view>
     </view>
   </movable-view>
 </movable-area>

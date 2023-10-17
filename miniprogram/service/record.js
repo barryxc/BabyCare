@@ -10,10 +10,10 @@ async function updateRecord(childId, record) {
   });
 }
 
-async function queryRecord(day, childId) {
+async function queryRecord(date, childId) {
   return callServer({
     type: 'selectRecord',
-    day,
+    date,
     childId,
   });
 }
@@ -22,7 +22,7 @@ async function insertRecord(childId, record) {
   return callServer({
     record,
     childId,
-    type: 'insertRecord'
+    type: 'insertOrReplaceRecord'
   });
 }
 

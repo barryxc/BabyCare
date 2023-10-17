@@ -1,7 +1,9 @@
 const {
   getRecentDate,
   weekDay,
-  dateInMonth
+  dateInMonth,
+  format,
+  getToday
 } = require("../../service/date");
 const {
   getIcon,
@@ -25,11 +27,10 @@ Page({
     selectIndex: 0,
     color: "#7A7E83",
     selectedColor: "#ff80ca",
-    cache: [],
+
+    //日期
+    date: getToday(),
     statstics: [],
-    weeks: [],//周
-    dates: [], // 日期数据
-    dateSelectIndex: 0, //选中的索引
   },
 
   /**
@@ -61,18 +62,18 @@ Page({
     this.setData({
       dateSelectIndex: this.data.dates.length - 1,
     })
-    this.refresh();
+    this.fetchRemoteData();
     eventBus.on('childChange', (data) => {
-      this.refresh();
+      this.fetchRemoteData();
     });
 
     eventBus.on('addRecord', (res) => {
       console.log("监听新增的记录")
-      this.refresh();
+      this.fetchRemoteData();
     });
     eventBus.on('deleteRecord', (res) => {
       console.log("监听删除记录")
-      this.refresh();
+      this.fetchRemoteData();
     });
   },
 
@@ -95,16 +96,18 @@ Page({
 
   },
 
-  //当前选中的日期
-  getSelectDate() {
-    return this.data.dates[this.data.dateSelectIndex];
-  },
-
-  refresh() {
-    let date = this.getSelectDate().date;
+  //页面刷新
+  fetchRemoteData() {
+    let date = this.data.date;
+    if (!date) {
+      return
+    }
+    wx.showLoading({
+      title: '',
+    })
     callServer({
       type: 'selectRecord',
-      day: date,
+      date: date,
       childId: getSelectedChild().childId
     }).then((res) => {
       let data = res.result.data;
@@ -144,8 +147,14 @@ Page({
       this.setData({
         statstics: stats,
       })
+      wx.hideLoading();
+      wx.stopPullDownRefresh();
+    }, () => {
+      wx.hideLoading();
       wx.stopPullDownRefresh();
     }).catch(e => {
+      console.error(e);
+      wx.hideLoading();
       wx.stopPullDownRefresh();
     });
   },
@@ -168,7 +177,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-    this.refresh();
+    this.fetchRemoteData();
   },
 
   /**
@@ -184,7 +193,9 @@ Page({
   onShareAppMessage() {
 
   },
-  onBindChange(e) {
+
+  //切换页面
+  onBindChangePage(e) {
     console.log(e);
     let index = e.detail.current;
     this.setData({
@@ -197,36 +208,14 @@ Page({
       selectIndex: index,
     })
   },
-  swiperChange: function (e) {
-    this.setData({
-      currentIndex: e.detail.current
-    });
-  },
 
-  //选中日期
-  selectDate(e) {
-    let index = e.currentTarget.dataset.index;
-    if (this.data.dateSelectIndex == index) {
-      return
-    }
+  //日期切换
+  onDateChange(e) {
+    let date = e.detail.date;
     this.setData({
-      dateSelectIndex: index
+      date
     })
-    let date = this.data.dates[index].date;
-    console.log('选中日期', date)
-    this.refresh();
-  },
-
-  //滑动日期
-  onWeekScroll(e) {
-    let current = e.detail.current;
-    console.log(current)
-    let dates = this.data.weeks[current];
-    console.log("滑动日期", dates)
-    this.setData({
-      dates,
-      dateSelectIndex: 6
-    })
-    this.refresh()
+    this.fetchRemoteData()
   }
+
 })

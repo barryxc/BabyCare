@@ -120,18 +120,16 @@
 }
 
 .content {
-  max-height: 140rpx;
-  margin-top: 30rpx;
+  height: 1000rpx;
+  margin-left: 32rpx;
   font-size: 28rpx;
   color: #666666;
-  padding-left: 10rpx;
+  padding-top: 30rpx;
+  padding-bottom: 30rpx;
 }
 
 .label {
-  padding-left: 10rpx;
-  color: #333333;
-  height: 60rpx;
-  font-size: 28rpx;
+  margin-left: 32rpx;
 }
 
 .icon {
@@ -210,4 +208,22 @@
   color: #666666;
   padding: 0rpx;
   margin: 0rpx;
+}
+
+
+.flex-cloumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+}
+
+.line-height {
+  height: 120rpx;
 }
