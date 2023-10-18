@@ -50,10 +50,17 @@
 
             <view style="margin-right: 32rpx;">
               <image src="../../images/arrow.svg" style="width: 30rpx;height:30rpx" mode="aspectFit" />
-            </view>
 
+            </view>
           </view>
         </date-time-picker>
+
+        <view style="display: flex;margin-top: 10rpx;margin-bottom: 10rpx;">
+          <view style="margin-left: auto;"></view>
+          <view style="margin-right: 40rpx;">
+            <switch value="needUpdateEndTime" color="#c8c8ff" bind:change='oCheckBoxChange' checked="{{needUpdateEndTime}}"><text style="font-size: 28rpx;">自动更新到结束时间</text></switch>
+          </view>
+        </view>
 
 
         <view class="flex-row" bind:tap="selectImg" style="margin-top: 1rpx;">
@@ -84,7 +91,7 @@
   </van-tab>
 
   <!-- 母乳瓶喂 -->
-  <van-tab style="margin-top: 2rpx;" title='母乳瓶喂' name='breast_feed_with_bottle'  disabled="{{lock?'breast_feed_with_bottle'!=feedType:false}}">
+  <van-tab style="margin-top: 2rpx;" title='母乳瓶喂' name='breast_feed_with_bottle' disabled="{{lock?'breast_feed_with_bottle'!=feedType:false}}">
     <form bindsubmit="bindsubmit" bindreset="bindreset">
       <view style="display: flex;flex-direction: column;;">
 

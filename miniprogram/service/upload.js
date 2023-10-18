@@ -3,7 +3,6 @@ const {
 } = require("./uuid");
 
 async function upload(filepath, prefix) {
-  debugger
   if (filepath.startsWith("cloud")) {
     return {
       success: true,

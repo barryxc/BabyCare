@@ -38,7 +38,7 @@ Page({
     eventBus.on("childChange", (child) => {
       this.refreshUser();
     });
-    eventBus.on("setUserInfo", (child) => {
+    eventBus.on("updateUserInfo", (child) => {
       this.refreshUser();
     });
     this.refreshUser();

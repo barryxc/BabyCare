@@ -176,6 +176,11 @@ page {
   font-size: 38rpx;
   color: #333333;
 }
+.event_red{
+  font-weight: bold;
+  font-size: 38rpx;
+  color: #ff0000;
+}
 
 .empty-img {
   width: 120rpx;
@@ -344,6 +349,8 @@ page {
   border-color: red;
   border-radius: 10rpx;
   border-width: 2rpx;
+  padding-left: 30rpx;
+  padding-right: 30rpx;
   border-style: solid;
 }
 

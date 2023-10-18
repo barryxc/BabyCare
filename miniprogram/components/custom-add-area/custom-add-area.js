@@ -105,11 +105,33 @@ Component({
     deleteItem(e) {
       let data = this.data.data;
       let index = e.currentTarget.dataset.index;
+
+      let select = this.data.selectIndex;
+      let item = this.data.data[select];
+
       if (data) {
+        //删除
         data.splice(index, 1);
+        //当前选中的被删除了
+        if (select == index) {
+          select = -1;
+          item = {};
+        } else {
+          select = data.findIndex((e) => e.name == item.name);
+        }
+
+        //刷新当前页面
         this.setData({
-          data
+          data,
+          selectIndex: select,
         })
+
+        //触发change事件
+        this.triggerEvent("change", {
+          index: select,
+          data: item,
+        });
+        //触发items事件
         this.triggerEvent('onItemsChanged', this.data.data)
       }
 

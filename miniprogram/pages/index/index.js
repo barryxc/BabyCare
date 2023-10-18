@@ -1,6 +1,5 @@
 let {
   getToday,
-  formatDiff,
   format,
   formatMillis,
 } = require('../../service/date.js');
@@ -9,6 +8,8 @@ const {
   getSelectedChild,
   getChilds,
   eventBus,
+  syncUserInfo,
+  setUser,
 } = require('../../service/user.js');
 const {
   getEventList,
@@ -16,9 +17,14 @@ const {
 } = require('../../service/eventlist.js');
 
 let lastSyncTime = 0;
+let updateUserInfoCall;
+let updateUiCallback;
+let childChangeCallbcak;
+let wakeEventCall;
+let feedEndCall;
+let hideCircleEventCall;
 
 Page({
-
 
   /**
    * 页面的初始数据
@@ -33,7 +39,6 @@ Page({
     date: getToday(),
 
     //数据
-    cache: {},
     records: [],
 
     //选中记录,传递个event-dialog参数
@@ -51,53 +56,160 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.fetchRemoteData();
-    eventBus.on("setUserInfo", () => {
+    //同步用户信息
+    syncUserInfo(getApp()).then((res) => {
+      setUser(res.result);
+    }).catch((e) => {
+      console.error(e)
+      wx.showToast({
+        title: '同步失败',
+        icon: "error"
+      })
+    });
+
+    //更新用户信息回调
+    updateUserInfoCall = (res) => {
+      let childs = getChilds();
+      if (!childs) {
+        return
+      }
+      this.setData({
+        childs: childs,
+        selectChild: getSelectedChild(),
+      })
+      this.fetchRemoteData();
+    }
+    //监听用户刷新事件
+    eventBus.on("updateUserInfo", updateUserInfoCall);
+
+    //更新小宝改变事件
+    childChangeCallbcak = (child) => {
+
       let childs = getChilds();
       this.setData({
         childs: childs,
         selectChild: getSelectedChild(),
       })
       this.fetchRemoteData();
-    });
 
-    eventBus.on("childChange", (child) => {
-      let childs = getChilds();
-      this.setData({
-        childs: childs,
-        selectChild: getSelectedChild(),
-      })
-      this.fetchRemoteData();
-    });
+    }
+    //监听child事件
+    eventBus.on("childChange", childChangeCallbcak);
 
-    eventBus.on('addRecord', (res) => {
-      try {
-        console.log("监听新增记录", res)
-        if (!this.data.cache[res.date]) {
-          this.data.cache[res.date] = [];
-        }
-        //新增记录添加到缓存
-        let fromCache = this.data.cache[res.date];
-        let index = fromCache.findIndex((e) => e.recordId == res.data.recordId);
-        if (index != -1) {
-          fromCache[index] = res.data;
-        } else {
-          fromCache.push(res.data)
-        }
-
-        //如果新增记录的是当前页面所选择的日期，则刷新页面
-        if (res.date == this.data.date) {
-          this.updatePageUi(this.data.cache[res.date]);
-        }
-      } catch (error) {
-        console.error(error);
+    //监听更新事件
+    updateUiCallback = (res) => {
+      //是否当前日期
+      if (res.data.date != this.data.date) {
+        return
+      }
+      let findIndex = this.data.records.findIndex((e) => e.recordId == res.data.recordId);
+      if (res.type == 'delete' && findIndex != -1) { //删除事件
+        this.data.records.splice(findIndex, 1);
+        this.setData({
+          records: this.data.records
+        })
       }
 
-    });
+      if (res.type == 'modify') {
+        if (findIndex == -1) { //新增
+          this.data.records.push(res.data);
+        } else { //修改
+          this.data.records[findIndex] = res.data;
+        }
+        this.updatePageUi(this.data.records)
+      }
+    }
+    //监听record事件
+    eventBus.on('updateUi', updateUiCallback);
 
-    eventBus.on('hideCircleAddBtn', (data) => {
+    //监听睡醒事件
+    wakeEventCall = (wakeRecord) => {
+      console.log(wakeRecord);
+
+      wakeRecord.sleepStatus = 'wake';
+      wakeRecord.endTime = Date.now();
+      wakeRecord.endtimeFormat = format(wakeRecord.endTime);
+      wakeRecord.date = format(wakeRecord.endTime, 'YYYY-MM-DD');
+      wakeRecord.time = format(wakeRecord.endTime, 'HH:mm');
+
+      delete wakeRecord.record;
+      delete wakeRecord.ext;
+      delete wakeRecord._id;
+
+      record.insertRecord(wakeRecord.childId, wakeRecord).then((res) => {
+        if (res.result.success) {
+          eventBus.emit('updateUi', {
+            type: "modify",
+            data: wakeRecord
+          });
+        } else {
+          wx.showToast({
+            title: '更新失败',
+            icon: 'error'
+          })
+        }
+      }).catch((e) => {
+        console.error(e);
+        wx.showToast({
+          title: '更新失败',
+          icon: "error"
+        })
+      });
+    }
+    //监听睡醒事件
+    eventBus.on("wake", wakeEventCall)
+
+    //监听喂养结束事件
+    feedEndCall = (feedEndRecord) => {
+      console.log("结束喂养", feedEndRecord);
+      let now = Date.now();
+      if (feedEndRecord.leftBreastFeeding) {
+        feedEndRecord.leftBreastFeeding = false;
+        feedEndRecord.leftTime += (now - feedEndRecord.lastTime);
+      }
+      if (feedEndRecord.rightBreastFeeding) {
+        feedEndRecord.rightBreastFeeding = false;
+        feedEndRecord.rightTime += (now - feedEndRecord.lastTime);
+      }
+
+      //存储上次时间
+      feedEndRecord.lastTime = now;
+
+      //需要更新到结束时间
+      if (wx.getStorageSync('needUpdateEndTime')) {
+        feedEndRecord.dateTime = now;
+        feedEndRecord.date = format(now, 'YYYY-MM-DD');
+        feedEndRecord.time = format(now, 'HH:mm');
+      }
+
+      //移除属性
+      delete feedEndRecord.ext;
+      delete feedEndRecord._id;
+      delete feedEndRecord.record;
+
+      record.insertRecord(feedEndRecord.childId, feedEndRecord).then((res) => {
+        if (res.result.success) {
+          eventBus.emit('updateUi', {
+            type: "modify",
+            data: feedEndRecord
+          });
+        } else {
+          wx.showToast({
+            title: '更新失败',
+            icon: 'error'
+          })
+        }
+      }).catch((e) => {
+        console.error(e);
+      });
+    };
+    eventBus.on('end_feed', feedEndCall);
+
+    hideCircleEventCall = (data) => {
       this.hideCircleAddBtn();
-    })
+    };
+    //监听circle add btn 事件
+    eventBus.on('hideCircleAddBtn', hideCircleEventCall)
   },
 
   /**
@@ -144,7 +256,16 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() {},
+  onUnload() {
+    console.log("onUnload");
+    lastSyncTime = 0;
+    eventBus.off("updateUserInfo", updateUserInfoCall);
+    eventBus.off("updateUi", updateUiCallback);
+    eventBus.off("childChange", childChangeCallbcak);
+    eventBus.off("wake", wakeEventCall);
+    eventBus.off('hideCircleAddBtn', hideCircleEventCall);
+    eventBus.off('end_feed', feedEndCall);
+  },
 
 
   /**
@@ -179,8 +300,18 @@ Page({
     }
   },
 
-  //刷新页面
+  //拉取数据
   fetchRemoteData() {
+    let currentTime = new Date().getTime();
+    let interval = currentTime - lastSyncTime;
+    if (interval < getApp().globalData.debounceTime) {
+      console.log("刷新频率太快", interval);
+      wx.showToast({
+        title: '刷新太频繁了',
+      })
+      return
+    }
+    lastSyncTime = currentTime;
     let childId = getSelectedChild().childId;
     if (!childId) {
       this.setData({
@@ -193,7 +324,6 @@ Page({
     wx.showLoading({
       title: '',
     })
-
     this.loadData().then((res) => {
       this.updatePageUi(res);
       wx.stopPullDownRefresh();
@@ -233,23 +363,10 @@ Page({
 
   //加载数据
   async loadData() {
-    let currentTime = new Date().getTime();
-    let interval = currentTime - lastSyncTime;
-    if (interval < getApp().globalData.debounceTime) {
-      console.log("刷新频率太快", interval);
-      wx.showToast({
-        title: '刷新太频繁了',
-      })
-      //从缓存中取数据
-      console.log("数据取自缓存", this.data.cache);
-      return this.data.cache[this.data.date]
-    }
-
-    lastSyncTime = currentTime;
-    let date = this.data.date;
-    let child = getSelectedChild();
-    let childId = child.childId;
     try {
+      let date = this.data.date;
+      let child = getSelectedChild();
+      let childId = child.childId;
       const res = await record.queryRecord(date, childId);
       let records = res.result.data;
       console.log("数据来自网络", records);
@@ -263,7 +380,12 @@ Page({
   //页面刷新
   updatePageUi(data) {
     try {
-      if (data && Array.isArray(data) && data.length > 0) {
+      //未定义
+      if (!data) {
+        return
+      }
+      //数组
+      if (Array.isArray(data) && data.length > 0) {
         // 排序
         data.sort((a, b) => {
           const result = b.time.localeCompare(a.time);
@@ -272,7 +394,6 @@ Page({
           }
           return b.clientModifyTime.localeCompare(a.clientModifyTime);
         });
-
         //更新页面
         data.forEach((ele, index) => {
           try {
@@ -281,75 +402,55 @@ Page({
               x: 0, //侧滑删除归位
             };
             ele.ext = ext;
-
             //扩展用于ui展示
             ext.icon = getIcon(ele.type);
 
+            ext.title = ele.event;
+            ext.content = ele.event;
+            ext.time = ele.time;
+
+            //区分展示
             let type = ele.type;
             switch (type) {
               case 'feed':
+                ext.title = ele.feedTitle;
                 if (ele.feedType == 'breast_feed_by_self') {
                   if (ele.leftBreastFeeding || ele.rightBreastFeeding) {
                     ext.title = '亲喂中...';
-                    break
+                    ext.title_red = true;
+                    ext.content = '结束喂养';
+                    ext.content_red = true;
+                  } else {
+                    ext.content = '';
+                    if (ele.leftTime > 0) {
+                      ext.content += `左 ${formatMillis(ele.leftTime, 'mm:ss') } `
+                    }
+                    if (ele.rightTime > 0) {
+                      ext.content += `右 ${formatMillis(ele.rightTime, 'mm:ss')} `
+                    }
+                    if (ele.leftTime > 0 && ele.rightTime > 0) {
+                      ext.content += `总 ${formatMillis(ele.rightTime+ele.leftTime, 'mm:ss')} `
+                    }
                   }
+                } else {
+                  ext.content = ele.volume + " 毫升";
                 }
-                ext.title = ele.feedTitle;
                 break;
               case 'activity':
                 ext.title = ele.activity.name;
+                ext.content = "时长 " + formatMillis(ele.endTime - ele.startTime, 'HH:mm')
+                ext.time = format(ele.startTime, 'HH:mm') + " - " + format(ele.endTime, 'HH:mm');
                 break;
               case 'other':
                 ext.title = '重要时刻';
-                break;
-              case 'shit':
-                ext.title = "换尿布";
-                break;
-              case 'food':
-                ext.title = "辅食";
-                break;
-              case 'sleep':
-                if (ele.sleepStatus == 'sleeping') {
-                  ext.title = "熟睡中😴...";
-                } else {
-                  ext.title = "睡醒了";
-                }
-                break;
-              default:
-                ext.title = ele.event;
-                break;
-            }
-
-            switch (type) {
-              case 'feed':
-                if (ele.feedType != 'breast_feed_by_self') {
-                  ext.content = ele.volume + " 毫升";
-                } else {
-                  if (ele.leftBreastFeeding || ele.rightBreastFeeding) {
-                    ext.content = '结束喂养';
-                    ext.content_clickable = true
-                  } else {
-                    ext.content_clickable = false
-                    ext.content = '左(' + formatMillis(ele.leftTime, 'mm:ss') + ") 右(" + formatMillis(ele.rightTime, 'mm:ss') + ') 总(' + formatMillis(ele.leftTime + ele.rightTime, 'mm:ss') + ")";
-                  }
-                }
-                break;
-              case 'activity':
-                ext.content = "时长 " + formatDiff(ele.endTime, ele.startTime, 'HH:mm')
-                break;
-              case 'sleep':
-                if (ele.sleepStatus == 'sleeping') {
-                  ext.content_clickable = true;
-                  ext.content = "睡醒了"
-                } else {
-                  ext.content = "时长 " + formatDiff(ele.startTime, ele.endTime, 'HH:mm')
-                }
-                break;
-              case 'other':
                 ext.content = ele.activity.name;
                 break;
               case 'shit':
+                ext.title = "换尿布";
                 let status = ele.nbsStatus.name;
+                if (!ext.content) {
+                  ext.content = '';
+                }
                 if (status.includes('嘘嘘')) {
                   ext.content = " 嘘嘘";
                   if (ele.peeColor.name) {
@@ -357,7 +458,7 @@ Page({
                   }
                 }
                 if (status.includes('便便')) {
-                  ext.content = ` 💩`
+                  ext.content += ` 💩`
                   if (ele.shitStatus.name) {
                     ext.content += ` (${ele.shitStatus.name})`
                   }
@@ -368,9 +469,9 @@ Page({
                     ext.content += ` (${ele.shitColor.name})`
                   }
                 }
-
                 break;
               case 'food':
+                ext.title = "辅食";
                 ext.content = ele.solidFood.name;
                 if (ele.volume) {
                   ext.content += " " + ele.volume;
@@ -379,43 +480,54 @@ Page({
                   ext.content += " " + ele.unit;
                 }
                 break;
-              default:
-                ext.content = ele.event;
+              case 'sleep':
+                if (ele.sleepStatus == 'sleeping') {
+                  ext.title = "熟睡中😴...";
+                  ext.title_red = true;
+                  ext.content_red = true;
+                  ext.content = "睡醒了"
+                  ext.time = ele.time;
+                } else {
+                  ext.title = "睡醒了";
+                  ext.content = "时长 " + formatMillis(ele.endTime - ele.startTime, 'HH:mm:ss')
+                  ext.time = format(ele.startTime, 'HH:mm') + " - " + format(ele.endTime, 'HH:mm');
+                }
                 break;
-            }
-
-
-            switch (type) {
-              case 'activity':
-                ext.time = format(ele.startTime, 'HH:mm') + "-" + format(ele.endTime, 'HH:mm');
-                break;
               default:
-                ext.time = ele.time;
                 break;
             }
           } catch (error) {
             console.error(error)
           }
-
         });
       }
-      if (data) {
-        //缓存数据
-        this.data.cache[this.data.date] = data;
-      }
+      this.setData({
+        records: data
+      })
       console.log("页面刷新", data);
-      if (data) {
-        this.setData({
-          records: data
-        });
-      } else {
-        this.setData({
-          records: []
-        })
-      }
     } catch (error) {
       console.error(error)
     }
+  },
+
+  //执行代办事项
+  executeToList(e) {
+    let index = e.currentTarget.dataset.index;
+    let record = this.data.records[index];
+    if (!record) {
+      console.error('record is undefined')
+      return
+    }
+    //睡眠中....
+    if (record.type == 'sleep' && record.sleepStatus == 'sleeping') {
+      eventBus.emit('wake', record)
+    } else
+      //亲喂中...
+      if (record.type == 'feed' && record.feedType == 'breast_feed_by_self' && (record.leftBreastFeeding || record.rightBreastFeeding)) {
+        eventBus.emit('end_feed', record)
+      } else {
+        this.onTapRecordItem(e);
+      }
   },
 
   //修改日期，重新刷新日志
@@ -457,13 +569,10 @@ Page({
       let deleteResult = await record.deteleRecord(childId, item.recordId);
 
       if (deleteResult.result.success) {
-        const dataset = this.data.records.filter((record, i) => i != index);
-        this.data.cache[this.data.date] = dataset;
-        this.setData({
-          records: dataset,
-          cache: this.data.cache
-        })
-        eventBus.emit("deleteRecord", item);
+        eventBus.emit("updateUi", {
+          type: "delete",
+          data: item
+        });
       } else {
         wx.showToast({
           title: '删除失败',
@@ -496,6 +605,7 @@ Page({
       })
     }
   },
+  //监听child picker 点击事件
   onChildPickerTap() {
     let childs = getChilds();
     let disabled = !childs || childs.length == 0;
@@ -543,6 +653,7 @@ Page({
     this.hideCircleAddBtn();
   },
 
+  //隐藏弹框
   hide() {
     this.setData({
       showEventDialog: false

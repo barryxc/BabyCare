@@ -23,7 +23,7 @@ Component({
     endTime: "",
 
     startTimeFormat: format(Date.now()),
-    endTimeFormat: "睡熟中😴...",
+    endTimeFormat: "熟睡中...",
     confirmText: '开始',
 
     costTimeText: "00:00",
@@ -68,7 +68,7 @@ Component({
       this.setData({
         costTimeText: "00:00",
         endTime: "",
-        endTimeFormat: "睡熟中😴...",
+        endTimeFormat: "熟睡中...",
         confirmText: "开始"
       })
     },
@@ -124,7 +124,6 @@ Component({
         //有结束时间按照结束时间算，没有按照开始时间算
         date: format(this.data.endTime ? this.data.endTime : this.data.startTime, 'YYYY-MM-DD'),
         time: format(this.data.endTime ? this.data.endTime : this.data.startTime, "HH:mm"),
-
       })
     }
   }

@@ -28,8 +28,8 @@
               </view>
             </view>
 
-            <view style="right: -40rpx; position: absolute;" catch:tap="onSleeping">
-              <image src="../../images/sleep.svg" mode="aspectFit" style="width: 40rpx;height: 40rpx;" />
+            <view style="right: -80rpx; position: absolute; width: 80rpx;height: 80rpx;display: flex;align-items: center;" catch:tap="onSleeping">
+              <text>😴</text>
             </view>
           </view>
 

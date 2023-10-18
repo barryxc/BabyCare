@@ -22,7 +22,6 @@ Component({
    */
   data: {
 
-    //第一次为当前时间，第二次进入时属于保存时间
     dateTime: Date.now(),
     dateTimeFormat: format(Date.now()),
 
@@ -44,9 +43,8 @@ Component({
 
     leftBreastFeeding: false,
     rightBreastFeeding: false,
-
     lock: false,
-
+    needUpdateEndTime: false
   },
 
   observers: {
@@ -74,6 +72,9 @@ Component({
   },
 
   lifetimes: {
+    created() {
+      console.log('created')
+    },
     attached() {
       console.log('onReady')
       this.setData({
@@ -88,9 +89,18 @@ Component({
         })
       }
 
+      //是否需要更新到结束时间
+      let needUpdateEndTime = wx.getStorageSync('needUpdateEndTime')
+      if (!needUpdateEndTime) {
+        needUpdateEndTime = false;
+      }
+      this.setData({
+        needUpdateEndTime,
+      })
+
       //恢复计时器状态
       if (this.data.leftBreastFeeding) {
-        let diff = Date.now() - this.data.dateTime;
+        let diff = Date.now() - this.data.lastTime;
         if (diff > 0) {
           this.setData({
             leftTime: (this.data.leftTime + diff)
@@ -101,7 +111,7 @@ Component({
 
       //恢复计时器状态
       if (this.data.rightBreastFeeding) {
-        let diff = Date.now() - this.data.dateTime;
+        let diff = Date.now() - this.data.lastTime;
         if (diff > 0) {
           this.setData({
             rightTime: (this.data.rightTime + diff)
@@ -109,7 +119,6 @@ Component({
         }
         this.startRightInterval()
       }
-
     },
     detached() {
       console.log('detached')
@@ -127,6 +136,11 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    oCheckBoxChange(e) {
+      let value = e.detail.value;
+      wx.setStorageSync("needUpdateEndTime", value)
+    },
+
     bindreset() {
       this.clearTimer()
       this.triggerEvent('cancel')
@@ -138,38 +152,31 @@ Component({
 
       //亲喂的情况下需要校验时长
       if (this.data.feedType == 'breast_feed_by_self') {
-        if (this.data.leftTime + this.data.rightTime == 0) {
-          if (!this.data.leftBreastFeeding && !this.data.rightBreastFeeding) {
-            wx.showToast({
-              title: '未点击开始',
-              icon: 'error'
-            })
-          }
+        let totalTime = this.data.leftTime + this.data.rightTime;
+        if (totalTime == 0) {
+          wx.showToast({
+            title: '未点击开始',
+            icon: 'error'
+          })
           return
         }
-      }
-
-      //瓶喂的情况下需要校验容量
-      if (this.data.feedType != 'breast_feed_by_self' && (!volume || volume === 0)) {
+      } else if ((!volume || volume === 0)) {
+        //瓶喂的情况下需要校验容量
         wx.showToast({
           title: '容量不能为空',
           icon: 'error'
         })
         return
       }
-      //状态锁定🔒
-      this.setData({
-        lock: true
-      })
+
       let now = Date.now();
       let item = {
         ...this.data,
-
         //重要
-        dateTime: now, //记录保存的时间
+        lastTime: now, //记录保存的时间
 
-        date: format(now, 'YYYY-MM-DD'),
-        time: format(now, 'HH:mm'),
+        date: format(this.data.dateTime, 'YYYY-MM-DD'),
+        time: format(this.data.dateTime, 'HH:mm'),
 
         volume,
         content,
@@ -189,6 +196,7 @@ Component({
       })
     },
 
+    //点击左边
     countLeft() {
       let feeding = !this.data.leftBreastFeeding;
       this.setData({
@@ -198,9 +206,12 @@ Component({
         this.startLeftInterval()
       } else {
         clearInterval(leftIntervalId);
+        //更新到结束时间
+        this.updateToEndTime();
       }
     },
 
+    //点击右边
     countRight() {
       let feeding = !this.data.rightBreastFeeding;
       this.setData({
@@ -210,9 +221,17 @@ Component({
         this.startRightInterval()
       } else {
         clearInterval(rightIntervalId);
+        this.updateToEndTime();
       }
     },
-
+    //更新到结束时间
+    updateToEndTime() {
+      if (this.data.needUpdateEndTime) {
+        this.setData({
+          dateTime: Date.now(),
+        })
+      }
+    },
     //左定时器
     startLeftInterval() {
       leftIntervalId = setInterval(() => {

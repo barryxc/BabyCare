@@ -62,11 +62,11 @@
         <!-- 第二行 -->
         <view style="display: flex;flex-direction: row;align-items: center; margin-top: 30rpx;">
           <view class="content-container">
-            <text class="event">{{item.ext.title}}</text>
+            <text class="{{item.ext.title_red? 'event_red':'event'}}">{{item.ext.title}}</text>
           </view>
           <view style="margin-left: auto;"></view>
-          <view class="content-container" wx:if="{{true}}" class="{{item.ext.content_clickable?'clickable':''}}">
-            <text class="{{ item.ext.content_clickable?'font-red':'font-gray'  }}">{{item.ext.content}}</text>
+          <view class="content-container" wx:if="{{true}}" class="{{item.ext.content_red?'clickable':''}}" catch:tap="executeToList" data-index="{{index}}">
+            <text class="{{ item.ext.content_red?'font-red':'font-gray'  }}">{{item.ext.content}}</text>
           </view>
         </view>
 

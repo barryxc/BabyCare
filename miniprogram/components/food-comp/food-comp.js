@@ -75,9 +75,7 @@ Component({
         })
         return
       }
-      debugger
       let item = {
-
         ...this.data,
         
         date: format(this.data.dateTime, 'YYYY-MM-DD'),

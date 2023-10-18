@@ -184,7 +184,7 @@ Page({
 
   //通知新增记录
   sendEevent(record) {
-    eventBus.emit('addRecord', {
+    eventBus.emit('updateUi', {
       date: record.date,
       data: record
     });

@@ -67,12 +67,7 @@ Page({
       this.fetchRemoteData();
     });
 
-    eventBus.on('addRecord', (res) => {
-      console.log("监听新增的记录")
-      this.fetchRemoteData();
-    });
-    eventBus.on('deleteRecord', (res) => {
-      console.log("监听删除记录")
+    eventBus.on('updateUi', (res) => {
       this.fetchRemoteData();
     });
   },

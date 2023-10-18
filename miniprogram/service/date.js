@@ -75,17 +75,6 @@ function format(ts, format) {
   return dayjs(ts).format('YYYY-MM-DD HH:mm');
 }
 
-function formatDiff(start, end, format) {
-  // 将毫秒数转换为Day.js的duration对象
-  let timeDiff = Math.abs(end - start);
-  // 计算小时和分钟
-  var hours = Math.floor(timeDiff / (1000 * 60 * 60));
-  var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-  // 格式化小时和分钟为 HH:mm 的形式
-  var formattedDiff = dayjs().hour(hours).minute(minutes).format(format);
-  return formattedDiff;
-}
-
 
 function formatMillis(milliseconds, format) {
   var totalSeconds = Math.floor(milliseconds / 1000);
@@ -98,6 +87,19 @@ function formatMillis(milliseconds, format) {
   }
   var formattedTime = dayjs().hour(hours).minute(minutes).second(seconds).format(format);
   return formattedTime;
+}
+
+function getHourMinuteSecond(milliseconds) {
+  var totalSeconds = Math.floor(milliseconds / 1000);
+  var hours = Math.floor(totalSeconds / 3600);
+  var minutes = Math.floor((totalSeconds % 3600) / 60);
+  var seconds = totalSeconds % 60;
+
+  return {
+    hours,
+    minutes,
+    seconds,
+  };
 }
 
 
@@ -126,8 +128,8 @@ module.exports = {
   format,
   diffMinutes,
   diffHour,
-  formatDiff,
   formatMillis,
   oneHourAgo,
-  minutesAgo
+  minutesAgo,
+  getHourMinuteSecond
 }

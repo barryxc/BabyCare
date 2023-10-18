@@ -82,7 +82,7 @@ function setUserInfo(info) {
   userInfo = {
     ...info,
   };
-  eventBus.emit("setUserInfo", userInfo);
+  eventBus.emit("updateUserInfo", userInfo);
 }
 
 function getUserInfo() {
@@ -98,7 +98,7 @@ async function syncUserInfo(app) {
     let internal = currentTime - lastSyncTime;
     if (internal < 800) {
       console.log("获取用户信息太频繁了...", internal);
-      return
+      return {}
     }
     lastSyncTime = currentTime;
     let result = await callServer({

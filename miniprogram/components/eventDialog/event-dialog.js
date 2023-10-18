@@ -50,7 +50,7 @@ Component({
   },
 
   lifetimes: {
-    attached(){
+    attached() {
       console.log("event dialog on ready");
       let event = getEventTitle(this.data.type);
       let icon = getIcon(this.data.type);
@@ -64,6 +64,9 @@ Component({
         icon,
         event,
       })
+    },
+    error() {
+
     }
   },
   /**
@@ -145,8 +148,6 @@ Component({
         //先上传图片
         upload(data.imgSrc, 'record_img').then((resp) => {
           if (resp.success) {
-            //本地路径
-            data.localImgSrc = this.data.imgSrc;
             //云路径
             data.imgSrc = resp.fileID;
             this.doUploadRecord(data)
@@ -228,10 +229,10 @@ Component({
       });
     },
     //通知新增记录
-    sendEevent(record) {
-      eventBus.emit('addRecord', {
-        data: record,
-        date: record.date,
+    sendEevent(record,type) {
+      eventBus.emit('updateUi', {
+        type: "modify",
+        data: record
       });
     },
   },

@@ -33,17 +33,6 @@ App({
         }
       })
     };
-    //同步用户信息
-    syncUserInfo(this).then((res) => {
-      setUser(res.result);
-    }).catch((e) => {
-      console.error(e)
-      wx.showToast({
-        title: '同步失败',
-        icon: "error"
-      })
-    });
-
   },
   onShow(options) {
     //判断来源
