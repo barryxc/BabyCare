@@ -68,7 +68,7 @@
 
     <view class="submi-area">
       <button form-type="reset" class="submit-button-reset " hover-class="submit-button-reset-hover">取消</button>
-      <button form-type="submit" class="submit-button-confirm color-accent" hover-class="submit-button-confirm-hover">保存</button>
+      <button form-type="submit" class="submit-button-confirm color-accent" hover-class="submit-button-confirm-hover">{{confirmText}}</button>
     </view>
 
   </form>

@@ -36,12 +36,13 @@ Component({
   },
 
   lifetimes: {
-    attached(){
+    attached() {
       let record = this.data.record;
       this.setData({
         dateTime: Date.now(),
         unit: this.data.units[this.data.unitIndex],
         ...record,
+        confirmText: record.recordId ? "修改" : "保存"
       })
     },
   },
@@ -77,7 +78,7 @@ Component({
       }
       let item = {
         ...this.data,
-        
+
         date: format(this.data.dateTime, 'YYYY-MM-DD'),
         time: format(this.data.dateTime, "HH:mm"),
       }

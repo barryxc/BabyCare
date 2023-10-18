@@ -41,13 +41,14 @@ Component({
 
   lifetimes: {
     attached() {
+      debugger
+      let record = this.data.record;
+      let confirmText = (record.recordId ? "修改" : "保存")
       this.setData({
         startTime: minutesAgo(10),
         endTime: Date.now(),
-      })
-      let record = this.data.record;
-      this.setData({
-        ...record
+        ...record,
+        confirmText,
       })
     },
   },

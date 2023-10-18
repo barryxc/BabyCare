@@ -108,10 +108,12 @@ Component({
   },
 
   lifetimes: {
-    attached(){
+    attached() {
+      let record = this.data.record;
       this.setData({
         dateTime: Date.now(),
-        ...this.data.record
+        ...record,
+        confirmText: record.recordId ? "修改" : "保存"
       })
     }
   },

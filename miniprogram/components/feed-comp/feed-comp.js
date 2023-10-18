@@ -77,17 +77,16 @@ Component({
     },
     attached() {
       console.log('onReady')
+      debugger
+      let record = this.data.record;
+      let confirmText = record.recordId ? "修改" : "保存"
+      let lock = record.recordId ? true : false;
       this.setData({
         dateTime: Date.now(),
-        ...this.data.record
+        ...record,
+        lock,
+        confirmText,
       })
-
-      //存在recordId,属于编辑状态
-      if (this.data.recordId) {
-        this.setData({
-          lock: true
-        })
-      }
 
       //是否需要更新到结束时间
       let needUpdateEndTime = wx.getStorageSync('needUpdateEndTime')

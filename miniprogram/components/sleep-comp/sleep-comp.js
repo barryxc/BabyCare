@@ -24,7 +24,6 @@ Component({
 
     startTimeFormat: format(Date.now()),
     endTimeFormat: "熟睡中...",
-    confirmText: '开始',
 
     costTimeText: "00:00",
     sleepStatus: ""
@@ -35,7 +34,8 @@ Component({
       let record = this.data.record;
       this.setData({
         startTime: Date.now(),
-        ...record
+        ...record,
+        confirmText: record.recordId ? "修改" : "保存"
       })
     }
   },
@@ -69,7 +69,6 @@ Component({
         costTimeText: "00:00",
         endTime: "",
         endTimeFormat: "熟睡中...",
-        confirmText: "开始"
       })
     },
 

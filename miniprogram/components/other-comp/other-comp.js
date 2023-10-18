@@ -39,7 +39,8 @@ Component({
       let record = this.data.record;
       this.setData({
         dateTime: Date.now(),
-        ...record
+        ...record,
+        comfirmText: record.recordId ? "修改" : "保存"
       })
     }
   },
