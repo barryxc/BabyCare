@@ -393,6 +393,28 @@ Page({
       if (Array.isArray(data) && data.length > 0) {
         // 排序
         data.sort((a, b) => {
+
+          //判断是否是喂养中
+          let isFeeding = (ele) => {
+            return ele.type == 'feed' && ele.feedType == 'breast_feed_by_self' && (ele.leftBreastFeeding || ele.rightBreastFeeding);
+          }
+          //判断是否是睡觉中
+          let isSleeping = (ele) => {
+            return (ele.type == 'sleep') && ele.sleepStatus == 'sleeping'
+          }
+          //喂养中排在最前面、其次是睡觉中
+          if (isFeeding(a)) {
+            return -1;
+          }
+          if (isFeeding(b)) {
+            return 1;
+          }
+          if (isSleeping(a)) {
+            return -1;
+          }
+          if (isSleeping(b)) {
+            return 1;
+          }
           const result = b.time.localeCompare(a.time);
           if (result != 0) {
             return result;
