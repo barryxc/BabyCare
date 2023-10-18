@@ -218,11 +218,9 @@ Page({
     //监听circle add btn 事件
     eventBus.on('hideCircleAddBtn', hideCircleEventCall)
 
-    //定时器,自动刷新页面
-    updateRefreshIntervalId = setInterval(() => {
-      this.updateSleepStatus();
-    }, 1000);
+
   },
+
 
   updateSleepStatus() {
     let records = this.data.records;
@@ -252,6 +250,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
+    console.log('onShow');
+    //定时器,自动刷新页面
+    updateRefreshIntervalId = setInterval(() => {
+      this.updateSleepStatus();
+    }, 1000);
+
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
@@ -274,8 +278,11 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide() {
+    console.log("onHide");
     //隐藏add按钮
     this.hideCircleAddBtn();
+    //清空定时器
+    clearInterval(updateRefreshIntervalId)
   },
 
   hideCircleAddBtn() {
@@ -297,9 +304,6 @@ Page({
     eventBus.off("wake", wakeEventCall);
     eventBus.off('hideCircleAddBtn', hideCircleEventCall);
     eventBus.off('end_feed', feedEndCall);
-
-    //清空定时器
-    clearInterval(updateRefreshIntervalId)
   },
 
 
