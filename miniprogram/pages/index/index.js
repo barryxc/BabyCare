@@ -2,6 +2,7 @@ let {
   getToday,
   format,
   formatMillis,
+  getDateTime,
 } = require('../../service/date.js');
 const record = require("../../service/record.js");
 const {
@@ -125,12 +126,14 @@ Page({
     //监听睡醒事件
     wakeEventCall = (wakeRecord) => {
       console.log(wakeRecord);
-
+      let now = Date.now();
       wakeRecord.sleepStatus = 'wake';
-      wakeRecord.endTime = Date.now();
+      wakeRecord.endTime = now;
       wakeRecord.endtimeFormat = format(wakeRecord.endTime);
       wakeRecord.date = format(wakeRecord.endTime, 'YYYY-MM-DD');
       wakeRecord.time = format(wakeRecord.endTime, 'HH:mm');
+
+      wakeRecord.clientModifyTime = getDateTime();
 
       delete wakeRecord.record;
       delete wakeRecord.ext;
@@ -162,6 +165,7 @@ Page({
     //监听喂养结束事件
     feedEndCall = (feedEndRecord) => {
       console.log("结束喂养", feedEndRecord);
+
       let now = Date.now();
       if (feedEndRecord.leftBreastFeeding) {
         feedEndRecord.leftBreastFeeding = false;
@@ -181,6 +185,7 @@ Page({
         feedEndRecord.date = format(now, 'YYYY-MM-DD');
         feedEndRecord.time = format(now, 'HH:mm');
       }
+      feedEndRecord.clientModifyTime = getDateTime();
 
       //移除属性
       delete feedEndRecord.ext;

@@ -41,7 +41,6 @@ Component({
 
   lifetimes: {
     attached() {
-      debugger
       let record = this.data.record;
       let confirmText = (record.recordId ? "修改" : "保存")
       this.setData({

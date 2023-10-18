@@ -1,6 +1,6 @@
 const {
   format,
-  formatDiff
+  formatMillis,
 } = require("../../service/date");
 
 // components/sleep-comp/sleep-comp.js
@@ -86,7 +86,7 @@ Component({
       let endTime = this.data.endTime;
       let startTime = this.data.startTime;
 
-      let costTimeText = formatDiff(endTime, startTime, "HH:mm");
+      let costTimeText = formatMillis(endTime - startTime, "HH:mm");
       this.setData({
         costTimeText
       })

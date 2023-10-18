@@ -73,11 +73,8 @@ Component({
 
   lifetimes: {
     created() {
-      console.log('created')
     },
     attached() {
-      console.log('onReady')
-      debugger
       let record = this.data.record;
       let confirmText = record.recordId ? "修改" : "保存"
       let lock = record.recordId ? true : false;
