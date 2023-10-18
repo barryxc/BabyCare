@@ -17,6 +17,8 @@ const {
   getIcon
 } = require('../../service/eventlist.js');
 
+let updateRefreshIntervalId;
+
 let lastSyncTime = 0;
 let updateUserInfoCall;
 let updateUiCallback;
@@ -215,7 +217,31 @@ Page({
     };
     //监听circle add btn 事件
     eventBus.on('hideCircleAddBtn', hideCircleEventCall)
+
+    //定时器,自动刷新页面
+    updateRefreshIntervalId = setInterval(() => {
+      this.updateSleepStatus();
+    }, 1000);
   },
+
+  updateSleepStatus() {
+    let records = this.data.records;
+    if (!records || records.length == 0) {
+      return
+    }
+    records.forEach((e, index) => {
+      if (this.isSleeping(e)) {
+        e.ext.status = formatMillis(Date.now() - e.startTime)
+      }
+      if (this.isFeeding(e)) {
+        e.ext.status = formatMillis(Date.now() - e.lastTime + e.leftTime + e.rightTime)
+      }
+    });
+    this.setData({
+      records
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -263,6 +289,7 @@ Page({
    */
   onUnload() {
     console.log("onUnload");
+
     lastSyncTime = 0;
     eventBus.off("updateUserInfo", updateUserInfoCall);
     eventBus.off("updateUi", updateUiCallback);
@@ -270,6 +297,9 @@ Page({
     eventBus.off("wake", wakeEventCall);
     eventBus.off('hideCircleAddBtn', hideCircleEventCall);
     eventBus.off('end_feed', feedEndCall);
+
+    //清空定时器
+    clearInterval(updateRefreshIntervalId)
   },
 
 
@@ -381,7 +411,14 @@ Page({
     }
     return [];
   },
-
+  //判断是否是喂养中
+  isFeeding: (ele) => {
+    return ele.type == 'feed' && ele.feedType == 'breast_feed_by_self' && (ele.leftBreastFeeding || ele.rightBreastFeeding);
+  },
+  //判断是否是睡觉中
+  isSleeping: (ele) => {
+    return (ele.type == 'sleep') && ele.sleepStatus == 'sleeping'
+  },
   //页面刷新
   updatePageUi(data) {
     try {
@@ -394,25 +431,17 @@ Page({
         // 排序
         data.sort((a, b) => {
 
-          //判断是否是喂养中
-          let isFeeding = (ele) => {
-            return ele.type == 'feed' && ele.feedType == 'breast_feed_by_self' && (ele.leftBreastFeeding || ele.rightBreastFeeding);
-          }
-          //判断是否是睡觉中
-          let isSleeping = (ele) => {
-            return (ele.type == 'sleep') && ele.sleepStatus == 'sleeping'
-          }
           //喂养中排在最前面、其次是睡觉中
-          if (isFeeding(a) && !isFeeding(b)) {
+          if (this.isFeeding(a) && !this.isFeeding(b)) {
             return -1;
           }
-          if (!isFeeding(a) && isFeeding(b)) {
+          if (!this.isFeeding(a) && this.isFeeding(b)) {
             return 1;
           }
-          if (isSleeping(a) && !isSleeping(b)) {
+          if (this.isSleeping(a) && !this.isSleeping(b)) {
             return -1;
           }
-          if (!isSleeping(a) && isSleeping(b)) {
+          if (!this.isSleeping(a) && this.isSleeping(b)) {
             return 1;
           }
           const result = b.time.localeCompare(a.time);
@@ -429,6 +458,7 @@ Page({
               x: 0, //侧滑删除归位
             };
             ele.ext = ext;
+
             //扩展用于ui展示
             ext.icon = getIcon(ele.type);
 
