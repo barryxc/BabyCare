@@ -403,16 +403,16 @@ Page({
             return (ele.type == 'sleep') && ele.sleepStatus == 'sleeping'
           }
           //喂养中排在最前面、其次是睡觉中
-          if (isFeeding(a)) {
+          if (isFeeding(a) && !isFeeding(b)) {
             return -1;
           }
-          if (isFeeding(b)) {
+          if (!isFeeding(a) && isFeeding(b)) {
             return 1;
           }
-          if (isSleeping(a)) {
+          if (isSleeping(a) && !isFeeding(b)) {
             return -1;
           }
-          if (isSleeping(b)) {
+          if (!isSleeping(a) && isSleeping(b)) {
             return 1;
           }
           const result = b.time.localeCompare(a.time);
