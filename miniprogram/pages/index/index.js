@@ -409,7 +409,7 @@ Page({
           if (!isFeeding(a) && isFeeding(b)) {
             return 1;
           }
-          if (isSleeping(a) && !isFeeding(b)) {
+          if (isSleeping(a) && !isSleeping(b)) {
             return -1;
           }
           if (!isSleeping(a) && isSleeping(b)) {
