@@ -1,21 +1,9 @@
 <event-dialog type="{{type}}" bind:hide='hide' wx:if="{{showEventDialog}}" style="width: 100%;height: fit-content;" record='{{record}}'>
 </event-dialog>
 
-<import src="index.skeleton.wxml" />
-<template is="skeleton" wx:if="{{loading}}" data="{{hideContent}}" loading='shine' />
-
-
 <view class="custom-navbar color-accent">
 
   <view class="icon-area">
-    <!-- <picker mode="date">
-
-      <view style="display: flex;align-items: center;">
-        <image src="../../images/date.svg" mode='aspectFit  ' style="width: 50rpx;height: 50rpx;" />
-      </view>
-
-    </picker> -->
-
     <picker id="childPicker" mode="selector" style="width: fit-content; height:fit-content;" range='{{childs}}' range-key="name" bind:change='onChildChange' value='{{value}}' wx:if="{{childs.length>=0}}" disabled="{{!childs||(childs.length==0)}}" bind:tap="onChildPickerTap">
       <view style="display: flex;flex-direction: row;margin-left: 20rpx;">
         <view style="display: flex;align-items: center;">
@@ -32,19 +20,24 @@
 </view>
 
 
-<view class="body" bind:tap="tapPage" data-skeleton-hide='hideContent' hidden="{{!hideContent}}">
-
+<view class="body" bind:tap="tapPage">
   <!-- 空白提示 -->
-  <view class="empty-container" wx:if="{{!records||records.length==0}}">
+  <view class="empty-container" wx:if="{{(!records||records.length==0)&&!loading}}">
     <view style="display: flex; flex-direction: column; align-items: center;">
       <image class="empty-img" src="../../images/empty-1.svg" mode="scaleToFill" />
       <text style="font-size: 30rpx ; color: #ffffff;">快开始记录吧~</text>
     </view>
   </view>
 
+  <!-- 加载效果 -->
+  <view wx:if="{{loading}}" class="empty-container" style="width:100%;height: 100rpx;">
+    <view style="display: flex; flex-direction: column; align-items: center;">
+      <loading-view class=""></loading-view>
+    </view>
+  </view>
 
   <!-- 列表项 -->
-  <view class="row-container" wx:key="index" wx:for="{{records}}">
+  <view wx:if="{{!loading}}" class="row-container" wx:key="index" wx:for="{{records}}">
     <swipe-item-view style="width: 740rpx;" x='{{item.ext.x}}' bind:expand='onExpand' data-index="{{index}}" bind:collapse='onCollapse' bind:onDelete='onDelete'>
       <view class="record-column" style="width: 740rpx; height: 100%;" bind:tap="onTapRecordItem" data-index="{{index}}">
 
@@ -83,7 +76,7 @@
     </swipe-item-view>
   </view>
 
-  <!--站位控件 -->
+  <!--底部站位控件 -->
   <view class="bottom-custom-bar"></view>
 </view>
 

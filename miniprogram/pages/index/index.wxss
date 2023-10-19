@@ -1,15 +1,9 @@
-@import "./index.skeleton.wxss";
-
 page {
   flex-direction: column;
   display: flex;
   width: 100vw;
   min-height: 100vh;
   background-color: #f6f6f6;
-}
-
-::-webkit-scrollbar {
-  display: none;
 }
 
 .custom-navbar {

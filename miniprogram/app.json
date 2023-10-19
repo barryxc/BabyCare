@@ -23,12 +23,12 @@
     "swipe-item-view": "./components/swipItemView/swipItemView",
     "van-datetime-picker": "@vant/weapp/datetime-picker/index",
     "van-popup": "@vant/weapp/popup/index",
-    "custom-add-area":"./components/custom-add-area/custom-add-area",
-    "date-time-picker":"./components/date-time-picker/date-time-picker",
+    "custom-add-area": "./components/custom-add-area/custom-add-area",
+    "date-time-picker": "./components/date-time-picker/date-time-picker",
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",
-    "week-date-switcher":"./components/week-date-switcher/week-date-switcher"
- 
+    "week-date-switcher": "./components/week-date-switcher/week-date-switcher",
+    "loading-view": "./components/loading-view/loading-view"
   },
   "sitemapLocation": "sitemap.json",
   "style": "v2",
@@ -37,8 +37,7 @@
     "color": "#000000",
     "selectedColor": "#000000",
     "backgroundColor": "#000000",
-    "list": [
-      {
+    "list": [{
         "pagePath": "pages/index/index",
         "text": "首页"
       },
