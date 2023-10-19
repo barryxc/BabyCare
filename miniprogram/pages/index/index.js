@@ -221,24 +221,21 @@ Page({
     };
     //监听circle add btn 事件
     eventBus.on('hideCircleAddBtn', hideCircleEventCall)
-
-
   },
 
 
-  updateSleepStatus() {
+  updateDataStatus() {
     let records = this.data.records;
     if (!records || records.length == 0) {
       return
     }
+    console.log('定时刷新', records, getDateTime());
     records.forEach((ele, index) => {
       if (this.isSleeping(ele)) {
-        let sleepTime = getHourMinuteSecond(Date.now() - ele.startTime);
-        ele.ext.status = `已入睡 ${sleepTime.hours?sleepTime.hours+"小时":''} ${sleepTime.minutes?sleepTime.minutes:0}分钟`
+        ele.ext.status = `已入睡 ${this.fomartTimeTextLongFormat(Date.now() - ele.startTime)}`
       }
       if (this.isFeeding(ele)) {
-        let feedingTime = getHourMinuteSecond(Date.now() - ele.lastTime + ele.leftTime + ele.rightTime);
-        ele.ext.status = `已亲喂 ${feedingTime.hours?feedingTime.hours+"小时":''} ${feedingTime.minutes?feedingTime.minutes:0}分钟`
+        ele.ext.status = `已亲喂 ${this.fomartTimeTextLongFormat(Date.now() - ele.lastTime + ele.leftTime + ele.rightTime)}`
       }
     });
     this.setData({
@@ -258,9 +255,13 @@ Page({
   onShow() {
     console.log('onShow');
     //定时器,自动刷新页面
+    this.updateDataStatus();
+    if (updateRefreshIntervalId) {
+      clearInterval(updateRefreshIntervalId);
+    }
     updateRefreshIntervalId = setInterval(() => {
-      this.updateSleepStatus();
-    }, 30000);
+      this.updateDataStatus();
+    }, 1000);
 
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
@@ -441,6 +442,18 @@ Page({
     return this.isFeeding(ele) || this.isSleeping(ele);
   },
 
+  //格式化时长
+  fomartTimeText(time) {
+    let obj = getHourMinuteSecond(time);
+    return `${obj.hours?obj.hours+"小时":''} ${obj.minutes?obj.minutes:0}分钟`;
+  },
+
+  //格式化时长
+  fomartTimeTextLongFormat(time) {
+    let obj = getHourMinuteSecond(time);
+    return `${obj.hours?obj.hours+"小时":''} ${obj.minutes?obj.minutes:0}分钟 ${obj.seconds?obj.seconds+"秒":''}`;
+  },
+
   //页面刷新
   updatePageUi(data) {
     try {
@@ -494,20 +507,18 @@ Page({
                     ext.title_red = true;
                     ext.content = '结束喂养';
                     ext.content_red = true;
-
-                    let feedingTime = getHourMinuteSecond(Date.now() - ele.lastTime + ele.leftTime + ele.rightTime);
-                    ext.status = `已亲喂 ${feedingTime.hours?feedingTime.hours+"小时":''} ${feedingTime.minutes?feedingTime.minutes:0}分钟`
+                    ext.status = `已亲喂 ${this.fomartTimeTextLongFormat(Date.now() - ele.lastTime + ele.leftTime + ele.rightTime)}`
 
                   } else {
                     ext.content = '';
                     if (ele.leftTime > 0) {
-                      ext.content += `左 ${formatMillis(ele.leftTime, 'mm:ss') } `
+                      ext.content += `左 ${this.fomartTimeTextLongFormat(ele.leftTime) }\n `
                     }
                     if (ele.rightTime > 0) {
-                      ext.content += `右 ${formatMillis(ele.rightTime, 'mm:ss')} `
+                      ext.content += `右 ${this.fomartTimeTextLongFormat(ele.rightTime)} \n`
                     }
                     if (ele.leftTime > 0 && ele.rightTime > 0) {
-                      ext.content += `总 ${formatMillis(ele.rightTime+ele.leftTime, 'mm:ss')} `
+                      ext.content += `总 ${this.fomartTimeTextLongFormat(ele.rightTime+ele.leftTime)} `
                     }
                   }
                 } else {
@@ -516,7 +527,7 @@ Page({
                 break;
               case 'activity':
                 ext.title = ele.activity.name;
-                ext.content = "时长 " + formatMillis(ele.endTime - ele.startTime, 'HH:mm')
+                ext.content = "时长 " + this.fomartTimeText(ele.endTime - ele.startTime)
                 ext.time = format(ele.startTime, 'HH:mm') + " - " + format(ele.endTime, 'HH:mm');
                 break;
               case 'other':
@@ -526,6 +537,9 @@ Page({
               case 'shit':
                 ext.title = "换尿布";
                 let status = ele.nbsStatus.name;
+                if (!status) {
+                  status = "";
+                }
                 if (!ext.content) {
                   ext.content = '';
                 }
@@ -566,12 +580,11 @@ Page({
                   ext.content = "睡醒了"
                   ext.time = ele.time;
 
-                  let sleepTime = getHourMinuteSecond(Date.now() - ele.startTime);
-                  ext.status = `已入睡 ${sleepTime.hours?sleepTime.hours+"小时":''} ${sleepTime.minutes?sleepTime.minutes:0}分钟`
+                  ext.status = `已入睡 ${this.fomartTimeTextLongFormat(Date.now() - ele.startTime)}`
 
                 } else {
                   ext.title = "睡醒了";
-                  ext.content = "时长 " + formatMillis(ele.endTime - ele.startTime, 'HH:mm:ss')
+                  ext.content = "时长 " + this.fomartTimeTextLongFormat(ele.endTime - ele.startTime)
                   ext.time = format(ele.startTime, 'HH:mm') + " - " + format(ele.endTime, 'HH:mm');
                 }
                 break;

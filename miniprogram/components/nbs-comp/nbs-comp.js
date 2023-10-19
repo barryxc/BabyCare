@@ -164,7 +164,7 @@ Component({
     },
 
     bindsubmit(e) {
-      if (!this.data.nbsStatus) {
+      if (!this.data.nbsStatus || Object.keys(this.data.nbsStatus).length == 0) {
         wx.showToast({
           title: '未选中尿布状态',
           icon: "none"
