@@ -1,7 +1,6 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/recordLife/recordLife",
     "pages/my/my",
     "pages/edit/edit",
     "pages/setting/setting",

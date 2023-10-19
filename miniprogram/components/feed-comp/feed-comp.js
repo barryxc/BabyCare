@@ -152,7 +152,7 @@ Component({
         if (totalTime == 0) {
           wx.showToast({
             title: '未点击开始',
-            icon: 'error'
+            icon: "none"
           })
           return
         }
@@ -160,7 +160,7 @@ Component({
         //瓶喂的情况下需要校验容量
         wx.showToast({
           title: '容量不能为空',
-          icon: 'error'
+          icon: "none"
         })
         return
       }

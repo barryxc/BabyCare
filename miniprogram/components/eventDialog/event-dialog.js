@@ -110,7 +110,7 @@ Component({
       if (!childId) {
         wx.showToast({
           title: '请先添加宝宝信息',
-          icon: 'error'
+          icon: "none"
         })
         return
       }
@@ -118,7 +118,7 @@ Component({
       if (interval < getApp().globalData.debounceTime) {
         wx.showToast({
           title: '提交太频繁了',
-          icon: 'error',
+          icon: "none"
         })
         console.log("提交太频繁了,距离上次提交间隔", interval);
         return
@@ -155,14 +155,14 @@ Component({
             this.dismiss();
             wx.showToast({
               title: '上传失败',
-              icon: "error"
+              icon: "none"
             })
           }
         }).catch(e => {
           console.error(e);
           wx.showToast({
             title: '上传失败',
-            icon: "error"
+            icon: "none"
           })
           this.dismiss();
         });
@@ -213,7 +213,7 @@ Component({
           wx.hideLoading();
           wx.showToast({
             title: "提交失败",
-            icon: "error"
+            icon: "none"
           });
           console.error("提交失败");
           this.dismiss();
@@ -222,7 +222,7 @@ Component({
         wx.hideLoading();
         wx.showToast({
           title: "提交失败",
-          icon: "error"
+          icon: "none"
         });
         console.error("数据库更新失败", e);
         this.dismiss();

@@ -72,7 +72,7 @@ Component({
       if (this.data.selectIndex === -1) {
         wx.showToast({
           title: '未选中辅食',
-          icon: "error"
+          icon: "none"
         })
         return
       }

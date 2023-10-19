@@ -3,7 +3,7 @@ function tipError(e){
   console.log(JSON.stringify(e))
   wx.showToast({
     title: '失败了',
-    icon:"error"
+    icon: "none"
   })
 }
 

@@ -74,7 +74,7 @@ Component({
       if (this.data.selectIndex === -1) {
         wx.showToast({
           title: '未选中自定义内容',
-          icon: "error"
+          icon: "none"
         })
         return
       }

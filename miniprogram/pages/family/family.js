@@ -121,7 +121,7 @@ Page({
       } else {
         wx.showToast({
           title: '删除失败',
-          icon: 'error'
+          icon: "none"
         })
       }
     } catch (error) {

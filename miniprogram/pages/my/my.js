@@ -167,7 +167,7 @@ Page({
   toAddChild() {
     wx.showToast({
       title: '请先添加宝宝',
-      icon:'error'
+      icon: "none"
     })
     setTimeout(() => {
       this.addChild()

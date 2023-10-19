@@ -1,5 +1,0 @@
-<sleep-comp wx:if="{{type=='sleep'}}"></sleep-comp>
-<feed-comp wx:if="{{type=='feed'}}"></feed-comp>
-<food-comp wx:if="{{type=='food'}}"></food-comp>
-<nbs-comp wx:if="{{type=='shit'}}"></nbs-comp>
-<activity-comp wx:if="{{type=='activity'}}"></activity-comp>

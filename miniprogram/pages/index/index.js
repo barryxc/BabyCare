@@ -74,7 +74,7 @@ Page({
       console.error(e)
       wx.showToast({
         title: '同步失败',
-        icon: "error"
+        icon: "none"
       })
     });
 
@@ -158,14 +158,14 @@ Page({
         } else {
           wx.showToast({
             title: '更新失败',
-            icon: 'error'
+            icon: "none"
           })
         }
       }).catch((e) => {
         console.error(e);
         wx.showToast({
           title: '更新失败',
-          icon: "error"
+          icon: "none"
         })
       });
     }
@@ -211,7 +211,7 @@ Page({
         } else {
           wx.showToast({
             title: '更新失败',
-            icon: 'error'
+            icon: "none"
           })
         }
       }).catch((e) => {
@@ -355,6 +355,7 @@ Page({
       console.log("刷新频率太快", interval);
       wx.showToast({
         title: '刷新太频繁了',
+        icon: 'none'
       })
       return
     }
@@ -631,7 +632,17 @@ Page({
   },
 
   //item折叠
-  onCollapse(e) {},
+  onCollapse(e) {
+    console.log("侧滑折叠", e);
+    this.data.records.forEach((ele, i) => {
+      if (i == e.target.dataset.index) {
+        ele.ext.x = 0;
+      }
+    });
+    this.setData({
+      records: this.data.records
+    })
+  },
 
   //删除item
   async onDelete(e) {
@@ -651,14 +662,14 @@ Page({
       } else {
         wx.showToast({
           title: '删除失败',
-          icon: "error"
+          icon: "none"
         })
       }
       wx.hideLoading();
     } catch (error) {
       wx.showToast({
         title: '未知错误',
-        icon: 'error'
+        icon: "none"
       })
       wx.hideLoading();
       console.error(error)
@@ -687,7 +698,7 @@ Page({
     if (disabled) {
       wx.showToast({
         title: '请先添加宝宝',
-        icon: 'error'
+        icon: "none"
       })
       setTimeout(() => {
         this.addChild()

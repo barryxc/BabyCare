@@ -77,7 +77,7 @@ Component({
       if (this.data.selectIndex === -1) {
         wx.showToast({
           title: '未选中活动',
-          icon: "error"
+          icon: "none"
         })
         return
       }
@@ -85,7 +85,7 @@ Component({
       if (this.data.endTime < this.data.startTime) {
         wx.showToast({
           title: '结束时间小于开始时间',
-          icon: 'error'
+          icon: "none"
         })
         return
       }

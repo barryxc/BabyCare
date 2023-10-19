@@ -167,7 +167,7 @@ Component({
       if (!this.data.nbsStatus) {
         wx.showToast({
           title: '未选中尿布状态',
-          icon: "error"
+          icon: "none"
         })
         return
       }

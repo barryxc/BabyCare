@@ -67,6 +67,7 @@ Component({
       if (now - lastConfirmTime < 800) {
         wx.showToast({
           title: '点击太频繁了',
+          icon: "none"
         })
         return
       }
@@ -86,14 +87,14 @@ Component({
       if (!child.name) {
         wx.showToast({
           title: '未填写昵称',
-          icon: "error"
+          icon: "none"
         })
         return
       }
       if (!child.date) {
         wx.showToast({
           title: '未填写出生日期',
-          icon: "error"
+          icon: "none"
         })
         return
       }
@@ -101,7 +102,7 @@ Component({
       if (weight && (Number.isNaN(Number(weight)) || child.weight > 100)) {
         wx.showToast({
           title: '体重不符合要求',
-          icon: "error"
+          icon: "none"
         })
         return
       }
@@ -110,7 +111,7 @@ Component({
       if (height && (Number.isNaN(Number(height)) || height > 200)) {
         wx.showToast({
           title: '身高不符合要求',
-          icon: "error"
+          icon: "none"
         })
         return
       }
