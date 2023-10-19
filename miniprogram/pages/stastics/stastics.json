@@ -2,5 +2,6 @@
   "usingComponents": {},
   "navigationBarTitleText": "统计",
   "navigationStyle": "custom",
-  "backgroundTextStyle":"dark"
+  "backgroundTextStyle": "dark",
+  "enablePullDownRefresh": true
 }

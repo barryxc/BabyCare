@@ -234,11 +234,11 @@ Page({
     records.forEach((ele, index) => {
       if (this.isSleeping(ele)) {
         let sleepTime = getHourMinuteSecond(Date.now() - ele.startTime);
-        ele.ext.status = `已入睡 ${sleepTime.hours?sleepTime.hours+"时":''} ${sleepTime.minutes?sleepTime.minutes+"分":''} ${sleepTime.seconds?sleepTime.seconds+"秒":''}`
+        ele.ext.status = `已入睡 ${sleepTime.hours?sleepTime.hours+"小时":''} ${sleepTime.minutes?sleepTime.minutes:0}分钟`
       }
       if (this.isFeeding(ele)) {
         let feedingTime = getHourMinuteSecond(Date.now() - ele.lastTime + ele.leftTime + ele.rightTime);
-        ele.ext.status = `已亲喂 ${feedingTime.hours?feedingTime.hours+"时":''} ${feedingTime.minutes?feedingTime.minutes+"分":''} ${feedingTime.seconds?feedingTime.seconds+"秒":''}`
+        ele.ext.status = `已亲喂 ${feedingTime.hours?feedingTime.hours+"小时":''} ${feedingTime.minutes?feedingTime.minutes:0}分钟`
       }
     });
     this.setData({
@@ -260,7 +260,7 @@ Page({
     //定时器,自动刷新页面
     updateRefreshIntervalId = setInterval(() => {
       this.updateSleepStatus();
-    }, 1000);
+    }, 30000);
 
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
@@ -496,7 +496,7 @@ Page({
                     ext.content_red = true;
 
                     let feedingTime = getHourMinuteSecond(Date.now() - ele.lastTime + ele.leftTime + ele.rightTime);
-                    ext.status = `已亲喂 ${feedingTime.hours?feedingTime.hours+"时":''} ${feedingTime.minutes?feedingTime.minutes+"分":''} ${feedingTime.seconds?feedingTime.seconds+"秒":''}`
+                    ext.status = `已亲喂 ${feedingTime.hours?feedingTime.hours+"小时":''} ${feedingTime.minutes?feedingTime.minutes:0}分钟`
 
                   } else {
                     ext.content = '';
@@ -567,7 +567,7 @@ Page({
                   ext.time = ele.time;
 
                   let sleepTime = getHourMinuteSecond(Date.now() - ele.startTime);
-                  ext.status = `已入睡 ${sleepTime.hours?sleepTime.hours+"时":''} ${sleepTime.minutes?sleepTime.minutes+"分":''} ${sleepTime.seconds?sleepTime.seconds+"秒":''}`
+                  ext.status = `已入睡 ${sleepTime.hours?sleepTime.hours+"小时":''} ${sleepTime.minutes?sleepTime.minutes:0}分钟`
 
                 } else {
                   ext.title = "睡醒了";
