@@ -72,8 +72,7 @@ Component({
   },
 
   lifetimes: {
-    created() {
-    },
+    created() {},
     attached() {
       let record = this.data.record;
       let confirmText = record.recordId ? "修改" : "保存"
@@ -149,7 +148,7 @@ Component({
       //亲喂的情况下需要校验时长
       if (this.data.feedType == 'breast_feed_by_self') {
         let totalTime = this.data.leftTime + this.data.rightTime;
-        if (totalTime == 0) {
+        if (totalTime == 0 && !this.data.leftBreastFeeding && !this.data.rightBreastFeeding) {
           wx.showToast({
             title: '未点击开始',
             icon: "none"

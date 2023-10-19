@@ -3,6 +3,7 @@ let {
   format,
   formatMillis,
   getDateTime,
+  getHourMinuteSecond,
 } = require('../../service/date.js');
 const record = require("../../service/record.js");
 const {
@@ -230,12 +231,14 @@ Page({
     if (!records || records.length == 0) {
       return
     }
-    records.forEach((e, index) => {
-      if (this.isSleeping(e)) {
-        e.ext.status = formatMillis(Date.now() - e.startTime)
+    records.forEach((ele, index) => {
+      if (this.isSleeping(ele)) {
+        let sleepTime = getHourMinuteSecond(Date.now() - ele.startTime);
+        ele.ext.status = `已入睡 ${sleepTime.hours?sleepTime.hours+"时":''} ${sleepTime.minutes?sleepTime.minutes+"分":''} ${sleepTime.seconds?sleepTime.seconds+"秒":''}`
       }
-      if (this.isFeeding(e)) {
-        e.ext.status = formatMillis(Date.now() - e.lastTime + e.leftTime + e.rightTime)
+      if (this.isFeeding(ele)) {
+        let feedingTime = getHourMinuteSecond(Date.now() - ele.lastTime + ele.leftTime + ele.rightTime);
+        ele.ext.status = `已亲喂 ${feedingTime.hours?feedingTime.hours+"时":''} ${feedingTime.minutes?feedingTime.minutes+"分":''} ${feedingTime.seconds?feedingTime.seconds+"秒":''}`
       }
     });
     this.setData({
@@ -432,6 +435,12 @@ Page({
   isSleeping: (ele) => {
     return (ele.type == 'sleep') && ele.sleepStatus == 'sleeping'
   },
+
+  //是否进行中
+  isDoing: function (ele) {
+    return this.isFeeding(ele) || this.isSleeping(ele);
+  },
+
   //页面刷新
   updatePageUi(data) {
     try {
@@ -444,19 +453,14 @@ Page({
         // 排序
         data.sort((a, b) => {
 
-          //喂养中排在最前面、其次是睡觉中
-          if (this.isFeeding(a) && !this.isFeeding(b)) {
+          //喂养中和睡觉中排在最前面
+          if (this.isDoing(a) && !this.isDoing(b)) {
             return -1;
           }
-          if (!this.isFeeding(a) && this.isFeeding(b)) {
+          if (!this.isDoing(a) && this.isDoing(b)) {
             return 1;
           }
-          if (this.isSleeping(a) && !this.isSleeping(b)) {
-            return -1;
-          }
-          if (!this.isSleeping(a) && this.isSleeping(b)) {
-            return 1;
-          }
+
           const result = b.time.localeCompare(a.time);
           if (result != 0) {
             return result;
@@ -490,6 +494,10 @@ Page({
                     ext.title_red = true;
                     ext.content = '结束喂养';
                     ext.content_red = true;
+
+                    let feedingTime = getHourMinuteSecond(Date.now() - ele.lastTime + ele.leftTime + ele.rightTime);
+                    ext.status = `已亲喂 ${feedingTime.hours?feedingTime.hours+"时":''} ${feedingTime.minutes?feedingTime.minutes+"分":''} ${feedingTime.seconds?feedingTime.seconds+"秒":''}`
+
                   } else {
                     ext.content = '';
                     if (ele.leftTime > 0) {
@@ -557,6 +565,10 @@ Page({
                   ext.content_red = true;
                   ext.content = "睡醒了"
                   ext.time = ele.time;
+
+                  let sleepTime = getHourMinuteSecond(Date.now() - ele.startTime);
+                  ext.status = `已入睡 ${sleepTime.hours?sleepTime.hours+"时":''} ${sleepTime.minutes?sleepTime.minutes+"分":''} ${sleepTime.seconds?sleepTime.seconds+"秒":''}`
+
                 } else {
                   ext.title = "睡醒了";
                   ext.content = "时长 " + formatMillis(ele.endTime - ele.startTime, 'HH:mm:ss')
