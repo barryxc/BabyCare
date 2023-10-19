@@ -1,4 +1,5 @@
-/* pages/recordService/record.wxss */
+@import "./index.skeleton.wxss";
+
 page {
   flex-direction: column;
   display: flex;

@@ -1,7 +1,11 @@
 <event-dialog type="{{type}}" bind:hide='hide' wx:if="{{showEventDialog}}" style="width: 100%;height: fit-content;" record='{{record}}'>
 </event-dialog>
 
-<view class="custom-navbar color-accent" wx:if="{{true}}">
+<import src="index.skeleton.wxml" />
+<template is="skeleton" wx:if="{{loading}}" data="{{hideContent}}" loading='shine' />
+
+
+<view class="custom-navbar color-accent">
 
   <view class="icon-area">
     <!-- <picker mode="date">
@@ -28,7 +32,7 @@
 </view>
 
 
-<view class="body" bind:tap="tapPage">
+<view class="body" bind:tap="tapPage" data-skeleton-hide='hideContent' hidden="{{!hideContent}}">
 
   <!-- 空白提示 -->
   <view class="empty-container" wx:if="{{!records||records.length==0}}">
@@ -41,8 +45,8 @@
 
   <!-- 列表项 -->
   <view class="row-container" wx:key="index" wx:for="{{records}}">
-    <swipe-item-view style="width: 100%;" x='{{item.ext.x}}' bind:expand='onExpand' data-index="{{index}}" bind:collapse='onCollapse' bind:onDelete='onDelete'>
-      <view class="record-column" style="width: 732rpx; height: 100%;" bind:tap="onTapRecordItem" data-index="{{index}}">
+    <swipe-item-view style="width: 740rpx;" x='{{item.ext.x}}' bind:expand='onExpand' data-index="{{index}}" bind:collapse='onCollapse' bind:onDelete='onDelete'>
+      <view class="record-column" style="width: 740rpx; height: 100%;" bind:tap="onTapRecordItem" data-index="{{index}}">
 
         <!-- 第一行 -->
         <view style="display: flex;flex-direction: row;">

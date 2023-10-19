@@ -49,7 +49,15 @@ Page({
     type: "", //类型
 
     //弹窗
-    showEventDialog: false
+    showEventDialog: false,
+
+
+
+    //是否正在加载
+    loading: false,
+    //隐藏骨架屏
+    hideContent: true,
+    hideHeader: true
   },
 
   onPageScroll(e) {},
@@ -360,18 +368,24 @@ Page({
       wx.hideLoading();
       return
     }
-    wx.showLoading({
-      title: '',
-    })
+    this.showSkeleton(true);
     this.loadData().then((res) => {
       this.updatePageUi(res);
       wx.stopPullDownRefresh();
-      wx.hideLoading();
+      this.showSkeleton(false);
     }).catch((e) => {
       console.error(e);
       wx.stopPullDownRefresh();
-      wx.hideLoading();
+      this.showSkeleton(false);
     });
+  },
+
+  //控制隐藏和显示骨架屏
+  showSkeleton(show) {
+    this.setData({
+      loading: show,
+      hideContent: !show
+    })
   },
 
   /**

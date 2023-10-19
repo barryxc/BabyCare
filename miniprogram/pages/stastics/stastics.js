@@ -31,6 +31,9 @@ Page({
     //日期
     date: getToday(),
     statstics: [],
+
+    //loading效果
+    loading: false,
   },
 
   /**
@@ -88,7 +91,13 @@ Page({
         selected: 1
       })
     };
-
+  },
+  
+  //显示loading效果
+  showloading(show) {
+    this.setData({
+      loading: show,
+    })
   },
 
   //页面刷新
@@ -97,14 +106,13 @@ Page({
     if (!date) {
       return
     }
-    wx.showLoading({
-      title: '',
-    })
+    this.showloading(true)
     callServer({
       type: 'selectRecord',
       date: date,
       childId: getSelectedChild().childId
     }).then((res) => {
+      this.showloading(false)
       let data = res.result.data;
       let map = {};
       if (data) {
@@ -145,12 +153,12 @@ Page({
       wx.hideLoading();
       wx.stopPullDownRefresh();
     }, () => {
-      wx.hideLoading();
       wx.stopPullDownRefresh();
+      this.showloading(false)
     }).catch(e => {
       console.error(e);
-      wx.hideLoading();
       wx.stopPullDownRefresh();
+      this.showloading(false)
     });
   },
 
