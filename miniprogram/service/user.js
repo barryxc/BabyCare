@@ -42,22 +42,38 @@ function getChilds() {
 
 function getSelectedChild() {
   let childs = getChilds();
-  if (!childs) {
-    childs = [];
+  if (!childs || childs.length == 0) {
+    return;
   }
-  let child = {};
-  if (childs.length > 0) {
-    child = childs[0];
-  }
-  let childId = wx.getStorageSync('selectChildId');
-  if (childId) {
+  let child = childs[0];
+  let selectChildId = wx.getStorageSync('selectChildId');
+  if (selectChildId) {
     childs.forEach((e) => {
-      if (e.childId == childId) {
+      if (e.childId == selectChildId) {
         child = e;
       }
     });
   }
   return child;
+}
+
+function getSelectedChildIndex() {
+  debugger
+  let childs = getChilds();
+  if (!childs || childs.length == 0) {
+    return -1;
+  }
+
+  let index = 0;
+  let selectChildId = wx.getStorageSync('selectChildId');
+  if (selectChildId) {
+    childs.forEach((e, i) => {
+      if (e.childId == selectChildId) {
+        index = i;
+      }
+    });
+  }
+  return index;
 }
 
 function addChild(child) {
@@ -122,7 +138,9 @@ module.exports = {
   getChilds: getChilds,
   addChild: addChild,
   getSelectedChild,
-  deleteChild: removeChild,
+  getSelectedChildIndex,
 
+  deleteChild: removeChild,
   syncUserInfo,
+
 };

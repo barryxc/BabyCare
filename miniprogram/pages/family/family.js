@@ -4,7 +4,7 @@ const {
 } = require("../../service/user")
 
 const {
-  afterXMinutes
+  afterMinutes
 } = require('../../service/date');
 const {
   callServer
@@ -83,7 +83,7 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage(object) {
-    let expire = afterXMinutes(15);
+    let expire = afterMinutes(15);
     console.log(object, "过期时间", expire);
     return {
       title: `${this.data.userInfo.name}邀请你加入我的家庭`,

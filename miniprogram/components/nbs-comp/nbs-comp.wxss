@@ -122,7 +122,7 @@
 }
 
 .content {
-  height: 1000rpx;
+  height: 100rpx;
   margin-left: 32rpx;
   font-size: 28rpx;
   color: #666666;

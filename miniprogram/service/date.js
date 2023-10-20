@@ -1,27 +1,18 @@
 const dayjs = require("dayjs");
 
-function getDateTime() {
+//当前的日期时间
+function currentDateTime() {
   return dayjs().format("YYYY-MM-DD HH:mm:ss");
 }
 
-function getToday() {
+//当前的日期
+function currentDate() {
   return dayjs().format("YYYY-MM-DD");
 }
 
-function getTime() {
+//当前的时间
+function currentTime() {
   return dayjs().format("HH:mm:ss");
-}
-
-function getShortTime() {
-  return dayjs().format("HH:mm");
-}
-
-function getHour(time) {
-  return dayjs(time).format('HH');
-}
-
-function getMinute(time) {
-  return dayjs(time).format('mm');
 }
 
 const mapWeekOfDay = {
@@ -34,40 +25,62 @@ const mapWeekOfDay = {
   6: '六',
 }
 
+//转换当前日期为星期
 function weekDay(day, format) {
   return mapWeekOfDay[dayjs(day, format).day()];
 }
 
-function diffDays(date) {
-  return dayjs().diff(date, "day");
+//获取日期的差值
+function diffDays(start, end) {
+  return dayjs(end).diff(start, "day");
 }
 
-
-function diffMinutes(start, end) {
-  return dayjs(end).diff(start, "minute");
-}
-
+//计算小时的差值
 function diffHour(start, end) {
   return dayjs(end).diff(start, "hour");
 }
 
-function addDay(date, diff) {
-  return dayjs(date).add(diff, 'day').format("YYYY-MM-DD");
+//计算分钟的差值
+function diffMinutes(start, end) {
+  return dayjs(end).diff(start, "minute");
 }
 
-function getRecentDate(diff) {
+//计算分钟的差值
+function diffSeconds(start, end) {
+  return dayjs(end).diff(start, "second");
+}
+
+//几天后
+function daysAfter(diff) {
   return dayjs().add(diff, 'day').format("YYYY-MM-DD");
 }
 
+//几分钟后
+function afterMinutes(interval) {
+  return dayjs().add(interval, 'minute').format('YYYY-MM-DD HH:mm:ss')
+}
+
+//一个小时前
+function oneHourAgo() {
+  return dayjs().subtract(1, 'hour').valueOf();
+}
+
+//几分钟前
+function minutesAgo(minutes) {
+  return dayjs().subtract(minutes, 'minute').valueOf();
+}
+
+//获取当前日期在当前月的第几天
 function dateInMonth(date) {
   return dayjs(date).date();
 }
 
-
-function afterXMinutes(interval) {
-  return dayjs().add(interval, 'minute').format('YYYY-MM-DD HH:mm:ss')
+//获取当前的月份
+function monthOfDate(date) {
+  return dayjs(date).month() + 1;
 }
 
+//uts时间戳格式化
 function format(ts, format) {
   if (format) {
     return dayjs(ts).format(format);
@@ -75,20 +88,34 @@ function format(ts, format) {
   return dayjs(ts).format('YYYY-MM-DD HH:mm');
 }
 
-
-function formatMillis(milliseconds, format) {
-  var totalSeconds = Math.floor(milliseconds / 1000);
-  var hours = Math.floor(totalSeconds / 3600);
-  var minutes = Math.floor((totalSeconds % 3600) / 60);
-  var seconds = totalSeconds % 60;
-
-  if (!format) {
-    format = 'HH:mm:ss';
+//时间差值格式化
+function differFormat(milliseconds, long) {
+  let obj = getHourMinuteSecond(milliseconds);
+  if (long) {
+    return `${padTime(obj.hours)}:${padTime(obj.minutes)}:${padTime(obj.seconds)}`
   }
-  var formattedTime = dayjs().hour(hours).minute(minutes).second(seconds).format(format);
-  return formattedTime;
+  return `${padTime(obj.hours)}:${padTime(obj.minutes)}`
 }
 
+//格式化为中文
+function fomartTimeChinese(milliseconds, long) {
+  let obj = getHourMinuteSecond(milliseconds);
+  if (long) {
+    return `${obj.hours?obj.hours+"小时":''} ${obj.minutes?obj.minutes+"分钟":''} ${obj.seconds?obj.seconds+"秒":''}`;
+  }
+  return `${obj.hours?obj.hours+"小时":''} ${obj.minutes?obj.minutes+"分钟":''}`;
+}
+
+//补零
+function padTime(time) {
+  if (!time) {
+    return "00";
+  }
+  let timeStr = time.toString().padStart(2, '0');
+  return timeStr;
+}
+
+//把时间差转为小时分钟秒
 function getHourMinuteSecond(milliseconds) {
   var totalSeconds = Math.floor(milliseconds / 1000);
   var hours = Math.floor(totalSeconds / 3600);
@@ -103,33 +130,23 @@ function getHourMinuteSecond(milliseconds) {
 }
 
 
-//一个小时前
-function oneHourAgo() {
-  return dayjs().subtract(10, 'minute').valueOf();
-}
-
-//分钟前
-function minutesAgo(minutes) {
-  return dayjs().subtract(minutes, 'minute').valueOf();
-}
 
 module.exports = {
-  getDateTime,
-  getToday,
-  getShortTime,
-  getHour,
-  getMinute,
+  currentDateTime,
+  currentDate,
   weekDay,
   diffDays,
-  addDay,
-  getRecentDate,
+  daysAfter,
   dateInMonth,
-  afterXMinutes,
+  afterMinutes,
   format,
   diffMinutes,
   diffHour,
-  formatMillis,
+  differFormat,
+  fomartTimeChinese,
   oneHourAgo,
   minutesAgo,
-  getHourMinuteSecond
+  getHourMinuteSecond,
+  diffSeconds,
+  monthOfDate
 }

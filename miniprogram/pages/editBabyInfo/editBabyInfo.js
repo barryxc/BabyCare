@@ -130,7 +130,7 @@ Page({
         user.addChild(child);
         user.getChilds().forEach((e, index) => {
           if (e.date) {
-            e.age = date.diffDays(e.date);
+            e.age = date.diffDays(e.date,Date.now());
           }
           //恢复，隐藏删除按钮
           e.offsetX = 0;

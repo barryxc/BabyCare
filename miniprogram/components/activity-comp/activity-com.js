@@ -1,7 +1,6 @@
 const {
   format,
   oneHourAgo,
-  minutesAgo
 } = require("../../service/date")
 
 // components/activity-comp/activity-com.js
@@ -31,7 +30,7 @@ Component({
     selectIndex: -1,
 
     startTime: oneHourAgo(),
-    startTimeFormat: format(minutesAgo(10)),
+    startTimeFormat: format(oneHourAgo()),
     endTime: Date.now(),
     endTimeFormat: format(Date.now()),
 
@@ -44,7 +43,7 @@ Component({
       let record = this.data.record;
       let confirmText = (record.recordId ? "修改" : "保存")
       this.setData({
-        startTime: minutesAgo(10),
+        startTime: oneHourAgo(),
         endTime: Date.now(),
         ...record,
         confirmText,

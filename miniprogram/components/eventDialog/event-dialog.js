@@ -1,5 +1,5 @@
 const {
-  getDateTime
+  currentDateTime
 } = require("../../service/date");
 const {
   insertRecord
@@ -106,14 +106,15 @@ Component({
 
     submit(e) {
       console.log("提交", e)
-      let childId = getSelectedChild().childId;
-      if (!childId) {
+      let child = getSelectedChild();
+      if (!child || !child.childId) {
         wx.showToast({
           title: '请先添加宝宝信息',
           icon: "none"
         })
         return
       }
+
       let interval = new Date().getTime() - lastSumbitTime;
       if (interval < getApp().globalData.debounceTime) {
         wx.showToast({
@@ -186,7 +187,7 @@ Component({
         //是否星标
         star: this.data.star,
         //客户端时间戳
-        clientModifyTime: getDateTime(),
+        clientModifyTime: currentDateTime(),
 
         //孩子信息
         childId,
@@ -229,7 +230,7 @@ Component({
       });
     },
     //通知新增记录
-    sendEevent(record,type) {
+    sendEevent(record, type) {
       eventBus.emit('updateUi', {
         type: "modify",
         data: record

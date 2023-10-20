@@ -1,13 +1,14 @@
 let {
-  getToday,
+  currentDate,
   format,
-  formatMillis,
-  getDateTime,
-  getHourMinuteSecond,
+  fomartTimeChinese,
+  currentDateTime,
+  daysAfter,
 } = require('../../service/date.js');
 const record = require("../../service/record.js");
 const {
   getSelectedChild,
+  getSelectedChildIndex,
   getChilds,
   eventBus,
   syncUserInfo,
@@ -37,10 +38,12 @@ Page({
     //小宝信息
     childs: [],
     selectChild: {},
-    nickName: "",
+    value: 0,
 
     //当前日期
-    date: getToday(),
+    date: currentDate(),
+    startDate: daysAfter(-59),
+    endDate: currentDate(),
 
     //数据
     records: [],
@@ -77,12 +80,13 @@ Page({
     //更新用户信息回调
     updateUserInfoCall = (res) => {
       let childs = getChilds();
-      if (!childs) {
+      if (!childs || childs.length == 0) {
         return
       }
       this.setData({
         childs: childs,
         selectChild: getSelectedChild(),
+        value: getSelectedChildIndex()
       })
       this.fetchRemoteData();
     }
@@ -91,32 +95,39 @@ Page({
 
     //更新小宝改变事件
     childChangeCallbcak = (child) => {
-
       let childs = getChilds();
+      if (!childs || childs.length == 0) {
+        return
+      }
       this.setData({
         childs: childs,
         selectChild: getSelectedChild(),
+        value: getSelectedChildIndex()
       })
       this.fetchRemoteData();
-
     }
     //监听child事件
     eventBus.on("childChange", childChangeCallbcak);
 
     //监听更新事件
     updateUiCallback = (res) => {
-      //是否当前日期
+      let findIndex = this.data.records.findIndex((e) => e.recordId == res.data.recordId);
       if (res.data.date != this.data.date) {
+        //不是当前的日期，不管新增和修改，都直接删除
+        if (findIndex != -1) {
+          this.data.records.splice(findIndex, 1);
+          this.setData({
+            records: this.data.records
+          })
+        }
         return
       }
-      let findIndex = this.data.records.findIndex((e) => e.recordId == res.data.recordId);
       if (res.type == 'delete' && findIndex != -1) { //删除事件
         this.data.records.splice(findIndex, 1);
         this.setData({
           records: this.data.records
         })
       }
-
       if (res.type == 'modify') {
         if (findIndex == -1) { //新增
           this.data.records.push(res.data);
@@ -139,7 +150,7 @@ Page({
       wakeRecord.date = format(wakeRecord.endTime, 'YYYY-MM-DD');
       wakeRecord.time = format(wakeRecord.endTime, 'HH:mm');
 
-      wakeRecord.clientModifyTime = getDateTime();
+      wakeRecord.clientModifyTime = currentDateTime();
 
       delete wakeRecord.record;
       delete wakeRecord.ext;
@@ -191,7 +202,7 @@ Page({
         feedEndRecord.date = format(now, 'YYYY-MM-DD');
         feedEndRecord.time = format(now, 'HH:mm');
       }
-      feedEndRecord.clientModifyTime = getDateTime();
+      feedEndRecord.clientModifyTime = currentDateTime();
 
       //移除属性
       delete feedEndRecord.ext;
@@ -223,19 +234,19 @@ Page({
     eventBus.on('hideCircleAddBtn', hideCircleEventCall)
   },
 
-
+  //定时刷新页面
   updateDataStatus() {
     let records = this.data.records;
     if (!records || records.length == 0) {
       return
     }
-    console.log('定时刷新', records, getDateTime());
+    console.log('定时刷新', records, currentDateTime());
     records.forEach((ele, index) => {
       if (this.isSleeping(ele)) {
-        ele.ext.status = `已入睡 ${this.fomartTimeTextLongFormat(Date.now() - ele.startTime)}`
+        ele.ext.status = `已入睡 ${fomartTimeChinese(Date.now() - ele.startTime)}`
       }
       if (this.isFeeding(ele)) {
-        ele.ext.status = `已亲喂 ${this.fomartTimeTextLongFormat(Date.now() - ele.lastTime + ele.leftTime + ele.rightTime)}`
+        ele.ext.status = `${fomartTimeChinese(Date.now() - ele.lastTime + ele.leftTime + ele.rightTime)}`
       }
     });
     this.setData({
@@ -261,23 +272,13 @@ Page({
     }
     updateRefreshIntervalId = setInterval(() => {
       this.updateDataStatus();
-    }, 1000);
+    }, 30000);
 
     if (typeof this.getTabBar === 'function' &&
       this.getTabBar()) {
       this.getTabBar().setData({
         selected: 0
       })
-    }
-    try {
-      let childName = getSelectedChild().name;
-      if (childName) {
-        this.setData({
-          nickName: childName,
-        });
-      }
-    } catch (e) {
-      console.error(e);
     }
   },
 
@@ -330,17 +331,19 @@ Page({
         return
       }
       let child = childs[index];
-      if (child.childId) {
-        this.setData({
-          selectChild: child
+      if (!child.childId) {
+        wx.showToast({
+          title: 'error',
+          icon: 'none'
         })
-        //本地缓存
-        wx.setStorageSync('selectChildId', child.childId)
-        this.fetchRemoteData();
-
-        eventBus.emit("childChange", child); //事件
+        return
       }
-
+      this.setData({
+        selectChild: child,
+      })
+      //本地缓存
+      wx.setStorageSync('selectChildId', child.childId)
+      eventBus.emit("childChange", child); //事件
     } catch (error) {
       console.error(error);
     }
@@ -348,7 +351,7 @@ Page({
 
   //拉取数据
   fetchRemoteData() {
-    let currentTime = new Date().getTime();
+    let currentTime = Date.now();
     let interval = currentTime - lastSyncTime;
     if (interval < getApp().globalData.debounceTime) {
       console.log("刷新频率太快", interval);
@@ -359,8 +362,8 @@ Page({
       return
     }
     lastSyncTime = currentTime;
-    let childId = getSelectedChild().childId;
-    if (!childId) {
+    let child = getSelectedChild()
+    if (!child || !child.childId) {
       this.setData({
         records: [],
       })
@@ -441,19 +444,6 @@ Page({
   isDoing: function (ele) {
     return this.isFeeding(ele) || this.isSleeping(ele);
   },
-
-  //格式化时长
-  fomartTimeText(time) {
-    let obj = getHourMinuteSecond(time);
-    return `${obj.hours?obj.hours+"小时":''} ${obj.minutes?obj.minutes:0}分钟`;
-  },
-
-  //格式化时长
-  fomartTimeTextLongFormat(time) {
-    let obj = getHourMinuteSecond(time);
-    return `${obj.hours?obj.hours+"小时":''} ${obj.minutes?obj.minutes:0}分钟 ${obj.seconds?obj.seconds+"秒":''}`;
-  },
-
   //页面刷新
   updatePageUi(data) {
     try {
@@ -493,7 +483,6 @@ Page({
             ext.icon = getIcon(ele.type);
 
             ext.title = ele.event;
-            ext.content = ele.event;
             ext.time = ele.time;
 
             //区分展示
@@ -507,18 +496,18 @@ Page({
                     ext.title_red = true;
                     ext.content = '结束喂养';
                     ext.content_red = true;
-                    ext.status = `已亲喂 ${this.fomartTimeTextLongFormat(Date.now() - ele.lastTime + ele.leftTime + ele.rightTime)}`
+                    ext.status = `${fomartTimeChinese(Date.now() - ele.lastTime + ele.leftTime + ele.rightTime)}`
 
                   } else {
                     ext.content = '';
                     if (ele.leftTime > 0) {
-                      ext.content += `左 ${this.fomartTimeTextLongFormat(ele.leftTime) }\n `
+                      ext.content += `左 ${fomartTimeChinese(ele.leftTime,true) }\n `
                     }
                     if (ele.rightTime > 0) {
-                      ext.content += `右 ${this.fomartTimeTextLongFormat(ele.rightTime)} \n`
+                      ext.content += `右 ${fomartTimeChinese(ele.rightTime,true)} \n`
                     }
                     if (ele.leftTime > 0 && ele.rightTime > 0) {
-                      ext.content += `总 ${this.fomartTimeTextLongFormat(ele.rightTime+ele.leftTime)} `
+                      ext.content += `总 ${fomartTimeChinese(ele.rightTime+ele.leftTime,true)} `
                     }
                   }
                 } else {
@@ -527,7 +516,7 @@ Page({
                 break;
               case 'activity':
                 ext.title = ele.activity.name;
-                ext.content = "时长 " + this.fomartTimeText(ele.endTime - ele.startTime)
+                ext.content = "时长 " + fomartTimeChinese(ele.endTime - ele.startTime)
                 ext.time = format(ele.startTime, 'HH:mm') + " - " + format(ele.endTime, 'HH:mm');
                 break;
               case 'other':
@@ -580,11 +569,11 @@ Page({
                   ext.content = "睡醒了"
                   ext.time = ele.time;
 
-                  ext.status = `已入睡 ${this.fomartTimeTextLongFormat(Date.now() - ele.startTime)}`
+                  ext.status = `已入睡 ${fomartTimeChinese(Date.now() - ele.startTime,'')}`
 
                 } else {
-                  ext.title = "睡醒了";
-                  ext.content = "时长 " + this.fomartTimeTextLongFormat(ele.endTime - ele.startTime)
+                  ext.title = "已睡醒";
+                  ext.content = "时长 " + fomartTimeChinese(ele.endTime - ele.startTime)
                   ext.time = format(ele.startTime, 'HH:mm') + " - " + format(ele.endTime, 'HH:mm');
                 }
                 break;
@@ -627,11 +616,21 @@ Page({
 
   //修改日期，重新刷新日志
   onDateChange(e) {
-    let date = e.detail.date;
+    let date = e.detail.value;
+    //时间没有变化
+    if (this.data.date == date) {
+      return
+    }
+    if (e.currentTarget.dataset.from == 'picker') {
+
+    } else {
+      //todo
+    }
     this.setData({
       date
     })
     this.fetchRemoteData();
+
   },
 
 

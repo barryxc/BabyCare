@@ -1,9 +1,8 @@
 const {
-  getRecentDate,
+  daysAfter,
   weekDay,
   dateInMonth,
-  format,
-  getToday
+  currentDate
 } = require("../../service/date");
 const {
   getIcon,
@@ -29,7 +28,7 @@ Page({
     selectedColor: "#ff80ca",
 
     //日期
-    date: getToday(),
+    date: currentDate(),
     statstics: [],
 
     //loading效果
@@ -44,7 +43,7 @@ Page({
     let dates = [];
     let weeks = [];
     for (let day = -34; day <= 0; day++) {
-      let date = getRecentDate(day);
+      let date = daysAfter(day);
       let weekOfDay = weekDay(date, 'YYYY-MM-DD');
       let dateIn = dateInMonth(date);
       dates.push({

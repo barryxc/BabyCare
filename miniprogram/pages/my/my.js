@@ -71,7 +71,7 @@ Page({
     })
 
     let child = getSelectedChild();
-    let age = diffDays(child.date);
+    let age = diffDays(child.date,Date.now());
     if (exist && age >= 0) {
       child.age = age + 1;
     }
@@ -188,8 +188,7 @@ Page({
           selectChild: child
         })
         //本地缓存
-        wx.setStorageSync('selectChildId', child.childId)
-        this.refreshUser();
+        wx.setStorageSync('selectChildId', child.childId);
 
         eventBus.emit("childChange", child); //事件
       }

@@ -4,6 +4,14 @@
 <view class="custom-navbar color-accent">
 
   <view class="icon-area">
+
+
+    <picker mode="date" bind:change='onDateChange' data-from="picker" model:value='{{date}}' start='{{startDate}}' end='{{endDate}}'>
+      <view style="display: flex;align-items: center;">
+        <image src="../../images/date.svg" mode="aspectFill" style="width: 50rpx;height: 50rpx;" />
+      </view>
+    </picker>
+
     <picker id="childPicker" mode="selector" style="width: fit-content; height:fit-content;" range='{{childs}}' range-key="name" bind:change='onChildChange' value='{{value}}' wx:if="{{childs.length>=0}}" disabled="{{!childs||(childs.length==0)}}" bind:tap="onChildPickerTap">
       <view style="display: flex;flex-direction: row;margin-left: 20rpx;">
         <view style="display: flex;align-items: center;">
@@ -16,7 +24,7 @@
     </picker>
   </view>
 
-  <week-date-switcher class="" model:value="{{date}}" bind:onChange="onDateChange"></week-date-switcher>
+  <week-date-switcher class="" model:value="{{date}}" start='{{startDate}}' end='{{endDate}}' bind:onChange="onDateChange"></week-date-switcher>
 </view>
 
 
@@ -58,7 +66,7 @@
 
         <!-- 第二行 -->
         <view style="display: flex;flex-direction: row;align-items: center; margin-top: 30rpx;">
-          <view class="content-container">
+          <view class="content-title">
             <text class="{{item.ext.title_red? 'event_red':'event'}}">{{item.ext.title}}</text>
           </view>
           <view style="margin-left: auto;"></view>
@@ -68,7 +76,7 @@
         </view>
 
         <!-- 第三行 -->
-        <view style="margin-top: 10rpx;">
+        <view style="margin-top: 10rpx;overflow-x:scroll;">
           <text style="font-size: 30rpx;">{{item.content}}</text>
         </view>
 

@@ -22,7 +22,7 @@ Page({
   onLoad(options) {
     let childs = user.getChilds();
     childs.forEach(e => {
-      let age = date.diffDays(e.date);
+      let age = date.diffDays(e.date,Date.now());
       if (age >= 0) {
         e.age = age + 1;
       }

@@ -1,6 +1,6 @@
 // components/addBabyModal/addBabyModal.js
 const {
-  getToday
+  currentDate
 } = require("../../service/date");
 const {
   defaultAvatar
@@ -47,7 +47,7 @@ Component({
     gender: 0,
     weight: "",
     height: "",
-    endDay: getToday(),
+    endDay: currentDate(),
   },
 
   /**

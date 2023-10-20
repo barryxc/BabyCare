@@ -21,6 +21,8 @@ Component({
       value: -1
     }
   },
+  observers: {
+  },
 
   /**
    * 组件的初始数据

@@ -58,6 +58,14 @@ Component({
       this.setData({
         unit: this.data.units[data],
       })
+    },
+    "volume": function (data) {
+      if (isNaN(data)) {
+        wx.showToast({
+          title: '输入不合法',
+          icon: 'none'
+        })
+      }
     }
   },
   /**
@@ -73,6 +81,13 @@ Component({
         wx.showToast({
           title: '未选中辅食',
           icon: "none"
+        })
+        return
+      }
+      if (isNaN(this.data.volume)) {
+        wx.showToast({
+          title: '食量输入非法',
+          icon: 'none'
         })
         return
       }

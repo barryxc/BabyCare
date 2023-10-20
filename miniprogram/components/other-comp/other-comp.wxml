@@ -32,7 +32,7 @@
   </view>
 
   <view style="background-color: white;margin-top: 1rpx;height: 200rpx;">
-    <textarea name="conent" type="text" class="content" placeholder="备注" maxlength="70" auto-height="true" placeholder-style="color:#e3e3e3;font-size:32rpx" model:value="{{content}}"></textarea>
+    <input name="conent" type="text" class="content" placeholder="备注" maxlength="50" auto-height="true" placeholder-style="color:#e3e3e3;font-size:32rpx" model:value="{{content}}"></input>
   </view>
 
 

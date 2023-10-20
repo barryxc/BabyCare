@@ -1,6 +1,6 @@
 const {
   format,
-  formatMillis
+  differFormat
 } = require("../../service/date")
 let leftIntervalId;
 let rightIntervalId;
@@ -57,16 +57,16 @@ Component({
 
     'leftTime': function (data) {
       this.setData({
-        leftTimeFormat: formatMillis(data, 'HH:mm:ss'),
-        totalTimeFormat: formatMillis(data + this.data.rightTime, 'HH:mm:ss')
+        leftTimeFormat: differFormat(data, true),
+        totalTimeFormat: differFormat(data + this.data.rightTime, true)
       })
     },
 
     'rightTime': function (data) {
       console.log(data);
       this.setData({
-        rightTimeFormat: formatMillis(data, 'HH:mm:ss'),
-        totalTimeFormat: formatMillis(this.data.leftTime + data, 'HH:mm:ss')
+        rightTimeFormat: differFormat(data, true),
+        totalTimeFormat: differFormat(this.data.leftTime + data, true)
       })
     },
   },

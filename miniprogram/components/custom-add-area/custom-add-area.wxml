@@ -6,7 +6,7 @@
       请输入
     </view>
     <view style="padding: 50rpx 32rpx 30rpx;">
-      <input value="{{addContent}}" type="text" placeholder="内容" name='content' style="width: 100%;height: fit-content;" maxlength="30" />
+      <input value="{{addContent}}" type="text" placeholder="内容" name='content' style="width: 100%;height: fit-content;" maxlength="10" />
     </view>
 
     <view style="display: flex;">
