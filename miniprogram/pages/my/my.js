@@ -9,6 +9,7 @@ const {
   getUser,
   getChilds,
   defaultAvatar,
+  getSelectedChildIndex,
 } = require("../../service/user")
 
 // pages/my/my.js
@@ -19,6 +20,7 @@ Page({
   data: {
     defaultAvatar: defaultAvatar,
     baby: {},
+    childIndex: 0,
     userInfo: {},
     childs: [{
       name: "aa"
@@ -71,13 +73,15 @@ Page({
     })
 
     let child = getSelectedChild();
-    let age = diffDays(child.date,Date.now());
+    let childIndex = getSelectedChildIndex();
+    let age = diffDays(child.date, Date.now());
     if (exist && age >= 0) {
       child.age = age + 1;
     }
     this.setData({
       baby: child,
-      childs: childs
+      childs,
+      childIndex,
     });
   },
   /**
@@ -172,7 +176,7 @@ Page({
     setTimeout(() => {
       this.addChild()
     }, 300);
-   
+
   },
 
   //切换小宝
@@ -226,8 +230,7 @@ Page({
           this.refreshUser();
         }).bind(this),
       },
-      success(res) {
-      }
+      success(res) {}
     })
   }
 

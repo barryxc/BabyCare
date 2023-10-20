@@ -481,8 +481,8 @@ Page({
 
             //扩展用于ui展示
             ext.icon = getIcon(ele.type);
-
             ext.title = ele.event;
+            ext.remark = ele.content;//备注
             ext.time = ele.time;
 
             //区分展示
@@ -520,8 +520,8 @@ Page({
                 ext.time = format(ele.startTime, 'HH:mm') + " - " + format(ele.endTime, 'HH:mm');
                 break;
               case 'other':
-                ext.title = '重要时刻';
-                ext.content = ele.activity.name;
+                ext.title = ele.activity.name;
+                ext.content = "重要时刻";
                 break;
               case 'shit':
                 ext.title = "换尿布";
@@ -539,7 +539,7 @@ Page({
                   }
                 }
                 if (status.includes('便便')) {
-                  ext.content += ` 💩`
+                  ext.content += ` 便便💩`
                   if (ele.shitStatus.name) {
                     ext.content += ` (${ele.shitStatus.name})`
                   }
@@ -568,14 +568,18 @@ Page({
                   ext.content_red = true;
                   ext.content = "睡醒了"
                   ext.time = ele.time;
-
                   ext.status = `已入睡 ${fomartTimeChinese(Date.now() - ele.startTime,'')}`
-
                 } else {
                   ext.title = "已睡醒";
                   ext.content = "时长 " + fomartTimeChinese(ele.endTime - ele.startTime)
                   ext.time = format(ele.startTime, 'HH:mm') + " - " + format(ele.endTime, 'HH:mm');
                 }
+                break;
+              case 'growth':
+                ext.title = "成长记录";
+                ext.content = `${ele.height?"身高 "+ele.height+" cm":""}` + "\n" +
+                  `${ele.weight?"体重 "+ele.weight+" kg":""}` + "\n" +
+                  `${ele.headcircum?"头围 "+ele.headcircum+" cm":""}`;
                 break;
               default:
                 break;
@@ -620,11 +624,6 @@ Page({
     //时间没有变化
     if (this.data.date == date) {
       return
-    }
-    if (e.currentTarget.dataset.from == 'picker') {
-
-    } else {
-      //todo
     }
     this.setData({
       date

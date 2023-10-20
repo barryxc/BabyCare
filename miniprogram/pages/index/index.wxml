@@ -6,7 +6,7 @@
   <view class="icon-area">
 
 
-    <picker mode="date" bind:change='onDateChange' data-from="picker" model:value='{{date}}' start='{{startDate}}' end='{{endDate}}'>
+    <picker mode="date" bind:change='onDateChange' data-from="picker" value='{{date}}' start='{{startDate}}' end='{{endDate}}'>
       <view style="display: flex;align-items: center;">
         <image src="../../images/date.svg" mode="aspectFill" style="width: 50rpx;height: 50rpx;" />
       </view>
@@ -24,7 +24,7 @@
     </picker>
   </view>
 
-  <week-date-switcher class="" model:value="{{date}}" start='{{startDate}}' end='{{endDate}}' bind:onChange="onDateChange"></week-date-switcher>
+  <week-date-switcher class="" value="{{date}}" start='{{startDate}}' end='{{endDate}}' bind:onChange="onDateChange"></week-date-switcher>
 </view>
 
 
@@ -77,7 +77,7 @@
 
         <!-- 第三行 -->
         <view style="margin-top: 10rpx;overflow-x:scroll;">
-          <text style="font-size: 30rpx;">{{item.content}}</text>
+          <text style="font-size: 30rpx;">{{item.ext.remark}}</text>
         </view>
 
       </view>

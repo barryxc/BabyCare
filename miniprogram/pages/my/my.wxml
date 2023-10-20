@@ -6,7 +6,7 @@
 
       <view style="position: absolute; top: 100rpx;left: 30rpx; display: flex;">
       
-        <picker mode="selector" style="width: fit-content; height:fit-content;" range='{{childs}}' range-key="name" bind:change='onChildChange' disabled="{{disableChildPicker}}" bind:tap="onChildPickerTap">
+        <picker mode="selector" style="width: fit-content; height:fit-content;" range='{{childs}}' range-key="name" bind:change='onChildChange' disabled="{{disableChildPicker}}" bind:tap="onChildPickerTap" value='{{childIndex}}'>
           <image src="../../images/switch-baby.svg" style="width: 50rpx;height: 50rpx;" mode="aspectFill" />
         </picker>
 

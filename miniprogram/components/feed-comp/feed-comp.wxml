@@ -100,7 +100,7 @@
             <text>容量</text>
           </view>
           <view style="margin-left: auto">
-            <input type="digit" name='volume' value="{{volume}}" placeholder="请输入" style="text-align: end;" maxlength="5"></input>
+            <input type="digit" name='volume' model:value="{{volume}}" placeholder="请输入" style="text-align: end;" maxlength="5"></input>
           </view>
           <view style="margin-left: 32rpx;margin-right: 32rpx;">
             <text>ml</text>
@@ -162,7 +162,7 @@
             <text>容量</text>
           </view>
           <view style="margin-left: auto">
-            <input type="number" name='volume' value="{{volume}}" placeholder="请输入" style="text-align: end;" maxlength="5"></input>
+            <input type="number" name='volume' model:value="{{volume}}" placeholder="请输入" style="text-align: end;" maxlength="5"></input>
           </view>
           <view style="margin-left: 32rpx;margin-right: 32rpx;">
             <text>ml</text>

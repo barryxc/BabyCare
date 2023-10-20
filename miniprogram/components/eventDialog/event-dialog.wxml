@@ -21,5 +21,6 @@
     <nbs-comp class="component" wx:if="{{type=='shit'}}" bind:cancel='cancel' bind:submit='submit' record='{{record}}'></nbs-comp>
     <activity-comp class="component" wx:if="{{type=='activity'}}" bind:cancel='cancel' bind:submit='submit' record='{{record}}'></activity-comp>
     <other-comp class="component" wx:if="{{type=='other'}}" bind:cancel='cancel' bind:submit='submit' record='{{record}}'></other-comp>
+    <weight-height-comp class="component" wx:if="{{type=='growth'}}" bind:cancel='cancel' bind:submit='submit' record='{{record}}'></weight-height-comp>
   </view>
 </view>

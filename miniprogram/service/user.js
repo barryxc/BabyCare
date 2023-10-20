@@ -58,7 +58,6 @@ function getSelectedChild() {
 }
 
 function getSelectedChildIndex() {
-  debugger
   let childs = getChilds();
   if (!childs || childs.length == 0) {
     return -1;

@@ -63,12 +63,19 @@ Component({
     },
 
     'rightTime': function (data) {
-      console.log(data);
       this.setData({
         rightTimeFormat: differFormat(data, true),
         totalTimeFormat: differFormat(this.data.leftTime + data, true)
       })
     },
+    "volume": function (data) {
+      if (data && isNaN(data)) {
+        wx.showToast({
+          title: '容量输入不合法',
+          icon: 'none'
+        })
+      }
+    }
   },
 
   lifetimes: {
@@ -155,15 +162,20 @@ Component({
           })
           return
         }
-      } else if ((!volume || volume === 0)) {
+      } else if (!volume || isNaN(volume)) {
         //瓶喂的情况下需要校验容量
+        wx.showToast({
+          title: '容量输入不合法',
+          icon: "none"
+        })
+        return
+      } else if (volume == 0) {
         wx.showToast({
           title: '容量不能为空',
           icon: "none"
         })
         return
       }
-
       let now = Date.now();
       let item = {
         ...this.data,
