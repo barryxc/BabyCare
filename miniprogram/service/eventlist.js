@@ -19,10 +19,6 @@ const events = [{
   type: "activity",
   icon: "../../images/activity.svg",
 }, {
-  event: "用药",
-  type: "medicine",
-  icon: "../../images/medicine.svg",
-}, {
   event: '身高体重',
   type: "growth",
   icon: "../../images/growth.svg",

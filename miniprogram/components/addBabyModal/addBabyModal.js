@@ -125,6 +125,7 @@ Component({
 
     //选择头像
     chooseImg() {
+      debugger
       if (this.data.babyInfo.shared) {
         return
       }
@@ -138,7 +139,11 @@ Component({
           this.setData({
             avatar,
           })
-        }.bind(this)
+        }.bind(this),
+        fail: function (res) {
+          debugger
+          console.log(res)
+        }
       });
     },
 
