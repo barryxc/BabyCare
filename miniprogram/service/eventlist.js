@@ -23,7 +23,7 @@ const events = [{
   type: "growth",
   icon: "../../images/growth.svg",
 }, {
-  event: '重要时刻',
+  event: '其它',
   type: "other",
   icon: "../../images/star.svg",
 }];

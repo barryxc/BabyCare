@@ -24,14 +24,8 @@ Component({
     selectIndex: -1,
     activity: "",
     data: [{
-      name: "第一次叫爸爸"
-    }, {
-      name: "第一次叫妈妈"
-    }, {
       name: "第一次走路"
-    }, {
-      name: "第一次翻身"
-    }]
+    },]
   },
 
   lifetimes: {
