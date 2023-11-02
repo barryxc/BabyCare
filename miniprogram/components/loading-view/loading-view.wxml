@@ -1,4 +1,0 @@
-<!--components/loading-view/loading-view.wxml-->
-<view style="display: inline-flex;flex-direction: column;">
-  <image class="loading-icon" src="../../images/loading.svg"></image>
-</view>

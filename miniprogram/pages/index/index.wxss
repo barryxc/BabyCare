@@ -189,6 +189,8 @@ page {
   flex-direction: column;
   margin-top: auto;
   margin-bottom: auto;
+  justify-content: center;
+  align-items: center;
 }
 
 .time-axis {

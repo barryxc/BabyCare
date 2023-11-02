@@ -28,8 +28,9 @@
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",
     "week-date-switcher": "./components/week-date-switcher/week-date-switcher",
-    "loading-view": "./components/loading-view/loading-view",
     
+    "van-swipe-cell": "@vant/weapp/swipe-cell/index",
+    "van-loading": "@vant/weapp/loading/index",
     "weight-height-comp": "./components/weight-height-comp/weight-height-comp"
     
   },

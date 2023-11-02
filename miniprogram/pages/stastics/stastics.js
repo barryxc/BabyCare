@@ -91,7 +91,7 @@ Page({
       })
     };
   },
-  
+
   //显示loading效果
   showloading(show) {
     this.setData({
@@ -126,12 +126,12 @@ Page({
               count: 0,
               desc: '',
               showProgress: true,
-              feed: 0
+              feed: parseInt(0)
             };
             map[key] = value;
           }
           value.count += 1;
-          value.feed += item.feed; //todo
+          value.feed = Number(item.volume?item.volume:0)+Number(value.feed)
           value.desc = `总计${value.count}次`;
           value.percent = value.count;
           if (isFeed(key)) {

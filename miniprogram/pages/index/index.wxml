@@ -39,9 +39,7 @@
 
   <!-- 加载效果 -->
   <view wx:if="{{loading}}" class="empty-container" style="width:100%;height: 100rpx;">
-    <view style="display: flex; flex-direction: column; align-items: center;">
-      <loading-view class=""></loading-view>
-    </view>
+    <van-loading color='#c8c8ff'/>
   </view>
 
   <!-- 列表项 -->
