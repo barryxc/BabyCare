@@ -24,7 +24,11 @@ Component({
     selectIndex: -1,
     activity: "",
     data: [{
-      name: "第一次走路"
+      name: "AD药剂"
+    },{
+      name: "洗澡澡"
+    },{
+      name: "游泳"
     },]
   },
 

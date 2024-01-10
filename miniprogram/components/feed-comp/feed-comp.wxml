@@ -12,7 +12,7 @@
             <image src="{{leftBreastFeeding?'../../images/pause.svg':'../../images/play.svg'}}" mode="aspectFit" style="width: 100rpx;height: 100rpx;" bind:tap="countLeft" />
             <view style="margin-top: 20rpx;"><text>左边</text></view>
             <view style="height: 40rpx;">
-              <text style="font-size: 22rpx;">{{leftTimeFormat}}</text>
+              <input style="font-size: 22rpx;" value="{{leftTimeFormat}}" bindinput="bindInputLeftTime"></input>
             </view>
           </view>
 
@@ -33,7 +33,7 @@
             <image bind:tap="countRight" src="{{rightBreastFeeding?'../../images/pause.svg':'../../images/play.svg'}}" mode="aspectFit" style="width: 100rpx;height: 100rpx;" />
             <view style="margin-top: 20rpx;"><text>右边</text></view>
             <view style="height: 40rpx;">
-              <text style="font-size: 22rpx;">{{rightTimeFormat}}</text>
+              <input style="font-size: 22rpx;" value="{{rightTimeFormat}}" bindinput="bindInputRightTime"></input>
             </view>
           </view>
         </view>

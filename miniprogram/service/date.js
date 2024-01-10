@@ -129,6 +129,17 @@ function getHourMinuteSecond(milliseconds) {
   };
 }
 
+function parseTime(timeString) {
+  // 解析时间字符串
+  const parts = timeString.split(':');
+  const hours = parseInt(parts[0], 10);
+  const minutes = parseInt(parts[1], 10);
+  const seconds = parseInt(parts[2], 10);
+
+  // 将时间转换为毫秒
+  const millis = (hours * 60 * 60 * 1000) + (minutes * 60 * 1000) + (seconds * 1000);
+  return millis;
+}
 
 
 module.exports = {
@@ -148,5 +159,6 @@ module.exports = {
   minutesAgo,
   getHourMinuteSecond,
   diffSeconds,
-  monthOfDate
+  monthOfDate,
+  parseTime
 }

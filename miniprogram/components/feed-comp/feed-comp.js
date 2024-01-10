@@ -1,6 +1,7 @@
 const {
   format,
-  differFormat
+  differFormat,
+  parseTime
 } = require("../../service/date")
 let leftIntervalId;
 let rightIntervalId;
@@ -61,13 +62,14 @@ Component({
         totalTimeFormat: differFormat(data + this.data.rightTime, true)
       })
     },
-
     'rightTime': function (data) {
       this.setData({
         rightTimeFormat: differFormat(data, true),
         totalTimeFormat: differFormat(this.data.leftTime + data, true)
       })
     },
+
+
     "volume": function (data) {
       if (data && isNaN(data)) {
         wx.showToast({
@@ -138,6 +140,23 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    bindInputLeftTime(data){
+      this.data.leftTime=parseTime(data.detail.value);
+      if (this.data.leftTime>=0) {
+        this.setData({
+          totalTimeFormat:differFormat(this.data.leftTime + this.data.rightTime, true)
+        })
+      }
+    },
+    bindInputRightTime(data){
+      this.data.rightTime=parseTime(data.detail.value);
+      if (this.data.rightTime>=0) {
+        this.setData({
+          totalTimeFormat:differFormat(this.data.leftTime + this.data.rightTime, true)
+        })
+      }
+    },
+
     oCheckBoxChange(e) {
       let value = e.detail.value;
       wx.setStorageSync("needUpdateEndTime", value)
