@@ -24,12 +24,8 @@ Component({
     selectIndex: -1,
     activity: "",
     data: [{
-      name: "AD药剂"
-    },{
-      name: "洗澡澡"
-    },{
-      name: "游泳"
-    },]
+      name: ""
+    }]
   },
 
   lifetimes: {

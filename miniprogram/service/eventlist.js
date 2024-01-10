@@ -17,7 +17,7 @@ const events = [{
 }, {
   event: "活动",
   type: "activity",
-  icon: "../../images/activity.svg",
+icon: "../../images/activity.svg",
 }, {
   event: '身高体重',
   type: "growth",
@@ -32,8 +32,14 @@ function getEventList() {
   return events;
 }
 
+function isFeedWithBottle(feedType) {
+  return (feedType=='breast_feed_with_bottle' ||  feedType=='formula_feed_with_bottle')
+}
 function isFeed(type) {
-  return type == 'feed'
+  return type=="feed"
+}
+function isFeedWithBreast(feedType) {
+  return (feedType=='breast_feed_by_self')
 }
 
 function getEventTitle(type) {
@@ -57,6 +63,8 @@ function getIcon(type) {
 module.exports = {
   getEventList,
   getIcon,
+  isFeedWithBottle,
+  isFeedWithBreast,
   isFeed,
   getEventTitle,
 }

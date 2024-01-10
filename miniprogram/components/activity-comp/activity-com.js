@@ -20,11 +20,17 @@ Component({
    */
   data: {
     activities: [{
-      name: "看绘本"
+      name: "AD药剂"
     }, {
-      name: "画画"
+      name: "洗澡澡"
     }, {
-      name: "听故事"
+      name: "游泳"
+    },{
+      name: "剪指甲"
+    },{
+      name: "听儿歌"
+    },{
+      name: "做排气操"
     }],
     activity: "",
     selectIndex: -1,

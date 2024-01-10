@@ -2,11 +2,15 @@ const {
   daysAfter,
   weekDay,
   dateInMonth,
-  currentDate
+  currentDate,
+  fomartTimeChinese,
+  parseTime
 } = require("../../service/date");
 const {
   getIcon,
-  isFeed
+  isFeed,
+  isFeedWithBottle,
+  isFeedWithBreast,
 } = require("../../service/eventlist");
 const {
   callServer
@@ -117,6 +121,10 @@ Page({
       if (data) {
         for (const item of data) {
           let key = item.type;
+          //喂养
+          if (isFeed(key)) {
+            key = item.feedType;
+          }
           let value = map[item.type];
           if (!value) {
             value = {
@@ -126,16 +134,26 @@ Page({
               count: 0,
               desc: '',
               showProgress: true,
-              feed: parseInt(0)
+              feed: parseInt(0),
             };
             map[key] = value;
           }
           value.count += 1;
-          value.feed = Number(item.volume?item.volume:0)+Number(value.feed)
+          if (isFeedWithBottle(key)) {
+            value.name="瓶喂"
+            value.feed = Number(item.volume ? item.volume : 0) + Number(value.feed)
+          }
+          if (isFeedWithBreast(key)) {
+            value.name=item.feedTitle
+            value.feed = fomartTimeChinese(item.leftTime+item.rightTime+parseTime(value.feed?value.feed:'00:00:00'),true) ;
+          }
           value.desc = `总计${value.count}次`;
           value.percent = value.count;
-          if (isFeed(key)) {
+          if (isFeedWithBottle(key)) {
             value.desc = (value.feed + 'ml/' + value.desc)
+          }
+          if (isFeedWithBreast(key)) {
+            value.desc = (value.feed + '/' + value.desc)
           }
         }
       }
