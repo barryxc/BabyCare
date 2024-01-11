@@ -130,6 +130,9 @@ function getHourMinuteSecond(milliseconds) {
 }
 
 function parseTime(timeString) {
+  if (timeString.trim().length==0) {
+    return 0;
+  }
   // 解析时间字符串
   const parts = timeString.split(':');
   const hours = parseInt(parts[0], 10);

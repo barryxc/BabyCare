@@ -24,7 +24,9 @@ Component({
     selectIndex: -1,
     activity: "",
     data: [{
-      name: ""
+      name: "第一次叫妈妈"
+    },{
+      name: "第一次叫爸爸"
     }]
   },
 

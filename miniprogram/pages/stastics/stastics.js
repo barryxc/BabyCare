@@ -125,7 +125,7 @@ Page({
           if (isFeed(key)) {
             key = item.feedType;
           }
-          let value = map[item.type];
+          let value = map[key];
           if (!value) {
             value = {
               name: item.event,
@@ -135,25 +135,24 @@ Page({
               desc: '',
               showProgress: true,
               feed: parseInt(0),
+              time:0
             };
             map[key] = value;
           }
           value.count += 1;
           if (isFeedWithBottle(key)) {
-            value.name="瓶喂"
+            value.name = "瓶喂"
             value.feed = Number(item.volume ? item.volume : 0) + Number(value.feed)
           }
-          if (isFeedWithBreast(key)) {
-            value.name=item.feedTitle
-            value.feed = fomartTimeChinese(item.leftTime+item.rightTime+parseTime(value.feed?value.feed:'00:00:00'),true) ;
-          }
           value.desc = `总计${value.count}次`;
+          if (isFeedWithBreast(key)) {
+            value.name = item.feedTitle
+            value.time += item.leftTime + item.rightTime;
+            value.desc=`${fomartTimeChinese(value.time,true)}/总计${value.count}次`
+          }
           value.percent = value.count;
           if (isFeedWithBottle(key)) {
             value.desc = (value.feed + 'ml/' + value.desc)
-          }
-          if (isFeedWithBreast(key)) {
-            value.desc = (value.feed + '/' + value.desc)
           }
         }
       }

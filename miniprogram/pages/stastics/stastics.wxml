@@ -59,10 +59,7 @@
                 </view>
               </view>
 
-              <view style="display: flex; flex-direction: row; width: 100%;height: fit-content; padding:20rpx 20rpx 0rpx;box-sizing: border-box;">
-                <view>
-                  <text style="font-size: 22rpx;">{{item.time?item.time:''}}</text>
-                </view>
+              <view style="display: flex; flex-direction: row; width: 100%;height: fit-content; padding:20rpx 20rpx 0rpx;box-sizing: border-box;" wx:if="item.progress">
               </view>
             </view>
 
